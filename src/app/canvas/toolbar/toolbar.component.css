@@ -1,0 +1,13 @@
+.mat-toolbar-row, .mat-toolbar-single-row {
+  padding: 0;
+}
+
+.mat-button-toggle-group, .mat-button-toggle-standalone {
+  box-shadow: inherit;
+  border-radius: 0;
+}
+
+.mat-button-toggle {
+  line-height: 64px;
+  padding: 0 4px;
+}
