@@ -30,4 +30,12 @@ export class Rect implements Shape {
   draw(ctx: CanvasRenderingContext2D) {
     ctx.fillRect(this.left, this.top, this.width, this.height);
   }
+
+  pick(p: Point): boolean {
+    const x1 = this.left;
+    const y1 = this.top;
+    const x2 = x1 + this.width;
+    const y2 = y1 + this.height;
+    return (x1 <= p.x && p.x <= x2) && (y1 <= p.y && p.y <= y2);
+  }
 }

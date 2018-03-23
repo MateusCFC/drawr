@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EditorService } from '../editor/editor.service';
 
 @Component({
   selector: 'app-canvas-props',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PropsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private propsService: EditorService) {
+
+  }
 
   ngOnInit() {
   }

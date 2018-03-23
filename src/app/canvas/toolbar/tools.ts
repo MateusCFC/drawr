@@ -1,5 +1,6 @@
 import { CanvasDirective } from "../canvas.directive";
 import { Point } from "../../data/point";
+import { EditorService } from "../editor/editor.service";
 
 /**
  * Define the callback function for mouse events.
@@ -7,7 +8,11 @@ import { Point } from "../../data/point";
  * interaction happens), and one or two points, according to the occorred event.
  */
 interface MouseHandler {
-  (canvas: CanvasDirective, layer: CanvasDirective, p1: Point, p2?: Point): void
+  ( canvas: CanvasDirective,
+    layer: CanvasDirective,
+    editor: EditorService,
+    p1: Point,
+    p2?: Point): void
 }
 
 /**
@@ -27,21 +32,36 @@ export interface Tool {
   dragEnd?: MouseHandler;
 }
 
+const selection: Tool = {
+  name: 'selection',
+  icon: 'crop_free',
+  click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p: Point) => {
+    for (let id in canvas.figure.shapes) {
+      const shape = canvas.figure.shapes[id];
+      if (shape.pick(p)) {
+        editor.selectedShape = shape;
+        break;
+      }
+    }
+  }
+}
+
+
 /**
  * The tool responsible for creating rectangles. It has two event handlers: drag and dragEnd.
  * The first one draws a temporary rectangle in the layer and the second one creates the rectangle
  * in the figure.
  */
-const Rect: Tool = {
+const rect: Tool = {
   name: 'rect',
   icon: 'check_box_outline_blank',
-  drag: (canvas: CanvasDirective, layer: CanvasDirective, p1: Point, p2: Point) => {
+  drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
     const w = p2.x - p1.x;
     const h = p2.y - p1.y;
     layer.context.strokeRect(p1.x, p1.y, w, h);
   },
-  dragEnd: (canvas: CanvasDirective, layer: CanvasDirective, p1: Point, p2: Point) => {
+  dragEnd: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
     const r = canvas.figure.addShape('rect', {
       top: p1.y,
@@ -55,7 +75,7 @@ const Rect: Tool = {
 /**
  * Cicle tool does nothing for the moment.
  */
-const Circle: Tool = {
+const circle: Tool = {
   name: 'circle',
   icon: 'radio_button_unchecked'    
 }
@@ -63,4 +83,4 @@ const Circle: Tool = {
 /**
  * Set of tools used in the canvas editor.
  */
-export const tools = [ Rect, Circle ];
+export const tools = [ selection, rect, circle ];

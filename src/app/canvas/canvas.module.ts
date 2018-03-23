@@ -6,6 +6,7 @@ import { PropsComponent } from './props/props.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SharedModule } from '../shared/shared.module';
 import { ToolService } from './toolbar/tool.service';
+import { EditorService } from './editor/editor.service';
 
 /**
  * Integrate drawing funcionalities in a canvas.
@@ -22,7 +23,8 @@ import { ToolService } from './toolbar/tool.service';
     ToolbarComponent
   ],
   providers: [
-    ToolService
+    ToolService,
+    EditorService
   ],
   exports: [
     CanvasDirective,

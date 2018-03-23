@@ -10,7 +10,7 @@ export type ShapeType = 'rect' | 'circle';
  * in the figure to update their views.
  */
 export class Figure {
-  private shapes: Shapes = {};
+  shapes: Shapes = {};
 
   /// It uses the library RxJS too create an observable
   private updateSubject = new Subject<boolean>();
@@ -86,14 +86,14 @@ export class Figure {
   /**
    * Factory method to create shapes.
    */
-  private createShape(type: ShapeType) {
+  private createShape(shapeType: ShapeType) {
     // this loop assures the generated id is unique in the shape set.
-    let id = this.generateId(type);
+    let id = this.generateId(shapeType);
     while (this.shapes[id] !== undefined) {
-      id = this.generateId(type);
+      id = this.generateId(shapeType);
     }
 
-    switch (type) {
+    switch (shapeType) {
       case 'rect': return new Rect(id);
     }
   }

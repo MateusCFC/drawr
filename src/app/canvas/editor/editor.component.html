@@ -1,6 +1,6 @@
 <app-canvas-toolbar></app-canvas-toolbar>
 <mat-sidenav-container>
-  <mat-sidenav position="end">End</mat-sidenav>
+  <mat-sidenav [(opened)]="editorService.selectedShape" position="end">End</mat-sidenav>
   <mat-sidenav-content>
     <ng-content></ng-content>
     <canvas appCanvas class="layer" [figure]="layerFig"

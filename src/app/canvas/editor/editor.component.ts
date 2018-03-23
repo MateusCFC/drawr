@@ -4,6 +4,7 @@ import { Figure } from '../../data/figure';
 import { DataService } from '../../data/data.service';
 import { ToolService } from '../toolbar/tool.service';
 import { Point } from '../../data/point';
+import { EditorService } from '../editor/editor.service';
 
 /** Number of pixels the mouse position must differ to consider as a drag. */
 const MOVE_THRESHOLD = 3;
@@ -33,7 +34,11 @@ export class CanvasEditorComponent implements AfterContentInit {
   private isDragging = false;
   private dragOrigin: Point = undefined;
 
-  constructor(private dataService: DataService, private toolService: ToolService) {
+  constructor(
+      private dataService: DataService,
+      private toolService: ToolService,
+      public editorService: EditorService
+    ) {
     this.layerFig = dataService.createFigure();
   }
 
@@ -64,12 +69,12 @@ export class CanvasEditorComponent implements AfterContentInit {
     const tool = this.toolService.selected;
     if (this.isDragging) {
       if (tool && tool.dragEnd) {
-        tool.dragEnd(this.canvas, this.layer, this.dragOrigin, { x, y });
+        tool.dragEnd(this.canvas, this.layer, this.editorService, this.dragOrigin, { x, y });
       }
     }
     else {
       if (tool && tool.click) {
-        tool.click(this.canvas, this.layer, this.dragOrigin);
+        tool.click(this.canvas, this.layer, this.editorService, this.dragOrigin);
       }
     }
     this.resetMouseEvent();
@@ -91,13 +96,13 @@ export class CanvasEditorComponent implements AfterContentInit {
         if (movedUpDown || movedLeftRight) {
           this.isDragging = true;
           if (tool && tool.dragStart) {
-            tool.dragStart(this.canvas, this.layer, this.dragOrigin);
+            tool.dragStart(this.canvas, this.layer, this.editorService, this.dragOrigin);
           }
         }
       }
       else {
         if (tool && tool.drag) {
-          tool.drag(this.canvas, this.layer, this.dragOrigin, { x, y });
+          tool.drag(this.canvas, this.layer, this.editorService, this.dragOrigin, { x, y });
         }
       }
     }
@@ -113,7 +118,7 @@ export class CanvasEditorComponent implements AfterContentInit {
       const y = event.offsetY;
       const tool = this.toolService.selected;
       if (tool && tool.dragEnd) {
-        tool.dragEnd(this.canvas, this.layer, this.dragOrigin, { x, y });
+        tool.dragEnd(this.canvas, this.layer, this.editorService, this.dragOrigin, { x, y });
       }
     }
     this.dragOrigin = undefined;
