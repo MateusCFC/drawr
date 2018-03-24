@@ -14,6 +14,3 @@ Essa versão será focada na parte de "Desenho Livre". Nela, serão abordadas im
 ### v1.1
 - Adição da ferramenta de criação de círculos.
 -- O usuário clica na posição onde será o centro do círculo e, segurando o botão do mouse, arrasta o ponteiro, que faz com que o raio mude de acordo com a distância até o centro.
-TO-DO:
--- [ ] Habilitar opção de preenchido ou não
--- [ ] Definir mais opções para customização (fillcolor, border, etc)
