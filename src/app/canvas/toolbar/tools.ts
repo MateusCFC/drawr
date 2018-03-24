@@ -73,11 +73,33 @@ const rect: Tool = {
 }
 
 /**
- * Cicle tool does nothing for the moment.
+ * The tool responsible for creating circles. It has two event handlers: drag and dragEnd.
+ * The first one draws a temporary circle in the layer and the second one creates the circle
+ * in the figure. 
+ * The center of the circle is fixed on the point where the drag started, 
+ * while the radius changes based on mouse movement. It's set to be a full circle.
  */
 const circle: Tool = {
   name: 'circle',
-  icon: 'radio_button_unchecked'    
+  icon: 'radio_button_unchecked',
+  drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
+    layer.clear();
+    const leftSize = Math.abs(p1.x - p2.x);
+    const topSize = Math.abs(p1.y - p2.y);
+    const radius = Math.sqrt(leftSize*leftSize + topSize*topSize);
+    layer.context.beginPath();
+    layer.context.arc(p1.x,p1.y,radius,0,Math.PI*2);
+    layer.context.stroke();
+    layer.context.closePath();
+  },
+  dragEnd: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
+    layer.clear();
+    const c = canvas.figure.addShape('circle', {
+      top: p1.y,
+      left: p1.x,
+      radius: Math.sqrt(Math.pow(p1.x - p2.x,2) + Math.pow(p1.y - p2.y,2))
+    });
+  }
 }
 
 /**

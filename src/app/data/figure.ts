@@ -1,4 +1,5 @@
 import { Rect } from './rect';
+import { Circle } from './circle';
 import { Shape, Shapes } from './shape';
 import { Subject } from 'rxjs/Subject';
 
@@ -95,6 +96,7 @@ export class Figure {
 
     switch (shapeType) {
       case 'rect': return new Rect(id);
+      case 'circle': return new Circle(id);
     }
   }
 
