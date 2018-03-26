@@ -42,6 +42,6 @@ export class Circle implements Shape {
     const xDiff = this.left - p.x;
     const yDiff = this.top - p.y;
     const distanceFromCenter = Math.pow(xDiff,2) + Math.pow(yDiff,2);
-    return distanceFromCenter == Math.pow(this.radius,2);
+    return distanceFromCenter <= Math.pow(this.radius,2);
   }
 }

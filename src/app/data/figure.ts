@@ -1,9 +1,10 @@
 import { Rect } from './rect';
 import { Circle } from './circle';
+import { Line } from './line';
 import { Shape, Shapes } from './shape';
 import { Subject } from 'rxjs/Subject';
 
-export type ShapeType = 'rect' | 'circle';
+export type ShapeType = 'rect' | 'circle' | 'line';
 
 /**
  * A figure is a set of shapes. It represents the model (data) and it's not concerned by the view (how the shapes are rendered).
@@ -97,6 +98,7 @@ export class Figure {
     switch (shapeType) {
       case 'rect': return new Rect(id);
       case 'circle': return new Circle(id);
+      case 'line': return new Line(id);
     }
   }
 

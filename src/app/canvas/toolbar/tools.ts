@@ -102,7 +102,27 @@ const circle: Tool = {
   }
 }
 
+const line: Tool = {
+  name: 'line',
+  icon: 'border_color',
+  drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
+    layer.clear();
+    layer.context.beginPath();
+    layer.context.moveTo(p1.x,p1.y);
+    layer.context.lineTo(p2.x,p2.y);
+    layer.context.stroke();
+    layer.context.closePath();
+  },
+  dragEnd: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
+    layer.clear();
+    const l = canvas.figure.addShape('line', {
+      startPoint: p1,
+      endPoint: p2
+    });
+  }
+}
+
 /**
  * Set of tools used in the canvas editor.
  */
-export const tools = [ selection, rect, circle ];
+export const tools = [ selection, line, rect, circle ];
