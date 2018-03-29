@@ -1,6 +1,7 @@
 import { CanvasDirective } from "../canvas.directive";
 import { Point } from "../../data/point";
 import { EditorService } from "../editor/editor.service";
+import { Rect } from "../../data/rect";
 
 /**
  * Define the callback function for mouse events.
@@ -32,6 +33,10 @@ export interface Tool {
   dragEnd?: MouseHandler;
 }
 
+
+/**
+ * Tool responsible for selecting a shape or a group of shapes.
+ */
 const selection: Tool = {
   name: 'selection',
   icon: 'crop_free',
@@ -63,12 +68,14 @@ const rect: Tool = {
   },
   dragEnd: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
-    const r = canvas.figure.addShape('rect', {
-      top: p1.y,
-      left: p1.x,
+    const r = new Rect({
+      x: p1.x,
+      y: p1.y,
       width: p2.x - p1.x,
       height: p2.y - p1.y
     });
+    canvas.figure.add(r);
+    canvas.figure.refresh();
   }
 }
 
@@ -77,7 +84,7 @@ const rect: Tool = {
  */
 const circle: Tool = {
   name: 'circle',
-  icon: 'radio_button_unchecked'    
+  icon: 'radio_button_unchecked',
 }
 
 /**
