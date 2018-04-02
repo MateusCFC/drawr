@@ -1,35 +1,48 @@
 import { Point } from './point';
-import { Shape } from './shape'
+import { Shape, ShapeProperties } from './shape'
+
+const DEFAULT_RADIUS= 10;
+const PICK_WIDTH_MIN = 4; // min width considered for the stroke when picking the circle.
+
+/**
+ * Properties that can init a circle It extends the shape's properties to include the
+ * circle radius (abstract properties of the shape).
+ */
+export interface CircleProperties extends Partial<ShapeProperties> {
+  radius: number;
+}
 
 /**
  * Circle shape. It is defined by the coordinates of its center, based on the top-left
  * corner and its radius length. 
  */
-export class Circle implements Shape {
-  top: number;
-  left: number;
-  radius: number;
-
+export class Circle extends Shape {
   readonly type = 'circle';
+  protected props: CircleProperties;
 
   /**
    * Create a new circle with a unique id.
    * @param id the shape identiifier (unique)
    */
-  constructor(public readonly id: string) {
-    this.top = 10;
-    this.left = 10;
-    this.radius = 10;
+  constructor(props?: Partial<CircleProperties>) {
+    super(props);
+    this.props.radius = props.radius || DEFAULT_RADIUS;
+  }
+  get width() {
+    return this.props.radius*2;
   }
 
+  get height() {
+    return this.props.radius*2;
+  }
   /**
    * Draw itself in a canvas.
    * @param ctx HTML canvas 2D graphic context where the circle will be drawn.
    */
-  draw(ctx: CanvasRenderingContext2D) {
+  path(ctx: CanvasRenderingContext2D) {
     ctx.fillStyle = "#000";
     ctx.beginPath();
-    ctx.arc(this.left,this.top,this.radius,0,Math.PI*2);
+    ctx.arc(this.x,this.y,this.props.radius,0,Math.PI*2);
     ctx.fill();
     ctx.closePath();
   }
@@ -39,9 +52,26 @@ export class Circle implements Shape {
    * @param p Point to be checked
    */
   pick(p: Point): boolean{
-    const xDiff = this.left - p.x;
-    const yDiff = this.top - p.y;
-    const distanceFromCenter = Math.pow(xDiff,2) + Math.pow(yDiff,2);
-    return distanceFromCenter <= Math.pow(this.radius,2);
+    const xDiff = p.x - this.props.x;
+    const yDiff = p.y - this.props.y;
+    const distance = Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2));
+    return distance <= this.props.radius;
+  }
+
+  /**
+   * Scale the circle
+   * @param scaleX scale in the X coordinate
+   * @param scaleY Scale in the Y coordinate
+   * @param refX Relative position (in X coordinate) of the center of scale
+   * @param refY Relative position (in Y coordinate) of the center of scale
+   */
+  scale(scaleX: number, scaleY: number, refX = 0, refY = 0) {
+    const newWidth = this.props.radius*2 * scaleX;
+    const newHeight = this.props.radius*2 * scaleY;
+    const deltaWidth = newWidth - this.props.radius*2;
+    const deltaHeight = newHeight - this.props.radius*2;
+    this.x -= refX * deltaWidth;
+    this.y -= refY * deltaHeight;
+    this.props.radius = newWidth/2;
   }
 }

@@ -2,6 +2,8 @@ import { CanvasDirective } from "../canvas.directive";
 import { Point } from "../../data/point";
 import { EditorService } from "../editor/editor.service";
 import { Rect } from "../../data/rect";
+import { Circle } from "../../data/circle";
+import { Line } from "../../data/line";
 
 /**
  * Define the callback function for mouse events.
@@ -89,7 +91,6 @@ const rect: Tool = {
 const circle: Tool = {
   name: 'circle',
   icon: 'radio_button_unchecked',
-<<<<<<< HEAD
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
     const leftSize = Math.abs(p1.x - p2.x);
@@ -102,11 +103,13 @@ const circle: Tool = {
   },
   dragEnd: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
-    const c = canvas.figure.addShape('circle', {
-      top: p1.y,
-      left: p1.x,
+    const c = new Circle({
+      x: p1.x,
+      y: p1.y,
       radius: Math.sqrt(Math.pow(p1.x - p2.x,2) + Math.pow(p1.y - p2.y,2))
     });
+    canvas.figure.add(c);
+    canvas.figure.refresh();
   }
 }
 
@@ -123,13 +126,13 @@ const line: Tool = {
   },
   dragEnd: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
-    const l = canvas.figure.addShape('line', {
+    const l = new Line({
       startPoint: p1,
       endPoint: p2
     });
+    canvas.figure.add(l);
+    canvas.figure.refresh();
   }
-=======
->>>>>>> upstream/master
 }
 
 /**

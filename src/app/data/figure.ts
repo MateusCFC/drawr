@@ -1,11 +1,5 @@
 import { Rect } from './rect';
-<<<<<<< HEAD
-import { Circle } from './circle';
-import { Line } from './line';
-import { Shape, Shapes } from './shape';
-=======
 import { Shape } from './shape';
->>>>>>> upstream/master
 import { Subject } from 'rxjs/Subject';
 import { Point } from './point';
 
@@ -103,12 +97,6 @@ export class Figure {
     return this;
   }
 
-<<<<<<< HEAD
-    switch (shapeType) {
-      case 'rect': return new Rect(id);
-      case 'circle': return new Circle(id);
-      case 'line': return new Line(id);
-=======
   /**
    * Return the first shape a given point is over.
    * @param p Position to check.
@@ -118,7 +106,6 @@ export class Figure {
       if (this.shapes[i].pick(p)) {
         return this.shapes[i];
       }
->>>>>>> upstream/master
     }
   }
 
