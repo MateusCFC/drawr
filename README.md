@@ -12,10 +12,11 @@ Essa versão será focada na parte de "Desenho Livre". Nela, serão abordadas im
 
 ## Commits
 ### v1.1
-- Adição da ferramenta de criação de círculos.
- - O usuário clica na posição onde será o centro do círculo e, segurando o botão do mouse, arrasta o ponteiro, que faz com que o raio mude de acordo com a distância até o centro.
+- Adição da ferramenta de criação de círculos: o usuário clica na posição onde será o centro do círculo e, segurando o botão do mouse, arrasta o ponteiro, que faz com que o raio mude de acordo com a distância até o centro.
 
 ### v1.2
-- Adição da ferramenta de criação de linhas retas.
- - O usuário clica na posição onde será o começo da linha e, arrastando o indicador do mouse, faz com que uma linha seja gerada entre a primeira posição clicada e a posição atual do mouse.
+- Adição da ferramenta de criação de linhas retas: o usuário clica na posição onde será o começo da linha e, arrastando o indicador do mouse, faz com que uma linha seja gerada entre a primeira posição clicada e a posição atual do mouse.
 - Correção de detecção da função pick de objetos do tipo círculo.
+
+### v1.2a
+- Atualização da branch com as modificações feitas pelo professor, na master.
