@@ -81,13 +81,6 @@ export class Line extends Shape {
    * @param refY Relative position (in Y coordinate) of the center of scale
    */
   scale(scaleX: number, scaleY: number, refX = 0, refY = 0) {
-    const newWidth = this.width * scaleX;
-    const newHeight = this.height * scaleY;
-    const deltaWidth = newWidth - this.width;
-    const deltaHeight = newHeight - this.height;
-    this.x -= refX * deltaWidth;
-    this.y -= refY * deltaHeight;
-    this.width = newWidth;
-    this.height = newHeight;
+    //TODO
   }
 }

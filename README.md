@@ -20,3 +20,10 @@ Essa versão será focada na parte de "Desenho Livre". Nela, serão abordadas im
 
 ### v1.2a
 - Atualização da branch com as modificações feitas pelo professor, na master.
+
+### v1.3
+- Adição de ferramenta de criação de linhas de rabisco: o usuário clica na posição onde será o começo do rabisco e, ao arrastar o mouse, faz com que uma linha que segue o ponteiro do mouse, enquanto o botão estiver segurado, seja gerada.
+- Remoção das implementações da função scale da ferramenta linha: incerteza na implementação.
+
+## TO-DOs
+- Implementação da função scale: linha e rabisco.

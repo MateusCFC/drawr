@@ -4,6 +4,7 @@ import { EditorService } from "../editor/editor.service";
 import { Rect } from "../../data/rect";
 import { Circle } from "../../data/circle";
 import { Line } from "../../data/line";
+import { Doodle } from "../../data/doodle";
 
 /**
  * Define the callback function for mouse events.
@@ -84,8 +85,7 @@ const rect: Tool = {
 /**
  * The tool responsible for creating circles. It has two event handlers: drag and dragEnd.
  * The first one draws a temporary circle in the layer and the second one creates the circle
- * in the figure. 
- * The center of the circle is fixed on the point where the drag started, 
+ * in the figure. The center of the circle is fixed on the point where the drag started, 
  * while the radius changes based on mouse movement. It's set to be a full circle.
  */
 const circle: Tool = {
@@ -113,9 +113,15 @@ const circle: Tool = {
   }
 }
 
+/**
+ * The tool responsible for creating lines. It has two event handlers: drag and dragEnd.
+ * The first one draws a temporary line in the layer and the second one creates the line
+ * in the figure. The start point of the line is fixed on the point where the drag started, 
+ * while the length changes based on mouse movement.
+ */
 const line: Tool = {
   name: 'line',
-  icon: 'border_color',
+  icon: 'mode_edit',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
     layer.context.beginPath();
@@ -136,6 +142,36 @@ const line: Tool = {
 }
 
 /**
+ * The tool responsible for creating doodle lines. It has two event handlers: drag and dragEnd.
+ * The first one draws a temporary line in the layer and the second one creates the line
+ * in the figure. The start point of the line is fixed on the point where the drag started, 
+ * while the length changes based on mouse movement.
+ */
+const doodle: Tool = {
+  name: 'line',
+  icon: 'border_color',
+  drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
+    //layer.clear();
+    layer.context.beginPath();
+    if (editor.pointList.length == 0) editor.pointList.push(p1);
+    layer.context.moveTo(editor.pointList[editor.pointList.length-1].x,editor.pointList[editor.pointList.length-1].y);
+    layer.context.lineTo(p2.x,p2.y);
+    editor.pointList.push(p2);
+    layer.context.stroke();
+    layer.context.closePath();
+  },
+  dragEnd: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
+    layer.clear();
+    const l = new Doodle({
+      points: editor.pointList
+    });
+    canvas.figure.add(l);
+    canvas.figure.refresh();
+    editor.pointList = [];
+  }
+}
+
+/**
  * Set of tools used in the canvas editor.
  */
-export const tools = [ selection, line, rect, circle ];
+export const tools = [ selection, doodle, line, rect, circle ];
