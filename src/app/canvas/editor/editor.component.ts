@@ -47,6 +47,10 @@ export class CanvasEditorComponent implements AfterContentInit {
     // the canvas with figures is rendered.
     this.layer.canvas.height = this.canvas.height;
     this.layer.canvas.width = this.canvas.width;
+
+    this.editorService.shapeSelectionChanged.subscribe(() => {
+      this.canvas.figure.draw(this.canvas.context, this.editorService);
+    });
   }
 
   /**
@@ -71,10 +75,9 @@ export class CanvasEditorComponent implements AfterContentInit {
       if (tool && tool.dragEnd) {
         tool.dragEnd(this.canvas, this.layer, this.editorService, this.dragOrigin, { x, y });
       }
-    }
-    else {
+    } else {
       if (tool && tool.click) {
-        tool.click(this.canvas, this.layer, this.editorService, this.dragOrigin);
+        tool.click(this.canvas, this.layer, this.editorService, this.dragOrigin, null, this.canvas.context);
       }
     }
     this.resetMouseEvent();
@@ -99,8 +102,7 @@ export class CanvasEditorComponent implements AfterContentInit {
             tool.dragStart(this.canvas, this.layer, this.editorService, this.dragOrigin);
           }
         }
-      }
-      else {
+      } else {
         if (tool && tool.drag) {
           tool.drag(this.canvas, this.layer, this.editorService, this.dragOrigin, { x, y });
         }

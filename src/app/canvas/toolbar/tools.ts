@@ -1,20 +1,19 @@
-import { CanvasDirective } from "../canvas.directive";
-import { Point } from "../../data/point";
-import { EditorService } from "../editor/editor.service";
-import { Rect } from "../../data/rect";
+import { CanvasDirective } from '../canvas.directive';
+import { Point } from '../../data/point';
+import { EditorService } from '../editor/editor.service';
+import { Rect } from '../../data/rect';
 
 /**
  * Define the callback function for mouse events.
  * It must receive the canvas (where the figures are drawn), the canvas layer (where the user
  * interaction happens), and one or two points, according to the occorred event.
  */
-interface MouseHandler {
-  ( canvas: CanvasDirective,
+type MouseHandler = ( canvas: CanvasDirective,
     layer: CanvasDirective,
     editor: EditorService,
     p1: Point,
-    p2?: Point): void
-}
+    p2?: Point,
+    ctx?: CanvasRenderingContext2D) => void;
 
 /**
  * A tool is defined by its name (identifier), the icon that will shown in the toolbar, and the
@@ -40,16 +39,27 @@ export interface Tool {
 const selection: Tool = {
   name: 'selection',
   icon: 'crop_free',
-  click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p: Point) => {
-    for (let id in canvas.figure.shapes) {
+  click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p: Point, p2?: Point, ctx?: CanvasRenderingContext2D) => {
+    // tslint:disable-next-line:forin
+    for (const id in canvas.figure.shapes) {
+      // here comes the selection
       const shape = canvas.figure.shapes[id];
+
+      /**
+       * First step: Show controller -> Resize, Move and Rotate
+       * Second step: Create a filter to mouseDown and mouseUp with the active controller
+       */
+
       if (shape.pick(p)) {
         editor.selectedShape = shape;
+        break;
+      } else {
+        editor.selectedShape = null;
         break;
       }
     }
   }
-}
+};
 
 
 /**
@@ -77,7 +87,7 @@ const rect: Tool = {
     canvas.figure.add(r);
     canvas.figure.refresh();
   }
-}
+};
 
 /**
  * Cicle tool does nothing for the moment.
@@ -85,7 +95,7 @@ const rect: Tool = {
 const circle: Tool = {
   name: 'circle',
   icon: 'radio_button_unchecked',
-}
+};
 
 /**
  * Set of tools used in the canvas editor.

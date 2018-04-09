@@ -1,6 +1,7 @@
 import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { Figure } from '../data/figure';
 import { Subscription } from 'rxjs/Subscription';
+import { EditorService } from './editor/editor.service';
 
 /**
  * Adapt the HTML canvas element to handle figures.
@@ -12,12 +13,12 @@ export class CanvasDirective implements OnInit, OnDestroy {
   @Input() width: number;
   @Input() height: number;
   @Input() figure: Figure;
-  
+
   private _canvas: HTMLCanvasElement;
   private _context: CanvasRenderingContext2D;
   private figureSubscription: Subscription;
 
-  constructor(elm: ElementRef) {
+  constructor(elm: ElementRef, private editorService: EditorService) {
     this._canvas = elm.nativeElement;
     this._context = this._canvas.getContext('2d');
     this._canvas.style.border = '1px dashed #ccc';
@@ -37,8 +38,10 @@ export class CanvasDirective implements OnInit, OnDestroy {
    */
   ngOnInit() {
     if (this.figure) {
-      this.figure.draw(this._context);
-      this.figureSubscription = this.figure.$update.subscribe(() => this.figure.draw(this._context))
+      this.figure.draw(this._context, this.editorService);
+      this.figureSubscription = this.figure.$update.subscribe(() =>
+        this.figure.draw(this._context, this.editorService)
+      );
     }
   }
 

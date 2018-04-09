@@ -154,7 +154,7 @@ export abstract class Shape {
   /** Set the drawing style of the shape (fill, stroke, transparency, and line properties) */
   set style(style: Partial<Style>) { this.props.style = style; }
 
-  /** Set the shadow properties of the shape. */  
+  /** Set the shadow properties of the shape. */
   set shadow(shadow: Shadow) { this.props.shadow = shadow; }
 
   /** Set the rotation angle (in degrees) of the shape. */
@@ -178,7 +178,7 @@ export abstract class Shape {
     this.path(ctx);
     this.render(ctx);
     ctx.closePath();
-    ctx.restore();  
+    ctx.restore();
   }
 
   // --- private/protected methods ----------------------------------------------------------
@@ -219,7 +219,7 @@ export abstract class Shape {
       ctx.stroke();
     }
   }
-  
+
   /** Check if a given parameter is a gradient. */
   private isGradient(fill): fill is Gradient {
     return (<Gradient>fill).type !== undefined;
@@ -257,7 +257,7 @@ export abstract class Shape {
           fill.gradient.addColorStop(colorStop.position, colorStop.color);
         }
       // }
-      ctx.fillStyle = fill.gradient;        
+      ctx.fillStyle = fill.gradient;
     }
     else if (this.isPattern(fill)) {
       if (fill.pattern === undefined) {
@@ -298,7 +298,7 @@ export abstract class Shape {
           stroke.gradient.addColorStop(colorStop.position, colorStop.color);
         }
       }
-      ctx.strokeStyle = stroke.gradient;        
+      ctx.strokeStyle = stroke.gradient;
     }
     if (style.lineWidth !== undefined) { ctx.lineWidth = style.lineWidth; }
     if (style.lineCap !== undefined) { ctx.lineCap = style.lineCap; }
