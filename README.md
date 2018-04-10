@@ -25,5 +25,9 @@ Essa versão será focada na parte de "Desenho Livre". Nela, serão abordadas im
 - Adição de ferramenta de criação de linhas de rabisco: o usuário clica na posição onde será o começo do rabisco e, ao arrastar o mouse, faz com que uma linha que segue o ponteiro do mouse, enquanto o botão estiver segurado, seja gerada.
 - Remoção das implementações da função scale da ferramenta linha: incerteza na implementação.
 
+### v1.4
+- Adição da ferramenta de criação de estrelas: o usuário clica na posição onde deverá ser o centro da estrela, e ao clicar, a estrela é inserida.
+
 ## TO-DOs
 - Implementação da função scale: linha e rabisco.
+- Pré-customização: estrela

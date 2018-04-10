@@ -5,6 +5,7 @@ import { Rect } from "../../data/rect";
 import { Circle } from "../../data/circle";
 import { Line } from "../../data/line";
 import { Doodle } from "../../data/doodle";
+import { Star } from "../../data/star";
 
 /**
  * Define the callback function for mouse events.
@@ -172,6 +173,28 @@ const doodle: Tool = {
 }
 
 /**
+ * The tool responsible for creating stars. It has one event handler: click.
+ * It creates a star, using default values for spikes, inner and outer radius,
+ * centered on the clicked position.
+ */
+const star: Tool = {
+  name: 'star',
+  icon: 'star_border',
+  click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point) => {
+    layer.clear();
+    const s = new Star({
+      x: p1.x,
+      y: p1.y,
+      spikes: 5,
+      innerRadius: 5,
+      outerRadius: 15
+    });
+    canvas.figure.add(s);
+    canvas.figure.refresh();
+  }
+}
+
+/**
  * Set of tools used in the canvas editor.
  */
-export const tools = [ selection, doodle, line, rect, circle ];
+export const tools = [ selection, doodle, line, rect, circle, star ];
