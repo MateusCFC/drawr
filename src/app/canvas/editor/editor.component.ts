@@ -48,8 +48,9 @@ export class CanvasEditorComponent implements AfterContentInit {
     this.layer.canvas.height = this.canvas.height;
     this.layer.canvas.width = this.canvas.width;
 
+    this.canvas.mainCanvas = true;
     this.editorService.shapeSelectionChanged.subscribe(() => {
-      this.canvas.figure.draw(this.canvas.context, this.editorService);
+      this.canvas.figure.draw(this.canvas, this.editorService);
     });
   }
 

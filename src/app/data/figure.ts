@@ -4,6 +4,7 @@ import { Subject } from 'rxjs/Subject';
 import { Point } from './point';
 import { EditorService } from '../canvas/editor/editor.service';
 import { ObjectController } from './object-controller';
+import { CanvasDirective } from '../canvas/canvas.directive';
 
 export type ShapeType = 'rect' | 'circle';
 
@@ -124,16 +125,18 @@ export class Figure {
    * Draw the figure in a HTML canvas.
    * @param ctx HTML canvas 2D graphic context where the figure will be drawn
    */
-  draw(ctx: CanvasRenderingContext2D, editor: EditorService): void {
+  draw(canvas: CanvasDirective, editor: EditorService): void {
+    const ctx = canvas.context;
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     for (const shape of this.shapes) {
       shape.draw(ctx);
     }
-    // Draw the controller
-    ObjectController.draw(ctx, editor);
+    if (canvas.mainCanvas) {
+      this.drawController(canvas.context, editor);
+    }
   }
 
-  drawController(ctx: CanvasRenderingContext2D, editor: EditorService) {
+  private drawController(ctx: CanvasRenderingContext2D, editor: EditorService) {
     ObjectController.draw(ctx, editor);
   }
 

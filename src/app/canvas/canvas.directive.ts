@@ -14,6 +14,14 @@ export class CanvasDirective implements OnInit, OnDestroy {
   @Input() height: number;
   @Input() figure: Figure;
 
+  /**
+   * It indicates if it's the main canvas to edit,
+   * the others are only for viewing shapes. It's important
+   * to place a marker if it could show controllers, like
+   * resize, rotate, and more.
+   */
+  mainCanvas: boolean;
+
   private _canvas: HTMLCanvasElement;
   private _context: CanvasRenderingContext2D;
   private figureSubscription: Subscription;
@@ -22,6 +30,7 @@ export class CanvasDirective implements OnInit, OnDestroy {
     this._canvas = elm.nativeElement;
     this._context = this._canvas.getContext('2d');
     this._canvas.style.border = '1px dashed #ccc';
+    this.mainCanvas = false;
   }
 
   get canvas() {
@@ -38,9 +47,9 @@ export class CanvasDirective implements OnInit, OnDestroy {
    */
   ngOnInit() {
     if (this.figure) {
-      this.figure.draw(this._context, this.editorService);
+      this.figure.draw(this, this.editorService);
       this.figureSubscription = this.figure.$update.subscribe(() =>
-        this.figure.draw(this._context, this.editorService)
+        this.figure.draw(this, this.editorService)
       );
     }
   }
