@@ -28,6 +28,7 @@ export class Circle extends Shape {
     super(props);
     this.props.radius = props.radius || DEFAULT_RADIUS;
   }
+
   get width() {
     return this.props.radius*2;
   }
@@ -35,16 +36,13 @@ export class Circle extends Shape {
   get height() {
     return this.props.radius*2;
   }
+
   /**
    * Draw itself in a canvas.
    * @param ctx HTML canvas 2D graphic context where the circle will be drawn.
    */
   path(ctx: CanvasRenderingContext2D) {
-    ctx.fillStyle = "#000";
-    ctx.beginPath();
     ctx.arc(this.x,this.y,this.props.radius,0,Math.PI*2);
-    ctx.fill();
-    ctx.closePath();
   }
 
   /**
@@ -55,23 +53,20 @@ export class Circle extends Shape {
     const xDiff = p.x - this.props.x;
     const yDiff = p.y - this.props.y;
     const distance = Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2));
-    return distance <= this.props.radius;
+    return (this.style.fill && distance <= this.props.radius) || (!this.style.fill && distance == this.props.radius);
   }
 
   /**
-   * Scale the circle
+   * Scale the circle, assuming it will have a linear scale.
    * @param scaleX scale in the X coordinate
-   * @param scaleY Scale in the Y coordinate
+   * @param scaleY Scale in the Y coordinate -- not used
    * @param refX Relative position (in X coordinate) of the center of scale
-   * @param refY Relative position (in Y coordinate) of the center of scale
+   * @param refY Relative position (in Y coordinate) of the center of scale -- not used
    */
   scale(scaleX: number, scaleY: number, refX = 0, refY = 0) {
-    const newWidth = this.props.radius*2 * scaleX;
-    const newHeight = this.props.radius*2 * scaleY;
-    const deltaWidth = newWidth - this.props.radius*2;
-    const deltaHeight = newHeight - this.props.radius*2;
-    this.x -= refX * deltaWidth;
-    this.y -= refY * deltaHeight;
-    this.props.radius = newWidth/2;
+    const newRadius = this.props.radius*scaleX;
+    const deltaRadius = newRadius - this.props.radius;
+    this.x -= refX*deltaRadius;
+    this.props.radius = newRadius;
   }
 }

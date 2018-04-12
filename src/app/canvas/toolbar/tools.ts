@@ -122,7 +122,7 @@ const circle: Tool = {
  */
 const line: Tool = {
   name: 'line',
-  icon: 'mode_edit',
+  icon: 'border_color',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
     layer.context.beginPath();
@@ -144,13 +144,12 @@ const line: Tool = {
 
 /**
  * The tool responsible for creating doodle lines. It has two event handlers: drag and dragEnd.
- * The first one draws a temporary line in the layer and the second one creates the line
- * in the figure. The start point of the line is fixed on the point where the drag started, 
- * while the length changes based on mouse movement.
+ * The first one draws a temporary doodle, that follows the mouse pointer in the figure and the
+ * second one creates the same doodle on the main canvas.
  */
 const doodle: Tool = {
-  name: 'line',
-  icon: 'border_color',
+  name: 'doodle',
+  icon: 'mode_edit',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     //layer.clear();
     layer.context.beginPath();
@@ -197,4 +196,4 @@ const star: Tool = {
 /**
  * Set of tools used in the canvas editor.
  */
-export const tools = [ selection, doodle, line, rect, circle, star ];
+export const tools = [ selection, line, doodle, rect, circle, star ];

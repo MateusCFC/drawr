@@ -52,11 +52,8 @@ export class Line extends Shape {
    * @param ctx HTML canvas 2D graphic context where the line will be drawn.
    */
   path(ctx: CanvasRenderingContext2D) {
-    ctx.beginPath();
     ctx.moveTo(this.props.startPoint.x,this.props.startPoint.y);
     ctx.lineTo(this.props.endPoint.x,this.props.endPoint.y);
-    ctx.stroke();
-    ctx.closePath();
   }
 
   /**
@@ -81,6 +78,13 @@ export class Line extends Shape {
    * @param refY Relative position (in Y coordinate) of the center of scale
    */
   scale(scaleX: number, scaleY: number, refX = 0, refY = 0) {
-    //TODO
+    const newWidth = this.width*scaleX;
+    const newHeight = this.height*scaleY;
+    const deltaWidth = newWidth - this.width;
+    const deltaHeight = newHeight - this.height;
+    this.x -= refX * deltaWidth;
+    this.y -= refY * deltaHeight;
+    this.width = newWidth;
+    this.height = newHeight;
   }
 }

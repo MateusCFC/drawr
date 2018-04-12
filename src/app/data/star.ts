@@ -71,22 +71,30 @@ export class Star extends Shape {
   }
 
   /**
-   * Check if a certain point is on it, by checking if the points' list contains the point given.
+   * Check if a certain point is inside of it, using the Pythagorean theorem
+   * (using the inner radius as reference)
    * @param p Point to be checked
    */
-  pick(p: Point){
-      //TODO
-      return true;
+  pick(p: Point): boolean{
+    const xDiff = p.x - this.x;
+    const yDiff = p.y - this.y;
+    const distance = Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2));
+    return distance <= this.props.innerRadius;
   }
 
   /**
-   * Scale the star.
+   * Scale the star, assuming a linear scale.
    * @param scaleX scale in the X coordinate
-   * @param scaleY Scale in the Y coordinate
+   * @param scaleY Scale in the Y coordinate -- not used
    * @param refX Relative position (in X coordinate) of the center of scale
-   * @param refY Relative position (in Y coordinate) of the center of scale
+   * @param refY Relative position (in Y coordinate) of the center of scale -- not used
    */
   scale(scaleX: number, scaleY: number, refX = 0, refY = 0) {
-    //TODO
+    const newInnerRadius = this.props.innerRadius*scaleX;
+    const newOuterRadius = this.props.outerRadius*scaleX;
+    const deltaInnerRadius = newInnerRadius - this.props.innerRadius;
+    this.x -= refX * deltaInnerRadius;
+    this.props.innerRadius = newInnerRadius;
+    this.props.outerRadius = newOuterRadius;
   }
 }
