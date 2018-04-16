@@ -80,7 +80,6 @@ export abstract class Shape {
    * @param props The initial shape's properties.
    */
   constructor(props?: Partial<ShapeProperties>) {
-    this.generateId();
     this.props = props ? { ...props } : {};   // create a shallow copy
     this.x = this.x || 0;
     this.y = this.y || 0;
@@ -335,7 +334,7 @@ export abstract class Shape {
    * Convert it to base 36 (numbers + letters), and grab the first 9
    * characters after the decimal.
    */
-  private generateId() {
+  protected generateId() {
     return `${this.type}-${Math.random().toString(36).substr(2, 6)}`;
   }
 
