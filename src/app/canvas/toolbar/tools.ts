@@ -40,22 +40,24 @@ const selection: Tool = {
   name: 'selection',
   icon: 'crop_free',
   click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p: Point, p2?: Point, ctx?: CanvasRenderingContext2D) => {
-    // tslint:disable-next-line:forin
-    for (const id in canvas.figure.shapes) {
-      // here comes the selection
+
+    console.log(canvas.figure.shapes);
+    Object.keys(canvas.figure.shapes);
+    for (let i = 0; i < canvas.figure.shapes.length; i++) {
+      const id = Object.keys(canvas.figure.shapes)[i];
       const shape = canvas.figure.shapes[id];
 
       /**
        * First step: Show controller -> Resize, Move and Rotate
        * Second step: Create a filter to mouseDown and mouseUp with the active controller
        */
-
+      console.log(shape);
+      console.log(shape.pick(p));
       if (shape.pick(p)) {
         editor.selectedShape = shape;
         break;
       } else {
         editor.selectedShape = null;
-        break;
       }
     }
   }
@@ -77,6 +79,7 @@ const rect: Tool = {
     layer.context.strokeRect(p1.x, p1.y, w, h);
   },
   dragEnd: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
+    console.log('get here');
     layer.clear();
     const r = new Rect({
       x: p1.x,

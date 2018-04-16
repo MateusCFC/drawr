@@ -15,7 +15,7 @@ function between(v: number, min: number, max: number) {
  */
 export interface RectProperties extends Partial<ShapeProperties> {
   width: number;
-  height: number;  
+  height: number;
 }
 
 /**
@@ -60,9 +60,8 @@ export class Rect extends Shape {
     const insideX = between(p.x, this.x, this.x + this.width);
     const insideY = between(p.y, this.y, this.y + this.height);
     if (this.style.fill) {
-      return insideX && insideY;  
-    }
-    else {
+      return insideX && insideY;
+    } else {
       const discount = Math.max(this.style.lineWidth, PICK_WIDTH_MIN);
       const onLeftEdge = insideY && between(p.x, this.x - discount, this.x + discount);
       const onTopEdge = insideX && between(p.y, this.y - discount, this.y + discount);
