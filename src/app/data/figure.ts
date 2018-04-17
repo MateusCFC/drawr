@@ -3,7 +3,7 @@ import { Shape } from './shape';
 import { Subject } from 'rxjs/Subject';
 import { Point } from './point';
 
-export type ShapeType = 'rect' | 'circle';
+export type ShapeType = 'rect' | 'circle' | 'line';
 
 /**
  * A figure is a set of shapes. It represents the model (data) and it's not concerned by the view (how the shapes are rendered).
