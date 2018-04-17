@@ -8,7 +8,7 @@ import { EditorService } from '../editor/editor.service';
 })
 export class PropsComponent implements OnInit {
 
-  constructor(private propsService: EditorService) {
+  constructor(private editorService: EditorService) {
 
   }
 
