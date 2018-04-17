@@ -5,6 +5,16 @@ function between(v: number, min: number, max: number) {
   return (min <= v) && (v <= max);
 }
 
+export enum ObjectControllersTypes {
+  ScaleTopLeft,
+  ScaleTopRight,
+  ScaleBottomLeft,
+  ScaleBottomRight,
+  Rotation,
+  Move
+}
+
+
 export class ObjectController {
 
   private PICK_WIDTH_MIN = 4;

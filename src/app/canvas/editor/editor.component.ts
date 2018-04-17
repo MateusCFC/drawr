@@ -6,7 +6,7 @@ import { DataService } from '../../data/data.service';
 import { ToolService } from '../toolbar/tool.service';
 import { Point } from '../../data/point';
 import { EditorService } from '../editor/editor.service';
-import { ObjectController } from '../../data/object-controller';
+import { ObjectController, ObjectControllersTypes } from '../../data/object-controller';
 
 /** Number of pixels the mouse position must differ to consider as a drag. */
 const MOVE_THRESHOLD = 3;
@@ -35,6 +35,15 @@ export class CanvasEditorComponent implements AfterContentInit {
   /** auxiliary objects to control mouse events. */
   private isDragging = false;
   private dragOrigin: Point = undefined;
+
+  /**
+   * It indicates the object controller (move, resize, rotate)
+   * that is selected by user. It happens when the user select
+   * a object, and click in one of the controllers of object.
+   */
+  private isObjectControllerSelected = false;
+  private controllerTypeSelected: ObjectControllersTypes;
+
 
   constructor(
       private dataService: DataService,
@@ -76,8 +85,13 @@ export class CanvasEditorComponent implements AfterContentInit {
     const y = event.offsetY;
     const tool = this.toolService.selected;
     if (this.isDragging) {
-      if (tool && tool.dragEnd) {
-        tool.dragEnd(this.canvas, this.layer, this.editorService, this.dragOrigin, { x, y });
+      if (this.isObjectControllerSelected) {
+        console.log('scale object!!!!!');
+        this.isObjectControllerSelected = false;
+      } else {
+        if (tool && tool.dragEnd) {
+          tool.dragEnd(this.canvas, this.layer, this.editorService, this.dragOrigin, { x, y });
+        }
       }
     } else {
       if (tool && tool.click) {
@@ -94,36 +108,51 @@ export class CanvasEditorComponent implements AfterContentInit {
   mouseMove(event: MouseEvent) {
     const x = event.offsetX;
     const y = event.offsetY;
+    const point: Point = {x, y};
+    const obj = new ObjectController(this.editorService);
 
     // reset cursor
     document.body.style.cursor = 'default';
 
     // if dragOrigin is not undefined, then the user has pressed the mouse button.
     if (this.dragOrigin) {
-      const tool = this.toolService.selected;
-      if (!this.isDragging) {
-        const movedUpDown = Math.abs(y - this.dragOrigin.y) > MOVE_THRESHOLD;
-        const movedLeftRight = Math.abs(x - this.dragOrigin.x) > MOVE_THRESHOLD;
-        if (movedUpDown || movedLeftRight) {
+
+      if (this.editorService.selectedShape) {
+        if (!this.isDragging) {
           this.isDragging = true;
-          if (tool && tool.dragStart) {
-            tool.dragStart(this.canvas, this.layer, this.editorService, this.dragOrigin);
+
+          if (obj.isTopLeftScaleController(point)) {
+            this.isObjectControllerSelected = true;
+            this.controllerTypeSelected = ObjectControllersTypes.ScaleTopLeft;
           }
+          console.log('first click - scale?');
+        } else {
+          console.log('continue');
         }
       } else {
-        if (tool && tool.drag) {
-          tool.drag(this.canvas, this.layer, this.editorService, this.dragOrigin, { x, y });
+        const tool = this.toolService.selected;
+        if (!this.isDragging) {
+          const movedUpDown = Math.abs(y - this.dragOrigin.y) > MOVE_THRESHOLD;
+          const movedLeftRight = Math.abs(x - this.dragOrigin.x) > MOVE_THRESHOLD;
+          if (movedUpDown || movedLeftRight) {
+            this.isDragging = true;
+            if (tool && tool.dragStart) {
+              tool.dragStart(this.canvas, this.layer, this.editorService, this.dragOrigin);
+            }
+          }
+        } else {
+          if (tool && tool.drag) {
+            tool.drag(this.canvas, this.layer, this.editorService, this.dragOrigin, { x, y });
+          }
         }
       }
+
     } else {
 
       // If there is a selected shape, then show custom cursor on controls
       if (this.editorService.selectedShape) {
-        // code here
-        const obj = new ObjectController(this.editorService);
 
-        if (obj.isTopLeftScaleController({x, y})) {
-          console.log('ok');
+        if (obj.isTopLeftScaleController(point)) {
           document.body.style.cursor = 'nwse-resize';
         }
       }
