@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { EditorService } from '../editor/editor.service';
+import { CanvasDirective } from '../canvas.directive';
 
 @Component({
   selector: 'app-canvas-props',
@@ -10,6 +11,8 @@ export class PropsComponent implements OnInit {
 
   x: number;
   y: number;
+
+  @Input() canvas: CanvasDirective;
 
   constructor(private editorService: EditorService) {
   }
@@ -29,7 +32,7 @@ export class PropsComponent implements OnInit {
   updateShape(){
     console.log("update shape"+this.x + " "+this.y);
     this.editorService.selectedShape.moveTo(this.x, this.y);
-
+    this.canvas.figure.refresh();
   }
 
 }
