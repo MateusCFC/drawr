@@ -7,6 +7,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SharedModule } from '../shared/shared.module';
 import { ToolService } from './toolbar/tool.service';
 import { EditorService } from './editor/editor.service';
+import { FormsModule } from '@angular/forms';
 
 /**
  * Integrate drawing funcionalities in a canvas.
@@ -14,7 +15,8 @@ import { EditorService } from './editor/editor.service';
 @NgModule({
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ],
   declarations: [
     CanvasDirective,
