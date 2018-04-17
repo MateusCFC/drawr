@@ -32,7 +32,7 @@ export class PropsComponent implements OnInit {
   updateShape(){
     this.editorService.selectedShape.moveTo(Number(this.x), Number(this.y));
     this.canvas.figure.refresh();
-    console.log("updated shape: "+ this.editorService.selectedShape);
+    console.log("updated shape");
   }
 
 }

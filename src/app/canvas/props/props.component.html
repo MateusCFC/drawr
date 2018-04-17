@@ -1,10 +1,10 @@
 <div *ngIf="editorService.selectedShape">
-  <form (ngSubmit)="updateShape()">
+  <form (ngSubmit)="updateShape()" (change)="updateShape()">
       <h1>Propriedades</h1>
       <b>type:</b> {{editorService.selectedShape?.type}} <br/>
       <b>id:</b> {{editorService.selectedShape?.id}} <br/>
       <b>props:</b> {{editorService.selectedShape?.props}} <br/>
-      <b>x:</b> <input type="number" [(ngModel)]="x" name="x"> <br/>
+      <b>x:</b> <input type="number" [(ngModel)]="x" name="x" > <br/>
       <b>y:</b> <input type="number" [(ngModel)]="y" name="y"> <br/>
       <b>height:</b> {{editorService.selectedShape?.props?.height}} <br/>
       <b>width:</b> {{editorService.selectedShape?.props?.width}} <br/>
