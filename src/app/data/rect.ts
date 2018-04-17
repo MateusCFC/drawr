@@ -58,11 +58,13 @@ export class Rect extends Shape {
    * @param p Position to check.
    */
   pick(p: Point): boolean {
+    //console.log(this.x + "<="+ p.x + "<="+ (this.x + this.width));
+    //console.log(this.y + "<="+ p.y + "<="+ (this.y + this.height));
     const insideX = between(p.x, this.x, this.x + this.width);
     const insideY = between(p.y, this.y, this.y + this.height);
-    if (this.style.fill) {
+    /*if (this.style.fill) {*/
       return insideX && insideY;
-    } else {
+    /*} else {
       const discount = Math.max(this.style.lineWidth, PICK_WIDTH_MIN);
       const onLeftEdge = insideY && between(p.x, this.x - discount, this.x + discount);
       const onTopEdge = insideX && between(p.y, this.y - discount, this.y + discount);
@@ -71,7 +73,7 @@ export class Rect extends Shape {
       const onRightEdge = insideY && between(p.x, right - discount, right + discount);
       const onBottomEdge = insideX && between(p.y, bottom - discount, bottom + discount);
       return onLeftEdge || onRightEdge || onTopEdge || onBottomEdge;
-    }
+    }*/
   }
 
   /**
