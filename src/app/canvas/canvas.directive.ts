@@ -46,6 +46,9 @@ export class CanvasDirective implements OnInit, OnDestroy {
    * a warning saying the a change happened, then the figure is drawn again.
    */
   ngOnInit() {
+    this._canvas.height = this.height;
+    this._canvas.width = this.width;
+
     if (this.figure) {
       this.figure.draw(this, this.editorService);
       this.figureSubscription = this.figure.$update.subscribe(() =>

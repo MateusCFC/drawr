@@ -1,4 +1,4 @@
-import { Component, OnInit, ContentChild, AfterContentInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ContentChild, AfterContentInit, ViewChild, Inject, HostListener, Input } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { CanvasDirective } from '../canvas.directive';
 import { Figure } from '../../data/figure';
@@ -21,6 +21,10 @@ const MOVE_THRESHOLD = 3;
   styleUrls: ['./editor.component.css']
 })
 export class CanvasEditorComponent implements AfterContentInit {
+
+  width: number;
+  height: number;
+
   /** As the canvas where the figure will be drawn is dynamically inserted (throght `ng-content`),
    * it is necessary to get it with `@ContentChild()` */
   @ContentChild(CanvasDirective) canvas: CanvasDirective;
@@ -45,16 +49,34 @@ export class CanvasEditorComponent implements AfterContentInit {
     this.layerFig = dataService.createFigure();
   }
 
+  ngOnInit() {
+    /*this.width = window.innerWidth - 24;
+    this.height = window.innerHeight - 94;*/
+    this.width = 2000;
+    this.height = 1500;
+  }
+
   ngAfterContentInit() {
     // the size of the layer canvas is modified only after the initialization of `ng-content`, where
     // the canvas with figures is rendered.
-    this.layer.canvas.height = this.canvas.height;
-    this.layer.canvas.width = this.canvas.width;
+    console.log( this.layer.canvas.width + "x" + this.layer.canvas.height);
+    //window.dispatchEvent(new Event('resize'));
+    this.layer.canvas.height = this.height;
+    this.layer.canvas.width = this.width;
+    this.canvas.canvas.height = this.height;
+    this.canvas.canvas.width = this.width;
+    this.canvas.figure.draw(this.canvas, this.editorService);
 
     this.canvas.mainCanvas = true;
     this.editorService.shapeSelectionChanged.subscribe(() => {
       this.canvas.figure.draw(this.canvas, this.editorService);
     });
+  }
+
+  /* Método chamado quando o evento resize é disparado na página */
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    console.log( window.innerWidth + "x" + window.innerHeight);
   }
 
   /**
