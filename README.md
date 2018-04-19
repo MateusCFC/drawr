@@ -36,5 +36,9 @@ Essa versão será focada na parte de "Desenho Livre". Nela, serão abordadas im
 - Rabisco: variável auxiliar, que armazena os pontos a medida que o rabisco era sendo criado, foi alterada de local. Previamente, estava no EditorService e, agora, está no CanvasDirective.
 - Estrela: estrela padrão alterada não ser cheia por padrão, seguindo a base das outras ferramentas; função pick alterada para usar como referência o círculo externo da estrela;
 
+### v1.5
+- Adição da ferramenta de criação de triângulos: o usuário clica em três pontos consecutivos, que servirão de vértices para o triângulo.
+- Seleção, Retângulo, Círculo, Linha, Estrela: adição de comando para limpar lista de pontos, salva na classe CanvasDirective, que armazena os pontos consecutivos das ferramentas Rabisco e Triângulo (feito para se evitar problemas com troca de função após clicar nos pontos). 
+
 ## TO-DOs
 - Rabisco: função scale.

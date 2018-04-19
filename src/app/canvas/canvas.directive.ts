@@ -18,7 +18,7 @@ export class CanvasDirective implements OnInit, OnDestroy {
   private _context: CanvasRenderingContext2D;
   private figureSubscription: Subscription;
 
-  //saves point list. used by the doodle tool.
+  //saves point list. used by the doodle and triangle tools.
   pointList: Point[] = [];
   
   constructor(elm: ElementRef) {

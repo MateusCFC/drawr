@@ -6,6 +6,7 @@ import { Circle } from "../../data/circle";
 import { Line } from "../../data/line";
 import { Doodle } from "../../data/doodle";
 import { Star } from "../../data/star";
+import { Triangle } from "../../data/triangle";
 
 /**
  * Define the callback function for mouse events.
@@ -45,6 +46,7 @@ const selection: Tool = {
   name: 'selection',
   icon: 'crop_free',
   click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p: Point) => {
+    canvas.pointList = [];
     for (let id in canvas.figure.shapes) {
       const shape = canvas.figure.shapes[id];
       if (shape.pick(p)) {
@@ -64,6 +66,7 @@ const rect: Tool = {
   name: 'rect',
   icon: 'check_box_outline_blank',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
+    canvas.pointList = [];
     layer.clear();
     const w = p2.x - p1.x;
     const h = p2.y - p1.y;
@@ -92,6 +95,7 @@ const circle: Tool = {
   name: 'circle',
   icon: 'radio_button_unchecked',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
+    canvas.pointList = [];
     layer.clear();
     const leftSize = Math.abs(p1.x - p2.x);
     const topSize = Math.abs(p1.y - p2.y);
@@ -123,6 +127,7 @@ const line: Tool = {
   name: 'line',
   icon: 'border_color',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
+    canvas.pointList = [];
     layer.clear();
     layer.context.beginPath();
     layer.context.moveTo(p1.x,p1.y);
@@ -178,6 +183,7 @@ const star: Tool = {
   name: 'star',
   icon: 'star_border',
   click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point) => {
+    canvas.pointList = [];
     layer.clear();
     const s = new Star({
       x: p1.x,
@@ -192,6 +198,34 @@ const star: Tool = {
 }
 
 /**
+ * The tool responsible for creating triangles. It has one event handler: click.
+ * It creates a triangle based on three consecutive clicks, using them as references
+ * for its vertices.
+ */
+const triangle: Tool = {
+  name: 'triangle',
+  icon: 'signal_cellular_null',
+  click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point) => {
+    if (canvas.pointList[0] === undefined){
+      canvas.pointList.push(p1);
+      return;
+    } else {
+      if (canvas.pointList[1] === undefined){
+        canvas.pointList.push(p1);
+        return;
+      }
+    }
+    canvas.pointList.push(p1);
+    const t = new Triangle({
+      vertices: canvas.pointList
+    });
+    canvas.figure.add(t);
+    canvas.figure.refresh();
+    canvas.pointList = [];
+  }
+}
+
+/**
  * Set of tools used in the canvas editor.
  */
-export const tools = [ selection, line, doodle, rect, circle, star ];
+export const tools = [ selection, line, doodle, rect, triangle, circle, star ];
