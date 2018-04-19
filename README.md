@@ -32,7 +32,9 @@ Essa versão será focada na parte de "Desenho Livre". Nela, serão abordadas im
 - Linha: função scale criada (de forma similar a função scale do retângulo).
 - Estrela: função pick criada (definida apenas para o círculo interno); função scale criada (de forma similar a função scale do círculo).
 
+### v1.4b
+- Rabisco: variável auxiliar, que armazena os pontos a medida que o rabisco era sendo criado, foi alterada de local. Previamente, estava no EditorService e, agora, está no CanvasDirective.
+- Estrela: estrela padrão alterada não ser cheia por padrão, seguindo a base das outras ferramentas; função pick alterada para usar como referência o círculo externo da estrela;
 
 ## TO-DOs
 - Rabisco: função scale.
-- Estrela: pré-customização, funções pick e scale.

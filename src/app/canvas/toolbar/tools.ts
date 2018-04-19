@@ -55,7 +55,6 @@ const selection: Tool = {
   }
 }
 
-
 /**
  * The tool responsible for creating rectangles. It has two event handlers: drag and dragEnd.
  * The first one draws a temporary rectangle in the layer and the second one creates the rectangle
@@ -151,23 +150,22 @@ const doodle: Tool = {
   name: 'doodle',
   icon: 'mode_edit',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
-    //layer.clear();
     layer.context.beginPath();
-    if (editor.pointList.length == 0) editor.pointList.push(p1);
-    layer.context.moveTo(editor.pointList[editor.pointList.length-1].x,editor.pointList[editor.pointList.length-1].y);
+    if (canvas.pointList.length == 0) canvas.pointList.push(p1);
+    layer.context.moveTo(canvas.pointList[canvas.pointList.length-1].x,canvas.pointList[canvas.pointList.length-1].y);
     layer.context.lineTo(p2.x,p2.y);
-    editor.pointList.push(p2);
+    canvas.pointList.push(p2);
     layer.context.stroke();
     layer.context.closePath();
   },
   dragEnd: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
     const l = new Doodle({
-      points: editor.pointList
+      points: canvas.pointList
     });
     canvas.figure.add(l);
     canvas.figure.refresh();
-    editor.pointList = [];
+    canvas.pointList = [];
   }
 }
 

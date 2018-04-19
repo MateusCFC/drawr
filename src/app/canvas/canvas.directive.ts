@@ -1,6 +1,7 @@
 import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { Figure } from '../data/figure';
 import { Subscription } from 'rxjs/Subscription';
+import { Point } from '../data/point';
 
 /**
  * Adapt the HTML canvas element to handle figures.
@@ -17,6 +18,9 @@ export class CanvasDirective implements OnInit, OnDestroy {
   private _context: CanvasRenderingContext2D;
   private figureSubscription: Subscription;
 
+  //saves point list. used by the doodle tool.
+  pointList: Point[] = [];
+  
   constructor(elm: ElementRef) {
     this._canvas = elm.nativeElement;
     this._context = this._canvas.getContext('2d');
