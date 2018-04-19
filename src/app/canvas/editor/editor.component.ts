@@ -83,11 +83,27 @@ export class CanvasEditorComponent implements AfterContentInit {
   mouseUp(event: MouseEvent) {
     const x = event.offsetX;
     const y = event.offsetY;
+    const point: Point = {x, y};
     const tool = this.toolService.selected;
+
     if (this.isDragging) {
       if (this.isObjectControllerSelected) {
+        const shape = this.editorService.selectedShape;
+
+        if (this.controllerTypeSelected === ObjectControllersTypes.ScaleTopLeft) {
+          console.log(1 + (shape.x - point.x) / shape.x);
+          console.log(1 + (shape.y - point.y) / shape.y);
+          // with bug
+          shape.scale(
+            1 + (shape.x - point.x) / shape.x,
+            1 + (shape.y - point.y) / shape.y,
+            1,
+            1
+          );
+        }
         console.log('scale object!!!!!');
         this.isObjectControllerSelected = false;
+        this.canvas.figure.refresh();
       } else {
         if (tool && tool.dragEnd) {
           tool.dragEnd(this.canvas, this.layer, this.editorService, this.dragOrigin, { x, y });
