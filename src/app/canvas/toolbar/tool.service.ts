@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { tools } from './tools';
+import { Subject } from 'rxjs/Subject';
 
 /**
  * Service responsible for managing the current drawing tool.
@@ -7,6 +8,10 @@ import { tools } from './tools';
 @Injectable()
 export class ToolService {
   private currentIndex: number;
+
+  private pointListSubject = new Subject<boolean>();
+
+  $plUpdate = this.pointListSubject.asObservable();
 
   /**
    * Get the set of registered tools.
@@ -30,5 +35,10 @@ export class ToolService {
    */
   select(name: string) {
     this.currentIndex = tools.findIndex(tool => tool.name === name);
+    //important to keep the order on the tools array declaration
+    if (!(this.currentIndex == 4)){
+      this.pointListSubject.next(true);
+      console.log("limpou");
+    }
   }
 }

@@ -12,10 +12,10 @@ Essa versão será focada na parte de "Desenho Livre". Nela, serão abordadas im
 
 ## Commits
 ### v1.1
-- Adição da ferramenta de criação de círculos: o usuário clica na posição onde será o centro do círculo e, segurando o botão do mouse, arrasta o ponteiro, que faz com que o raio mude de acordo com a distância até o centro.
+- Adição de ferramenta de criação de círculos: o usuário clica na posição onde será o centro do círculo e, segurando o botão do mouse, arrasta o ponteiro, que faz com que o raio mude de acordo com a distância até o centro.
 
 ### v1.2
-- Adição da ferramenta de criação de linhas retas: o usuário clica na posição onde será o começo da linha e, arrastando o indicador do mouse, faz com que uma linha seja gerada entre a primeira posição clicada e a posição atual do mouse.
+- Adição de ferramenta de criação de linhas retas: o usuário clica na posição onde será o começo da linha e, arrastando o indicador do mouse, faz com que uma linha seja gerada entre a primeira posição clicada e a posição atual do mouse.
 - Círculo: correção na função pick;
 
 ### v1.2a
@@ -25,7 +25,7 @@ Essa versão será focada na parte de "Desenho Livre". Nela, serão abordadas im
 - Adição de ferramenta de criação de linhas de rabisco: o usuário clica na posição onde será o começo do rabisco e, ao arrastar o mouse, faz com que uma linha que segue o ponteiro do mouse, enquanto o botão estiver segurado, seja gerada.
 
 ### v1.4
-- Adição da ferramenta de criação de estrelas: o usuário clica na posição onde deverá ser o centro da estrela, e ao clicar, a estrela é inserida.
+- Adição de ferramenta de criação de estrelas: o usuário clica na posição onde deverá ser o centro da estrela, e ao clicar, a estrela é inserida.
 
 ### v1.4a
 - Círculo: função pick definida para círculos não-cheios; função scale modificada para trabalhar apenas com escalas lineares.
@@ -37,8 +37,14 @@ Essa versão será focada na parte de "Desenho Livre". Nela, serão abordadas im
 - Estrela: estrela padrão alterada não ser cheia por padrão, seguindo a base das outras ferramentas; função pick alterada para usar como referência o círculo externo da estrela;
 
 ### v1.5
-- Adição da ferramenta de criação de triângulos: o usuário clica em três pontos consecutivos, que servirão de vértices para o triângulo.
-- Seleção, Retângulo, Círculo, Linha, Estrela: adição de comando para limpar lista de pontos, salva na classe CanvasDirective, que armazena os pontos consecutivos das ferramentas Rabisco e Triângulo (feito para se evitar problemas com troca de função após clicar nos pontos). 
+- Adição de ferramenta de criação de triângulos: o usuário clica em três pontos consecutivos, que servirão de vértices para o triângulo.
+- Serviço de ferramentas: adição de comando para limpar lista de pontos, salva na classe CanvasDirective, que armazena os pontos consecutivos das ferramentas Rabisco e Triângulo (feito para se evitar problemas com troca de função após clicar nos pontos). 
+
+### v1.6
+- Adição de ferramenta de criação de polígonos: o usuário clica em 4 (pré-definido) pontos, que servirão de vértices para o polígono.
+- Triângulo: mudanças em comentários e identações
+- Serviço de ferramenta: função alterada para escutar uma variável observável, que limpa as informações de pontos armazenados pela ferramenta Polígono caso o usuário escolha uma outra ferramenta durante a definição dos pontos do polígono.
 
 ## TO-DOs
-- Rabisco: função scale.
+- Rabisco e Triângulo: função scale.
+- Círculo, Triângulo e Polígono: funções pick para o caso da figura preenchida.

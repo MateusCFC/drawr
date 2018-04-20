@@ -2,6 +2,7 @@ import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { Figure } from '../data/figure';
 import { Subscription } from 'rxjs/Subscription';
 import { Point } from '../data/point';
+import { ToolService } from '../canvas/toolbar/tool.service';
 
 /**
  * Adapt the HTML canvas element to handle figures.
@@ -18,10 +19,13 @@ export class CanvasDirective implements OnInit, OnDestroy {
   private _context: CanvasRenderingContext2D;
   private figureSubscription: Subscription;
 
-  //saves point list. used by the doodle and triangle tools.
+  //saves point list. used by the doodle, triangle and polygon tools.
   pointList: Point[] = [];
+  pointListSubscription: Subscription;
+  //saves polygon points counter. used by the polygon function.
+  polygonVertexCounter: number;
   
-  constructor(elm: ElementRef) {
+  constructor(elm: ElementRef, private toolService: ToolService) {
     this._canvas = elm.nativeElement;
     this._context = this._canvas.getContext('2d');
     this._canvas.style.border = '1px dashed #ccc';
@@ -44,6 +48,7 @@ export class CanvasDirective implements OnInit, OnDestroy {
       this.figure.draw(this._context);
       this.figureSubscription = this.figure.$update.subscribe(() => this.figure.draw(this._context))
     }
+    this.pointListSubscription = this.toolService.$plUpdate.subscribe(() => this.refreshStoredInfo());
   }
 
   /**
@@ -51,9 +56,15 @@ export class CanvasDirective implements OnInit, OnDestroy {
    */
   ngOnDestroy() {
     this.figureSubscription.unsubscribe();
+    this.pointListSubscription.unsubscribe();
   }
 
   clear() {
     this._context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+
+  refreshStoredInfo(){
+    this.pointList = [];
+    this.polygonVertexCounter = undefined;
   }
 }

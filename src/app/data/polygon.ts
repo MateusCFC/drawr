@@ -1,32 +1,38 @@
 import { Point } from './point';
 import { Shape, ShapeProperties } from './shape'
 
+const DEFAULT_VERTEX_COUNTER = 4;
 const DEFAULT_VERTICES: Point[] = [{x:100, y:100}, {x:200, y:100}, {x:150, y:150}];
-const PICK_WIDTH_MIN = 4; //min width considered for the stroke when picking the triangle.
+const PICK_WIDTH_MIN = 4; //min width considered for the stroke when picking the polygon.
 
 /**
- * Properties that can init a triangle. It extends the shape's properties to include
- * each of the triangle's vertices as a Point.
+ * Properties that can init a polygon. It extends the shape's properties to include
+ * each of the polygon's vertices as a Point.
  */
-export interface TriangleProperties extends Partial<ShapeProperties> {
+export interface PolygonProperties extends Partial<ShapeProperties> {
   vertices: Point[];
+  vertexCounter: number;
 }
 
+export class PolygonVertexes {
+    public static VERTEX_COUNTER: number = DEFAULT_VERTEX_COUNTER;
+}
 /**
- * Triangle shape. 
+ * Polygon shape. 
  * It is defined by an array of Points that represents its vertices.
  */
-export class Triangle extends Shape {
-  readonly type = 'triangle';
-  protected props: TriangleProperties;
+export class Polygon extends Shape {
+  readonly type = 'polygon';
+  protected props: PolygonProperties;
 
   /**
-   * Create a new triangle with a unique id.
+   * Create a new polygon with a unique id.
    * @param id the shape identiifier (unique)
    */
-  constructor(props?: Partial<TriangleProperties>) {
+  constructor(props?: Partial<PolygonProperties>) {
     super(props);
     this.props.vertices = props.vertices || DEFAULT_VERTICES;
+    this.props.vertexCounter = props.vertexCounter || DEFAULT_VERTEX_COUNTER;
   }
 
   get width() {
@@ -37,15 +43,20 @@ export class Triangle extends Shape {
     return this.props.style.lineWidth;
   }
 
+  get vertexCounter(){
+    return this.vertexCounter;
+  }
+
   /**
    * Draw itself in a canvas.
-   * @param ctx HTML canvas 2D graphic context where the triangle will be drawn.
+   * @param ctx HTML canvas 2D graphic context where the polygon will be drawn.
    */
   path(ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
     ctx.moveTo(this.props.vertices[0].x,this.props.vertices[0].y);
-    ctx.lineTo(this.props.vertices[1].x,this.props.vertices[1].y);
-    ctx.lineTo(this.props.vertices[2].x,this.props.vertices[2].y);
+    for (var i=1;i<this.props.vertexCounter;i++){
+        ctx.lineTo(this.props.vertices[i].x,this.props.vertices[i].y);
+    }
     ctx.stroke();
     ctx.closePath();
   }
@@ -73,14 +84,16 @@ export class Triangle extends Shape {
    * @param p Point to be checked
    */
   pick(p: Point){
-    const l1 = this.crossProduct(p,this.props.vertices[0],this.props.vertices[1]);
-    const l2 = this.crossProduct(p,this.props.vertices[1],this.props.vertices[2]);
-    const l3 = this.crossProduct(p,this.props.vertices[2],this.props.vertices[0]);
-    return l1 || l2 || l3;
+    let out = false;
+    for (var i=0;i<this.props.vertexCounter-1;i++){
+      out = out || this.crossProduct(p,this.props.vertices[i],this.props.vertices[i+1]);
+    }
+    out = out || this.crossProduct(p,this.props.vertices[this.props.vertexCounter-1],this.props.vertices[0]);
+    return out;
   }
 
   /**
-   * Scale the triangle.
+   * Scale the polygon.
    * @param scaleX scale in the X coordinate
    * @param scaleY Scale in the Y coordinate
    * @param refX Relative position (in X coordinate) of the center of scale
