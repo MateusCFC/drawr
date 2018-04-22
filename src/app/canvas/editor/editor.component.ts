@@ -91,17 +91,55 @@ export class CanvasEditorComponent implements AfterContentInit {
         const shape = this.editorService.selectedShape;
 
         if (this.controllerTypeSelected === ObjectControllersTypes.ScaleTopLeft) {
-          console.log(1 + (shape.x - point.x) / shape.x);
-          console.log(1 + (shape.y - point.y) / shape.y);
-          // with bug
+          let newScaleY = 1;
+          let newScaleX = 1;
+          let refY = 0;
+          let refX = 0;
+
+          if (point.y < (shape.y + shape.height)) {
+            const diffY = shape.y - point.y;
+            newScaleY = (diffY + shape.height - 10) / shape.height;
+            refY = 1;
+          }
+
+          if (point.x < (shape.x + shape.width)) {
+            const diffX = shape.x - point.x;
+            newScaleX = (diffX + shape.width - 10) / shape.width;
+            refX = 1;
+          }
+
           shape.scale(
-            1 + (shape.x - point.x) / shape.x,
-            1 + (shape.y - point.y) / shape.y,
-            1,
-            1
+            newScaleX,
+            newScaleY,
+            refY,
+            refX
+          );
+        } else if (this.controllerTypeSelected === ObjectControllersTypes.ScaleBottomLeft) {
+          let newScaleY = 0;
+          let newScaleX = 1;
+          let refY = 0;
+          let refX = 0;
+
+          if (point.y >= shape.y) {
+            const diffY = point.y - (shape.y + shape.height);
+            newScaleY = (diffY + shape.height - 10) / shape.height;
+            refY = 1;
+          }
+
+          if (point.x < (shape.x + shape.width)) {
+            const diffX = shape.x - point.x;
+            newScaleX = (diffX + shape.width - 10) / shape.width;
+            refX = 0;
+          }
+
+          shape.scale(
+            newScaleX,
+            newScaleY,
+            refY,
+            refX
           );
         }
-        console.log('scale object!!!!!');
+
         this.isObjectControllerSelected = false;
         this.canvas.figure.refresh();
       } else {
@@ -140,10 +178,13 @@ export class CanvasEditorComponent implements AfterContentInit {
           if (obj.isTopLeftScaleController(point)) {
             this.isObjectControllerSelected = true;
             this.controllerTypeSelected = ObjectControllersTypes.ScaleTopLeft;
+          } else if (obj.isBottomLeftScaleController(point)) {
+            this.isObjectControllerSelected = true;
+            this.controllerTypeSelected = ObjectControllersTypes.ScaleBottomLeft;
           }
-          console.log('first click - scale?');
+
+
         } else {
-          console.log('continue');
         }
       } else {
         const tool = this.toolService.selected;
@@ -170,7 +211,12 @@ export class CanvasEditorComponent implements AfterContentInit {
 
         if (obj.isTopLeftScaleController(point)) {
           document.body.style.cursor = 'nwse-resize';
+        } else if (obj.isBottomLeftScaleController(point)) {
+          document.body.style.cursor = 'nesw-resize';
+        } else if (this.editorService.selectedShape.pick(point)) {
+          document.body.style.cursor = 'move';
         }
+
       }
 
     }

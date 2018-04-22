@@ -93,4 +93,11 @@ export class ObjectController {
     return insideX && insideY;
   }
 
+  isBottomLeftScaleController(p: Point) {
+    const shape = this.editor.selectedShape;
+    const insideX = between(p.x, shape.x - 10 - this.PICK_WIDTH_MIN, shape.x - 10 + 5 + this.PICK_WIDTH_MIN);
+    const insideY = between(p.y, shape.y + shape.height + 10 - this.PICK_WIDTH_MIN, shape.y + shape.height + 10 + 5 + this.PICK_WIDTH_MIN);
+    return insideX && insideY;
+  }
+
 }
