@@ -14,7 +14,7 @@ export interface CircleProperties extends Partial<ShapeProperties> {
 
 /**
  * Circle shape. It is defined by the coordinates of its center, based on the top-left
- * corner and its radius length. 
+ * corner and its radius length.
  */
 export class Circle extends Shape {
   readonly type = 'circle';
@@ -53,7 +53,7 @@ export class Circle extends Shape {
     const xDiff = p.x - this.props.x;
     const yDiff = p.y - this.props.y;
     const distance = Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2));
-    return (this.style.fill && distance <= this.props.radius) || (!this.style.fill && distance == this.props.radius);
+    return (distance <= this.props.radius);
   }
 
   /**
