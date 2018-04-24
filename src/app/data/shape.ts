@@ -224,7 +224,7 @@ export abstract class Shape {
       this.setFill(ctx);
       ctx.fill();
     }
-    if (this.style && (this.style.stroke || this.style.lineWidth)) {
+    if (this.style && (this.style.lineWidth > 0)) {
       if (this.style.fill) {
         this.clearShadow(ctx);
       }

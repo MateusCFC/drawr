@@ -35,6 +35,7 @@ export class Rect extends Shape {
     this.id = this.generateId();
     this.props.width = props.width || DEFAULT_WIDTH;
     this.props.height = props.height || DEFAULT_HEIGHT;
+
   }
 
   get width() {

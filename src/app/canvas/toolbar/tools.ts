@@ -89,7 +89,12 @@ const rect: Tool = {
       x: p1.x,
       y: p1.y,
       width: p2.x - p1.x,
-      height: p2.y - p1.y
+      height: p2.y - p1.y,
+      style : {
+          fill : '#ccc',
+          stroke : '#000',
+          lineWidth : 1
+      }
     });
     canvas.figure.add(r);
     canvas.figure.refresh();

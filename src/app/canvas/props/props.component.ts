@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { EditorService } from '../editor/editor.service';
 import { CanvasDirective } from '../canvas.directive';
+import { Gradient, Pattern } from '../../data/shape';
 
 @Component({
   selector: 'app-canvas-props',
@@ -14,6 +15,9 @@ export class PropsComponent implements OnInit {
 
   height: number;
   width: number;
+  fill: string | Gradient | Pattern;
+  stroke: string | Gradient;
+  lineWidth: number;
 
   @Input() canvas: CanvasDirective;
 
@@ -27,6 +31,11 @@ export class PropsComponent implements OnInit {
         this.y = this.editorService.selectedShape.y;
         this.width = this.editorService.selectedShape.width;
         this.height = this.editorService.selectedShape.height;
+
+        this.fill = this.editorService.selectedShape.properties.style.fill;
+
+        this.lineWidth = this.editorService.selectedShape.properties.style.lineWidth;
+        this.stroke = this.editorService.selectedShape.properties.style.stroke;
       } else {
         this.x = 0;
         this.y = 0;
@@ -38,6 +47,11 @@ export class PropsComponent implements OnInit {
     this.editorService.selectedShape.moveTo(Number(this.x), Number(this.y));
     this.editorService.selectedShape.width = this.width;
     this.editorService.selectedShape.height = this.height;
+
+    this.editorService.selectedShape.properties.style.fill = this.fill;
+    this.editorService.selectedShape.properties.style.lineWidth = this.lineWidth;
+    this.editorService.selectedShape.properties.style.stroke = this.stroke;
+
     this.canvas.figure.refresh();
     console.log("updated shape");
   }
