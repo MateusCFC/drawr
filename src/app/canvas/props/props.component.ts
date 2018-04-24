@@ -18,6 +18,7 @@ export class PropsComponent implements OnInit {
   fill: string | Gradient | Pattern;
   stroke: string | Gradient;
   lineWidth: number;
+  rotation: number;
 
   @Input() canvas: CanvasDirective;
 
@@ -31,6 +32,7 @@ export class PropsComponent implements OnInit {
         this.y = this.editorService.selectedShape.y;
         this.width = this.editorService.selectedShape.width;
         this.height = this.editorService.selectedShape.height;
+        this.rotation = this.editorService.selectedShape.rotation;
 
         this.fill = this.editorService.selectedShape.properties.style.fill;
 
@@ -47,6 +49,7 @@ export class PropsComponent implements OnInit {
     this.editorService.selectedShape.moveTo(Number(this.x), Number(this.y));
     this.editorService.selectedShape.width = this.width;
     this.editorService.selectedShape.height = this.height;
+    this.editorService.selectedShape.rotation = this.rotation;
 
     this.editorService.selectedShape.properties.style.fill = this.fill;
     this.editorService.selectedShape.properties.style.lineWidth = this.lineWidth;

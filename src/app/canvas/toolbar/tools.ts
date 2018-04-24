@@ -90,6 +90,7 @@ const rect: Tool = {
       y: p1.y,
       width: p2.x - p1.x,
       height: p2.y - p1.y,
+      rotation: 0,
       style : {
           fill : '#ccc',
           stroke : '#000',
