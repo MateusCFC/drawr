@@ -75,6 +75,10 @@ export abstract class Shape {
   /** All the shape's properties. */
   protected props: Partial<ShapeProperties>;
 
+  get properties() {
+    return this.props;
+  }
+
   /**
    * Cretate a new shape with a given set of properties.
    * @param props The initial shape's properties.
@@ -120,6 +124,16 @@ export abstract class Shape {
    * Height of the shape. It is abstract because it depends on the shape's path.
    */
   abstract get height(): number;
+
+    /**
+   * Width of the shape. It is abstract because it depends on the shape's path.
+   */
+  abstract set width(w: number);
+
+  /**
+   * Height of the shape. It is abstract because it depends on the shape's path.
+   */
+  abstract set height(w: number);
 
   /** X coordinate of the shape. */
   get x() { return this.props.x; }

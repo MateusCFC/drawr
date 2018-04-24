@@ -45,6 +45,14 @@ export class Rect extends Shape {
     return this.props.height;
   }
 
+  set width(w) {
+    this.props.width = w;
+  }
+
+  set height(h) {
+    this.props.height = h;
+  }
+
   /**
    * Draw itself in a canvas.
    * @param ctx HTML canvas 2D graphic context where the rectangle will be drawn.

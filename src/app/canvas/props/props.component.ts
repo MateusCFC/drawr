@@ -12,6 +12,9 @@ export class PropsComponent implements OnInit {
   x: number;
   y: number;
 
+  height: number;
+  width: number;
+
   @Input() canvas: CanvasDirective;
 
   constructor(private editorService: EditorService) {
@@ -22,6 +25,8 @@ export class PropsComponent implements OnInit {
       if (this.editorService.selectedShape) {
         this.x = this.editorService.selectedShape.x;
         this.y = this.editorService.selectedShape.y;
+        this.width = this.editorService.selectedShape.width;
+        this.height = this.editorService.selectedShape.height;
       } else {
         this.x = 0;
         this.y = 0;
@@ -31,6 +36,8 @@ export class PropsComponent implements OnInit {
 
   updateShape(){
     this.editorService.selectedShape.moveTo(Number(this.x), Number(this.y));
+    this.editorService.selectedShape.width = this.width;
+    this.editorService.selectedShape.height = this.height;
     this.canvas.figure.refresh();
     console.log("updated shape");
   }
