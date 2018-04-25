@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ToolService } from './toolbar/tool.service';
 import { EditorService } from './editor/editor.service';
 import { FormsModule } from '@angular/forms';
+import { ColorPickerComponent } from './props/color-picker/color-picker.component';
 
 /**
  * Integrate drawing funcionalities in a canvas.
@@ -22,7 +23,8 @@ import { FormsModule } from '@angular/forms';
     CanvasDirective,
     CanvasEditorComponent,
     PropsComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    ColorPickerComponent
   ],
   providers: [
     ToolService,
