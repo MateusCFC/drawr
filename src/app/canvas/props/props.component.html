@@ -1,45 +1,88 @@
 <div *ngIf="editorService.selectedShape">
-  <form (ngSubmit)="updateShape()" (change)="updateShape()">
-      <h1>Propriedades</h1>
-          <mat-form-field class="col-12">
-            <input matInput type="text" placeholder="type" [(ngModel)]="editorService.selectedShape.type"  name="type" disabled>
-          </mat-form-field>
-          <mat-form-field class="col-12">
-            <input matInput type="text" placeholder="id" [(ngModel)]="editorService.selectedShape.id"  name="id">
-          </mat-form-field>
-          <mat-form-field class="col-6">
-            <input matInput type="number" placeholder="x" [(ngModel)]="x"  name="x">
-          </mat-form-field>
-          <mat-form-field class="col-6">
-            <input matInput type="number" placeholder="y" [(ngModel)]="y"  name="y">
-          </mat-form-field>
-          <mat-form-field class="col-6">
-            <input matInput type="number" placeholder="width" [(ngModel)]="width"  name="width" min="1">
-          </mat-form-field>
-          <mat-form-field class="col-6">
-            <input matInput type="number" placeholder="height" [(ngModel)]="height"  name="height" min="1">
-          </mat-form-field>
-          <mat-form-field class="col-6">
-            <input matInput type="number" placeholder="rotation" [(ngModel)]="rotation"  name="rotation" min="0" max="360">
-            <span matSuffix>&nbsp;°</span>
-          </mat-form-field>
-          <mat-form-field class="col-6">
-            <input matInput type="number" placeholder="opacity" [(ngModel)]="transparency"  name="transparency" min="0" max="100">
-            <span matSuffix>&nbsp;%</span>
-          </mat-form-field>
+  <form (ngSubmit)="updateShape()" (change)="updateShape()" fxLayout="column" fxFlexFill >
+    <h1>Propriedades</h1>
+    <mat-form-field class="form-field">
+      <input matInput type="text" placeholder="type" [(ngModel)]="editorService.selectedShape.type"  name="type" disabled>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input matInput type="text" placeholder="id" [(ngModel)]="editorService.selectedShape.id"  name="id">
+    </mat-form-field>
 
-      <h2>Style</h2>
-      <mat-form-field class="col-12">
-        <input matInput type="text" placeholder="background" [(ngModel)]="fill"  name="fill">
+    <div fxLayout="row"  fxFlexFill>
+      <mat-form-field fxFlex="50" class="form-field">
+        <input matInput type="number" placeholder="x" [(ngModel)]="x"  name="x">
       </mat-form-field>
+      <mat-form-field fxFlex="50" class="form-field">
+        <input matInput type="number" placeholder="y" [(ngModel)]="y"  name="y">
+      </mat-form-field>
+    </div>
 
-      <h3>Stroke</h3>
-      <mat-form-field class="col-6">
-        <input matInput type="text" placeholder="color" [(ngModel)]="stroke"  name="stroke">
+    <div fxLayout="row"  fxFlexFill>
+      <mat-form-field fxFlex="50" class="form-field">
+        <input matInput type="number" placeholder="width" [(ngModel)]="width"  name="width" min="1">
       </mat-form-field>
-      <mat-form-field class="col-6">
-        <input matInput type="number" placeholder="size" [(ngModel)]="lineWidth"  name="lineWidth">
+      <mat-form-field fxFlex="50" class="form-field">
+        <input matInput type="number" placeholder="height" [(ngModel)]="height"  name="height" min="1">
       </mat-form-field>
+    </div>
+
+    <div fxLayout="row"  fxFlexFill>
+      <mat-form-field fxFlex="50" class="form-field">
+        <input matInput type="number" placeholder="rotation" [(ngModel)]="rotation"  name="rotation" min="0" max="360">
+        <span matSuffix>&nbsp;°</span>
+      </mat-form-field>
+      <mat-form-field fxFlex="50" class="form-field">
+        <input matInput type="number" placeholder="opacity" [(ngModel)]="transparency"  name="transparency" min="0" max="100">
+        <span matSuffix>&nbsp;%</span>
+      </mat-form-field>
+    </div>
+
+
+
+    <h2>Style</h2>
+    <mat-form-field class="form-field">
+      <input matInput type="text" placeholder="background" [(ngModel)]="fill"  name="fill" readonly>
+    </mat-form-field>
+
+    <div class="preview-color-picker form-field" fxFlex="100" [ngStyle]="{'background-color': 'rgb(' + red + ',' + green + ',' + blue + ')' }">
+      {{rgbToHex (red, green, blue)}}
+    </div>
+
+    <div fxLayout="row" fxFlexFill>
+      <div class="form-field" fxFlex="70">
+        <mat-slider min="0" max="255" step="1" [(ngModel)]="red" name="red"></mat-slider>
+      </div>
+      <mat-form-field class="form-field" fxFlex="30">
+          <input matInput type="number" placeholder="red" [(ngModel)]="red" name="red" min="0" max="255">
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxFlexFill>
+      <div class="form-field" fxFlex="70">
+        <mat-slider min="0" max="255" step="1" [(ngModel)]="green" name="green"></mat-slider>
+      </div>
+      <mat-form-field class="form-field" fxFlex="30">
+          <input matInput type="number" placeholder="green" [(ngModel)]="green" name="green" min="0" max="255">
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxFlexFill>
+      <div class="form-field" fxFlex="70">
+        <mat-slider min="0" max="255" step="1" [(ngModel)]="blue" name="blue"></mat-slider>
+      </div>
+      <mat-form-field class="form-field" fxFlex="30">
+          <input matInput type="number" placeholder="blue" [(ngModel)]="blue" name="blue" min="0" max="255">
+      </mat-form-field>
+    </div>
+
+
+
+    <mat-form-field class="form-field">
+      <input matInput type="text" placeholder="stroke" [(ngModel)]="stroke"  name="stroke">
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input matInput type="number" placeholder="size" [(ngModel)]="lineWidth"  name="lineWidth" min="0">
+    </mat-form-field>
 
   </form>
 </div>

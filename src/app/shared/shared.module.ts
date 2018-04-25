@@ -3,7 +3,7 @@ import { CommonModule, } from '@angular/common';
 import { FlexLayoutModule, } from '@angular/flex-layout';
 import {
   MatButtonModule, MatCheckboxModule, MatToolbarModule, MatIconModule,
-  MatButtonToggleModule, MatSidenavModule, MatFormFieldModule, MatInputModule
+  MatButtonToggleModule, MatSidenavModule, MatFormFieldModule, MatInputModule, MatSliderModule
 } from '@angular/material';
 
 const LAYOUT_MODULES: any[] = [
@@ -12,7 +12,7 @@ const LAYOUT_MODULES: any[] = [
 
 const MATERIAL_MODULES: any[] = [
   MatButtonModule, MatCheckboxModule, MatToolbarModule, MatIconModule,
-  MatButtonToggleModule, MatSidenavModule, MatFormFieldModule, MatInputModule
+  MatButtonToggleModule, MatSidenavModule, MatFormFieldModule, MatInputModule, MatSliderModule
 ];
 
 /**

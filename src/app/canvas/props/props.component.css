@@ -1,11 +1,13 @@
 form {
-  width: 260px;
+  max-width: 260px;
   margin: 15px;
 }
-.col-12 {
-  width: 100%;
+
+h1, h2, h3, h4, h5, h6, .form-field {
+  padding: 0 10px;
 }
 
-.col-6 {
-  width: 49%;
+.preview-color-picker {
+  height: 150px;
+  background: red;
 }
