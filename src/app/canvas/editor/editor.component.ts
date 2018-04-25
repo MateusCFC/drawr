@@ -59,8 +59,6 @@ export class CanvasEditorComponent implements AfterContentInit {
   ngAfterContentInit() {
     // the size of the layer canvas is modified only after the initialization of `ng-content`, where
     // the canvas with figures is rendered.
-    console.log( this.layer.canvas.width + "x" + this.layer.canvas.height);
-    //window.dispatchEvent(new Event('resize'));
     this.layer.canvas.height = this.height;
     this.layer.canvas.width = this.width;
     this.canvas.canvas.height = this.height;

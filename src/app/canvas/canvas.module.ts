@@ -9,6 +9,8 @@ import { ToolService } from './toolbar/tool.service';
 import { EditorService } from './editor/editor.service';
 import { FormsModule } from '@angular/forms';
 import { ColorPickerComponent } from './props/color-picker/color-picker.component';
+import { RectPropertiesComponent } from './props/rect-properties/rect-properties.component';
+import { CirclePropertiesComponent } from './props/circle-properties/circle-properties.component';
 
 /**
  * Integrate drawing funcionalities in a canvas.
@@ -24,7 +26,9 @@ import { ColorPickerComponent } from './props/color-picker/color-picker.componen
     CanvasEditorComponent,
     PropsComponent,
     ToolbarComponent,
-    ColorPickerComponent
+    ColorPickerComponent,
+    RectPropertiesComponent,
+    CirclePropertiesComponent
   ],
   providers: [
     ToolService,

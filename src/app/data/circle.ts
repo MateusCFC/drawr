@@ -18,7 +18,7 @@ export interface CircleProperties extends Partial<ShapeProperties> {
  */
 export class Circle extends Shape {
   readonly type = 'circle';
-  protected props: CircleProperties;
+  public props: CircleProperties;
 
   /**
    * Create a new circle with a unique id.

@@ -24,7 +24,7 @@ export interface RectProperties extends Partial<ShapeProperties> {
  */
 export class Rect extends Shape {
   readonly type = 'rect';
-  protected props: RectProperties;
+  public props: RectProperties;
 
   /**
    * Create a new rectangle with a unique id.

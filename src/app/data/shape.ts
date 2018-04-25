@@ -75,10 +75,6 @@ export abstract class Shape {
   /** All the shape's properties. */
   protected props: Partial<ShapeProperties>;
 
-  get properties() {
-    return this.props;
-  }
-
   /**
    * Cretate a new shape with a given set of properties.
    * @param props The initial shape's properties.
