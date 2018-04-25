@@ -26,6 +26,7 @@ export class Circle extends Shape {
    */
   constructor(props?: Partial<CircleProperties>) {
     super(props);
+    this.id = this.generateId();
     this.props.radius = props.radius || DEFAULT_RADIUS;
   }
 

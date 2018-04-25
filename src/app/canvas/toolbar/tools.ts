@@ -127,8 +127,16 @@ const circle: Tool = {
     const c = new Circle({
       x: p1.x,
       y: p1.y,
-      radius: Math.sqrt(Math.pow(p1.x - p2.x,2) + Math.pow(p1.y - p2.y,2))
+      radius: Math.sqrt(Math.pow(p1.x - p2.x,2) + Math.pow(p1.y - p2.y,2)),
+      rotation: 0,
+      style : {
+        fill : '#cccccc',
+        stroke : '#000000',
+        lineWidth : 1,
+        transparency: 1
+      }
     });
+
     canvas.figure.add(c);
     canvas.figure.refresh();
   }
