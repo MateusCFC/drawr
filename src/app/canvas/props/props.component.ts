@@ -12,13 +12,15 @@ export class PropsComponent implements OnInit {
 
   x: number;
   y: number;
-
   height: number;
   width: number;
+  rotation: number;
+  transparency: number;
+
   fill: string | Gradient | Pattern;
   stroke: string | Gradient;
   lineWidth: number;
-  rotation: number;
+
 
   @Input() canvas: CanvasDirective;
 
@@ -33,6 +35,7 @@ export class PropsComponent implements OnInit {
         this.width = this.editorService.selectedShape.width;
         this.height = this.editorService.selectedShape.height;
         this.rotation = this.editorService.selectedShape.rotation;
+        this.transparency = this.editorService.selectedShape.style.transparency * 100;
 
         this.fill = this.editorService.selectedShape.properties.style.fill;
 
@@ -50,6 +53,7 @@ export class PropsComponent implements OnInit {
     this.editorService.selectedShape.width = this.width;
     this.editorService.selectedShape.height = this.height;
     this.editorService.selectedShape.rotation = this.rotation;
+    this.editorService.selectedShape.style.transparency = this.transparency / 100;
 
     this.editorService.selectedShape.properties.style.fill = this.fill;
     this.editorService.selectedShape.properties.style.lineWidth = this.lineWidth;

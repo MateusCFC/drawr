@@ -1,18 +1,45 @@
 <div *ngIf="editorService.selectedShape">
   <form (ngSubmit)="updateShape()" (change)="updateShape()">
       <h1>Propriedades</h1>
-      <b>type:</b> {{editorService.selectedShape?.type}} <br/>
-      <b>id:</b> <input type="text" [(ngModel)]="editorService.selectedShape.id" name="id" ><br/>
-      <b>x:</b> <input type="number" [(ngModel)]="x" name="x" > <br/>
-      <b>y:</b> <input type="number" [(ngModel)]="y" name="y"> <br/>
-      <b>height:</b> <input type="number" [(ngModel)]="height" name="height" > <br/>
-      <b>width:</b> <input type="number" [(ngModel)]="width" name="width"> <br/>
-      <b>rotation:</b> <input type="number" [(ngModel)]="rotation" name="rotation"> <br/>
+          <mat-form-field class="col-12">
+            <input matInput type="text" placeholder="type" [(ngModel)]="editorService.selectedShape.type"  name="type" disabled>
+          </mat-form-field>
+          <mat-form-field class="col-12">
+            <input matInput type="text" placeholder="id" [(ngModel)]="editorService.selectedShape.id"  name="id">
+          </mat-form-field>
+          <mat-form-field class="col-6">
+            <input matInput type="number" placeholder="x" [(ngModel)]="x"  name="x">
+          </mat-form-field>
+          <mat-form-field class="col-6">
+            <input matInput type="number" placeholder="y" [(ngModel)]="y"  name="y">
+          </mat-form-field>
+          <mat-form-field class="col-6">
+            <input matInput type="number" placeholder="width" [(ngModel)]="width"  name="width" min="1">
+          </mat-form-field>
+          <mat-form-field class="col-6">
+            <input matInput type="number" placeholder="height" [(ngModel)]="height"  name="height" min="1">
+          </mat-form-field>
+          <mat-form-field class="col-6">
+            <input matInput type="number" placeholder="rotation" [(ngModel)]="rotation"  name="rotation" min="0" max="360">
+            <span matSuffix>&nbsp;°</span>
+          </mat-form-field>
+          <mat-form-field class="col-6">
+            <input matInput type="number" placeholder="opacity" [(ngModel)]="transparency"  name="transparency" min="0" max="100">
+            <span matSuffix>&nbsp;%</span>
+          </mat-form-field>
+
       <h2>Style</h2>
-      <b>background:</b> <input type="text" [(ngModel)]="fill" name="fill"> <br/>
+      <mat-form-field class="col-12">
+        <input matInput type="text" placeholder="background" [(ngModel)]="fill"  name="fill">
+      </mat-form-field>
+
       <h3>Stroke</h3>
-      <b>color:</b> <input type="text" [(ngModel)]="stroke" name="stroke"> <br/>
-      <b>size:</b> <input type="number" [(ngModel)]="lineWidth" name="lineWidth"> <br/>
-      <button type="submit">Alterar</button>
+      <mat-form-field class="col-6">
+        <input matInput type="text" placeholder="color" [(ngModel)]="stroke"  name="stroke">
+      </mat-form-field>
+      <mat-form-field class="col-6">
+        <input matInput type="number" placeholder="size" [(ngModel)]="lineWidth"  name="lineWidth">
+      </mat-form-field>
+
   </form>
 </div>

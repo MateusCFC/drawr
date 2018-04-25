@@ -217,9 +217,9 @@ export abstract class Shape {
    */
   private render(ctx: CanvasRenderingContext2D) {
     this.setShadow(ctx);
-    if (this.style.transparency) {
-      ctx.globalAlpha = this.style.transparency;
-    }
+    //trasnparency
+    ctx.globalAlpha = this.style.transparency;
+
     if (this.style && this.style.fill) {
       this.setFill(ctx);
       ctx.fill();

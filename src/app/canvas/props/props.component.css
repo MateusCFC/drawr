@@ -1,0 +1,11 @@
+form {
+  width: 260px;
+  margin: 15px;
+}
+.col-12 {
+  width: 100%;
+}
+
+.col-6 {
+  width: 49%;
+}

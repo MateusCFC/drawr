@@ -94,7 +94,8 @@ const rect: Tool = {
       style : {
           fill : '#ccc',
           stroke : '#000',
-          lineWidth : 1
+          lineWidth : 1,
+          transparency: 1
       }
     });
     canvas.figure.add(r);
