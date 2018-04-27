@@ -36,9 +36,8 @@ export class ToolService {
   select(name: string) {
     this.currentIndex = tools.findIndex(tool => tool.name === name);
     //important to keep the order on the tools array declaration
-    if (!(this.currentIndex == 4)){
+    if (!(this.currentIndex == tools.length-1)){
       this.pointListSubject.next(true);
-      console.log("limpou");
     }
   }
 }

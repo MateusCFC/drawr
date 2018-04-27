@@ -45,6 +45,11 @@ Essa versão será focada na parte de "Desenho Livre". Nela, serão abordadas im
 - Triângulo: mudanças em comentários e identações
 - Serviço de ferramenta: função alterada para escutar uma variável observável, que limpa as informações de pontos armazenados pela ferramenta Polígono caso o usuário escolha uma outra ferramenta durante a definição dos pontos do polígono.
 
+### v1.6a
+- Mudança de ordenação das ferramentas e adição de comentários.
+
 ## TO-DOs
-- Rabisco e Triângulo: função scale.
-- Círculo, Triângulo e Polígono: funções pick para o caso da figura preenchida.
+- Rabisco: função scale.
+- Círculo: função pick para o caso da figura preenchida.
+- Triângulo: função scale e função pick para o caso de figura cheia.
+- Polígono: função scale e função pick para o caso de figura cheia.

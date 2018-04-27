@@ -256,4 +256,4 @@ const polygon: Tool = {
 /**
  * Set of tools used in the canvas editor.
  */
-export const tools = [ selection, line, doodle, rect, polygon, triangle, circle, star ];
+export const tools = [ selection, line, doodle, rect, circle, triangle, star, polygon ];

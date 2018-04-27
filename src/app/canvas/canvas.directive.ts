@@ -20,10 +20,13 @@ export class CanvasDirective implements OnInit, OnDestroy {
   private figureSubscription: Subscription;
 
   //saves point list. used by the doodle, triangle and polygon tools.
-  pointList: Point[] = [];
-  pointListSubscription: Subscription;
+  public pointList: Point[] = [];
+
+  //subscription that listens to tool changes to persist (or not) information.
+  private pointListSubscription: Subscription;
+
   //saves polygon points counter. used by the polygon function.
-  polygonVertexCounter: number;
+  public polygonVertexCounter: number;
   
   constructor(elm: ElementRef, private toolService: ToolService) {
     this._canvas = elm.nativeElement;
@@ -63,6 +66,9 @@ export class CanvasDirective implements OnInit, OnDestroy {
     this._context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
+  /**
+   * Refreshes the info stored on persistent variables used by the tools.
+   */
   refreshStoredInfo(){
     this.pointList = [];
     this.polygonVertexCounter = undefined;
