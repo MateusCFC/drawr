@@ -2,9 +2,30 @@
 <mat-dialog-content>
     <div fxLayout="column" fxFlexFill >
 
-        <div class="preview-color-picker form-field" fxFlex="100" [ngStyle]="{'background-color': 'rgb(' + red + ',' + green + ',' + blue + ')' }">
-          {{rgbToHex (red, green, blue)}}
+        <div fxLayout="row" fxFlexFill>
+          <div fxFlex="90">
+            <div #SBcontrol class="picker-saturation-bright-control"
+              [ngStyle]="{'background-color': 'hsl(' + hue + ', 100%, 50%)' }"
+              (mousedown)="SBmouseDown($event)"
+
+            >
+              <span class="selector"></span>
+            </div>
+
+          </div>
+          <div fxFlex="10">
+            <div #Hcontrol class="picker-hue-control"
+              (mousedown)="HmouseDown($event)"
+            >
+              <span class="selector"></span>
+            </div>
+          </div>
         </div>
+        HEX: {{rgbToHex (red, green, blue)}}
+        <br/>
+        HSL: {{hue}} {{saturation}} {{brightness}}
+        <br/>
+        <div class="preview" [ngStyle]="{'background-color': 'rgb(' + red + ', ' + green + ' , '+ blue +')'}"></div>RGB: {{red}} {{green}} {{blue}}
 
         <div fxLayout="row" fxFlexFill>
           <div class="form-field" fxFlex="70">
