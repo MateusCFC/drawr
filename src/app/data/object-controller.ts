@@ -1,8 +1,8 @@
-import { EditorService } from '../canvas/editor/editor.service';
-import { Point } from './point';
+import { EditorService } from "../canvas/editor/editor.service";
+import { Point } from "./point";
 
 function between(v: number, min: number, max: number) {
-  return (min <= v) && (v <= max);
+  return min <= v && v <= max;
 }
 
 export enum ObjectControllersTypes {
@@ -14,18 +14,18 @@ export enum ObjectControllersTypes {
   Move
 }
 
-
 export class ObjectController {
-
   private PICK_WIDTH_MIN = 4;
 
   constructor(private editor: EditorService) {}
 
   static draw(ctx: CanvasRenderingContext2D, editor: EditorService): void {
-    if (!editor.selectedShape) { return; }
+    if (!editor.selectedShape) {
+      return;
+    }
     ctx.save();
-    ctx.strokeStyle = 'blue';
-    ctx.fillStyle = 'blue';
+    ctx.strokeStyle = "blue";
+    ctx.fillStyle = "blue";
     ctx.lineWidth = 0.6;
 
     /* draw selection */
@@ -88,16 +88,61 @@ export class ObjectController {
 
   isTopLeftScaleController(p: Point) {
     const shape = this.editor.selectedShape;
-    const insideX = between(p.x, shape.x - 10 - this.PICK_WIDTH_MIN, shape.x - 10 + 5 + this.PICK_WIDTH_MIN);
-    const insideY = between(p.y, shape.y - 10 - this.PICK_WIDTH_MIN, shape.y - 10 + 5 + this.PICK_WIDTH_MIN);
+    const insideX = between(
+      p.x,
+      shape.x - 10 - this.PICK_WIDTH_MIN,
+      shape.x - 10 + 5 + this.PICK_WIDTH_MIN
+    );
+    const insideY = between(
+      p.y,
+      shape.y - 10 - this.PICK_WIDTH_MIN,
+      shape.y - 10 + 5 + this.PICK_WIDTH_MIN
+    );
     return insideX && insideY;
   }
 
   isBottomLeftScaleController(p: Point) {
     const shape = this.editor.selectedShape;
-    const insideX = between(p.x, shape.x - 10 - this.PICK_WIDTH_MIN, shape.x - 10 + 5 + this.PICK_WIDTH_MIN);
-    const insideY = between(p.y, shape.y + shape.height + 10 - this.PICK_WIDTH_MIN, shape.y + shape.height + 10 + 5 + this.PICK_WIDTH_MIN);
+    const insideX = between(
+      p.x,
+      shape.x - 10 - this.PICK_WIDTH_MIN,
+      shape.x - 10 + 5 + this.PICK_WIDTH_MIN
+    );
+    const insideY = between(
+      p.y,
+      shape.y + shape.height + 10 - this.PICK_WIDTH_MIN,
+      shape.y + shape.height + 10 + 5 + this.PICK_WIDTH_MIN
+    );
     return insideX && insideY;
   }
 
+  isTopRightScaleController(p: Point) {
+    const shape = this.editor.selectedShape;
+    const insideX = between(
+      p.x,
+      shape.x + shape.width + 10 - this.PICK_WIDTH_MIN,
+      shape.x + shape.width + 10 + this.PICK_WIDTH_MIN
+    );
+    const insideY = between(
+      p.y,
+      shape.y - 10 - this.PICK_WIDTH_MIN,
+      shape.y - 10 + 5 + this.PICK_WIDTH_MIN
+    );
+    return insideX && insideY;
+  }
+
+  isBottomRightScaleController(p: Point) {
+    const shape = this.editor.selectedShape;
+    const insideX = between(
+      p.x + shape.width,
+      shape.x + shape.width - 10 - this.PICK_WIDTH_MIN,
+      shape.x + shape.width - 10 + 5 + this.PICK_WIDTH_MIN
+    );
+    const insideY = between(
+      p.y,
+      shape.y + shape.height + 10 - this.PICK_WIDTH_MIN,
+      shape.y + shape.height + 10 + 5 + this.PICK_WIDTH_MIN
+    );
+    return insideX && insideY;
+  }
 }

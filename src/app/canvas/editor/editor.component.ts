@@ -138,6 +138,8 @@ export class CanvasEditorComponent implements AfterContentInit {
             refY,
             refX
           );
+        } else if (this.controllerTypeSelected === ObjectControllersTypes.Move) {
+          shape.moveTo(point.x - (this.dragOrigin.x - shape.x), point.y - (this.dragOrigin.y - shape.y));
         }
 
         this.isObjectControllerSelected = false;
@@ -181,26 +183,34 @@ export class CanvasEditorComponent implements AfterContentInit {
           } else if (obj.isBottomLeftScaleController(point)) {
             this.isObjectControllerSelected = true;
             this.controllerTypeSelected = ObjectControllersTypes.ScaleBottomLeft;
+          } else if (obj.isTopRightScaleController(point)) {
+            this.isObjectControllerSelected = true;
+            this.controllerTypeSelected = ObjectControllersTypes.ScaleTopRight;
+          } else if (obj.isBottomRightScaleController(point)) {
+            this.isObjectControllerSelected = true;
+            this.controllerTypeSelected = ObjectControllersTypes.ScaleBottomRight;
+          } else if (this.editorService.selectedShape.pick(point)) {
+            this.isObjectControllerSelected = true;
+            this.controllerTypeSelected = ObjectControllersTypes.Move;
           }
 
 
-        } else {
+        }
+      }
+
+      const tool = this.toolService.selected;
+      if (!this.isDragging) {
+        const movedUpDown = Math.abs(y - this.dragOrigin.y) > MOVE_THRESHOLD;
+        const movedLeftRight = Math.abs(x - this.dragOrigin.x) > MOVE_THRESHOLD;
+        if (movedUpDown || movedLeftRight) {
+          this.isDragging = true;
+          if (tool && tool.dragStart) {
+            tool.dragStart(this.canvas, this.layer, this.editorService, this.dragOrigin);
+          }
         }
       } else {
-        const tool = this.toolService.selected;
-        if (!this.isDragging) {
-          const movedUpDown = Math.abs(y - this.dragOrigin.y) > MOVE_THRESHOLD;
-          const movedLeftRight = Math.abs(x - this.dragOrigin.x) > MOVE_THRESHOLD;
-          if (movedUpDown || movedLeftRight) {
-            this.isDragging = true;
-            if (tool && tool.dragStart) {
-              tool.dragStart(this.canvas, this.layer, this.editorService, this.dragOrigin);
-            }
-          }
-        } else {
-          if (tool && tool.drag) {
-            tool.drag(this.canvas, this.layer, this.editorService, this.dragOrigin, { x, y });
-          }
+        if (tool && tool.drag) {
+          tool.drag(this.canvas, this.layer, this.editorService, this.dragOrigin, { x, y });
         }
       }
 
@@ -213,6 +223,10 @@ export class CanvasEditorComponent implements AfterContentInit {
           document.body.style.cursor = 'nwse-resize';
         } else if (obj.isBottomLeftScaleController(point)) {
           document.body.style.cursor = 'nesw-resize';
+        } else if (obj.isTopRightScaleController(point)) {
+          document.body.style.cursor = 'nesw-resize';
+        } else if (obj.isBottomRightScaleController(point)) {
+          document.body.style.cursor = 'nwse-resize';
         } else if (this.editorService.selectedShape.pick(point)) {
           document.body.style.cursor = 'move';
         }
