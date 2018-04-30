@@ -161,9 +161,18 @@ const line: Tool = {
   },
   dragEnd: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
+
     const l = new Line({
       startPoint: p1,
-      endPoint: p2
+      endPoint: p2,
+      x: p1.x,
+      y: p1.y,
+      rotation: 0,
+      style : {
+          stroke : '#000000',
+          lineWidth : 1,
+          transparency: 1
+      }
     });
     canvas.figure.add(l);
     canvas.figure.refresh();
@@ -191,7 +200,15 @@ const doodle: Tool = {
   dragEnd: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
     const l = new Doodle({
-      points: editor.pointList
+      points: editor.pointList,
+      x: p1.x,
+      y: p1.y,
+      rotation: 0,
+      style : {
+          stroke : '#000000',
+          lineWidth : 1,
+          transparency: 1
+      }
     });
     canvas.figure.add(l);
     canvas.figure.refresh();
@@ -212,10 +229,18 @@ const star: Tool = {
     const s = new Star({
       x: p1.x,
       y: p1.y,
+      rotation: 0,
+      style : {
+          fill : '#cccccc',
+          stroke : '#000000',
+          lineWidth : 1,
+          transparency: 1
+      },
       spikes: 5,
       innerRadius: 5,
       outerRadius: 15
     });
+
     canvas.figure.add(s);
     canvas.figure.refresh();
   }

@@ -11,6 +11,9 @@ import { FormsModule } from '@angular/forms';
 import { ColorPickerComponent } from './props/color-picker/color-picker.component';
 import { RectPropertiesComponent } from './props/rect-properties/rect-properties.component';
 import { CirclePropertiesComponent } from './props/circle-properties/circle-properties.component';
+import { LinePropertiesComponent } from './props/line-properties/line-properties.component';
+import { DoodlePropertiesComponent } from './props/doodle-properties/doodle-properties.component';
+import { StarPropertiesComponent } from './props/star-properties/star-properties.component';
 
 /**
  * Integrate drawing funcionalities in a canvas.
@@ -28,7 +31,10 @@ import { CirclePropertiesComponent } from './props/circle-properties/circle-prop
     ToolbarComponent,
     ColorPickerComponent,
     RectPropertiesComponent,
-    CirclePropertiesComponent
+    CirclePropertiesComponent,
+    LinePropertiesComponent,
+    DoodlePropertiesComponent,
+    StarPropertiesComponent
   ],
   providers: [
     ToolService,
