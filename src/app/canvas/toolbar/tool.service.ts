@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { tools } from './tools';
 import { Subject } from 'rxjs/Subject';
 

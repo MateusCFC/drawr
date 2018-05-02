@@ -30,6 +30,7 @@ export class Star extends Shape {
    */
   constructor(props?: Partial<StarProperties>) {
     super(props);
+    this.id = this.generateId();
     this.props.spikes = props.spikes || DEFAULT_SPIKES;
     this.props.innerRadius = props.innerRadius || DEFAULT_INNER_RADIUS;
     this.props.outerRadius = props.outerRadius || DEFAULT_OUTER_RADIUS;

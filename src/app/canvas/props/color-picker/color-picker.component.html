@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>Color Picker</h2>
+<mat-dialog-content>
+    <div fxLayout="column" fxFlexFill >
+
+        <div class="preview-color-picker form-field" fxFlex="100" [ngStyle]="{'background-color': 'rgb(' + red + ',' + green + ',' + blue + ')' }">
+          {{rgbToHex (red, green, blue)}}
+        </div>
+
+        <div fxLayout="row" fxFlexFill>
+          <div class="form-field" fxFlex="70">
+            <mat-slider min="0" max="255" step="1" [(ngModel)]="red" name="red" class="red-slider"></mat-slider>
+          </div>
+          <mat-form-field class="form-field" fxFlex="30">
+              <input matInput type="number" placeholder="red" [(ngModel)]="red" name="red" min="0" max="255">
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxFlexFill>
+          <div class="form-field" fxFlex="70">
+            <mat-slider min="0" max="255" step="1" [(ngModel)]="green" name="green"></mat-slider>
+          </div>
+          <mat-form-field class="form-field" fxFlex="30">
+              <input matInput type="number" placeholder="green" [(ngModel)]="green" name="green" min="0" max="255">
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxFlexFill>
+          <div class="form-field" fxFlex="70">
+            <mat-slider min="0" max="255" step="1" [(ngModel)]="blue" name="blue"></mat-slider>
+          </div>
+          <mat-form-field class="form-field" fxFlex="30" >
+              <input matInput type="number" placeholder="blue" [(ngModel)]="blue" name="blue" min="0" max="255">
+          </mat-form-field>
+        </div>
+      </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  <button mat-button (click)="this.save()">Apply</button>
+</mat-dialog-actions>

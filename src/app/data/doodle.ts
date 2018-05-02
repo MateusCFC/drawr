@@ -25,6 +25,7 @@ export class Doodle extends Shape {
    */
   constructor(props?: Partial<DoodleProperties>) {
     super(props);
+    this.id = this.generateId();
     this.props.points = props.points || DEFAULT_POINTS;
   }
 

@@ -9,10 +9,10 @@ export class Group extends Shape {
 
   /** The bottom left point of the group. Along with the group position (x and y), they define the group bouding box. */
   private max: Point;
-  
+
   /** Members of the group. */
   shapes: Shape[];
-  
+
   /**
    * Create a new group and optionally set its initial members.
    * @param shapes A list of shapes that will be member of the group.
@@ -95,7 +95,7 @@ export class Group extends Shape {
     for (let shape of this.shapes) {
       shape.draw(ctx);
     }
-    ctx.restore();  
+    ctx.restore();
   }
 
   /**

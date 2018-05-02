@@ -1,14 +1,14 @@
 <app-canvas-editor>
-  <canvas appCanvas width="300" height="200" [figure]="fig1">
+  <canvas appCanvas [figure]="fig1">
   </canvas>
 </app-canvas-editor>
 
-<h2>Preview</h2>
-<canvas appCanvas width="300" height="200" [figure]="fig1">
-</canvas>
+<div class="preview">
+  <canvas appCanvas [width]="300" height="200" [figure]="fig1">
+  </canvas>
+</div>
 
-<h2>Other canvas</h2>
+<!--<h2>Other canvas</h2>
 <canvas appCanvas width="300" height="200" [figure]="fig2" (click)="clicked(fig2, $event)">
 </canvas>
-
-
+-->

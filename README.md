@@ -19,7 +19,7 @@ Essa versão será focada na parte de "Desenho Livre". Nela, serão abordadas im
 - Círculo: correção na função pick;
 
 ### v1.2a
-- Atualização da branch com as modificações feitas pelo professor, na master.
+- Atualização do fork com as modificações feitas na master.
 
 ### v1.3
 - Adição de ferramenta de criação de linhas de rabisco: o usuário clica na posição onde será o começo do rabisco e, ao arrastar o mouse, faz com que uma linha que segue o ponteiro do mouse, enquanto o botão estiver segurado, seja gerada.
@@ -47,6 +47,9 @@ Essa versão será focada na parte de "Desenho Livre". Nela, serão abordadas im
 
 ### v1.6a
 - Mudança de ordenação das ferramentas e adição de comentários.
+
+### v1.6b
+- Atualização do fork com as modificações feitas na master.
 
 ## TO-DOs
 - Rabisco: função scale.

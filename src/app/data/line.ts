@@ -19,7 +19,7 @@ export interface LineProperties extends Partial<ShapeProperties> {
  */
 export class Line extends Shape {
   readonly type = 'line';
-  protected props: LineProperties;
+  public props: LineProperties;
 
   /**
    * Create a new line with a unique id.
@@ -27,6 +27,7 @@ export class Line extends Shape {
    */
   constructor(props?: Partial<LineProperties>) {
     super(props);
+    this.id = this.generateId();
     this.props.startPoint = props.startPoint || DEFAULT_START;
     this.props.endPoint = props.endPoint || DEFAULT_END;
   }
