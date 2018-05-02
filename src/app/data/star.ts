@@ -37,11 +37,11 @@ export class Star extends Shape {
   }
 
   get width() {
-    return this.props.style.lineWidth;
+    return this.props.outerRadius*2;
   }
 
   get height() {
-    return this.props.style.lineWidth;
+    return this.props.outerRadius*2;
   }
 
   /**
@@ -67,20 +67,20 @@ export class Star extends Shape {
       rot += step
     }
     ctx.lineTo(this.x, this.y - this.props.outerRadius);
+    ctx.stroke();
     ctx.closePath();
-    ctx.fill();
   }
 
   /**
    * Check if a certain point is inside of it, using the Pythagorean theorem
-   * (using the inner radius as reference)
+   * (using the outer radius as reference)
    * @param p Point to be checked
    */
   pick(p: Point): boolean{
     const xDiff = p.x - this.x;
     const yDiff = p.y - this.y;
     const distance = Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2));
-    return distance <= this.props.innerRadius;
+    return distance <= this.props.outerRadius;
   }
 
   /**
