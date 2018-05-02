@@ -35,12 +35,34 @@ export class Polygon extends Shape {
     this.props.vertexCounter = props.vertexCounter || DEFAULT_VERTEX_COUNTER;
   }
 
+  getMinYX(opt) {
+    let minX = 100000;
+    let minY = 100000;
+    for (var i = 0; i < this.props.vertices.length; i++) {
+      if (this.props.vertices[i].x < minX) minX = this.props.vertices[i].x;
+      if (this.props.vertices[i].y < minY) minY = this.props.vertices[i].y;
+    }
+    if (opt === 'w') return minX;
+    if (opt === 'h') return minY;
+  }
+
+  getMaxYX(opt) {
+    let maxX = 0;
+    let maxY = 0;
+    for (var i = 0; i < this.props.vertices.length; i++) {
+      if (this.props.vertices[i].x > maxX) maxX = this.props.vertices[i].x;
+      if (this.props.vertices[i].y > maxY) maxY = this.props.vertices[i].y;
+    }
+    if (opt === 'w') return maxX;
+    if (opt === 'h') return maxY;
+  }
+
   get width() {
-    return this.props.style.lineWidth;
+    return this.getMaxYX('w') - this.getMinYX('w');
   }
 
   get height() {
-    return this.props.style.lineWidth;
+    return this.getMaxYX('h') - this.getMinYX('h');
   }
 
   get vertexCounter(){
@@ -84,12 +106,16 @@ export class Polygon extends Shape {
    * @param p Point to be checked
    */
   pick(p: Point){
-    let out = false;
-    for (var i=0;i<this.props.vertexCounter-1;i++){
-      out = out || this.crossProduct(p,this.props.vertices[i],this.props.vertices[i+1]);
+    if (!this.style.fill){
+      let out = false;
+      for (var i=0;i<this.props.vertexCounter-1;i++){
+        out = out || this.crossProduct(p,this.props.vertices[i],this.props.vertices[i+1]);
+      }
+      out = out || this.crossProduct(p,this.props.vertices[this.props.vertexCounter-1],this.props.vertices[0]);
+      return out;
+    } else {
+      return (p.x < this.getMaxYX('w') && p.x > this.getMinYX('w')) && (p.y < this.getMaxYX('h') && p.y > this.getMinYX('h'));
     }
-    out = out || this.crossProduct(p,this.props.vertices[this.props.vertexCounter-1],this.props.vertices[0]);
-    return out;
   }
 
   /**

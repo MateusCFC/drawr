@@ -126,8 +126,7 @@ const circle: Tool = {
   dragEnd: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
     const c = new Circle({
-      x: p1.x,
-      y: p1.y,
+      center: p1,
       radius: Math.sqrt(Math.pow(p1.x - p2.x,2) + Math.pow(p1.y - p2.y,2)),
       rotation: 0,
       style : {

@@ -37,11 +37,11 @@ export class Star extends Shape {
   }
 
   get width() {
-    return this.props.style.lineWidth;
+    return this.props.outerRadius*2;
   }
 
   get height() {
-    return this.props.style.lineWidth;
+    return this.props.outerRadius*2;
   }
 
   /**

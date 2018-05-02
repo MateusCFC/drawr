@@ -29,12 +29,34 @@ export class Triangle extends Shape {
     this.props.vertices = props.vertices || DEFAULT_VERTICES;
   }
 
+  getMinYX(opt) {
+    let minX = 100000;
+    let minY = 100000;
+    for (var i = 0; i < this.props.vertices.length; i++) {
+      if (this.props.vertices[i].x < minX) minX = this.props.vertices[i].x;
+      if (this.props.vertices[i].y < minY) minY = this.props.vertices[i].y;
+    }
+    if (opt === 'w') return minX;
+    if (opt === 'h') return minY;
+  }
+
+  getMaxYX(opt) {
+    let maxX = 0;
+    let maxY = 0;
+    for (var i = 0; i < this.props.vertices.length; i++) {
+      if (this.props.vertices[i].x > maxX) maxX = this.props.vertices[i].x;
+      if (this.props.vertices[i].y > maxY) maxY = this.props.vertices[i].y;
+    }
+    if (opt === 'w') return maxX;
+    if (opt === 'h') return maxY;
+  }
+
   get width() {
-    return this.props.style.lineWidth;
+    return this.getMaxYX('w') - this.getMinYX('w');
   }
 
   get height() {
-    return this.props.style.lineWidth;
+    return this.getMaxYX('h') - this.getMinYX('h');
   }
 
   /**
@@ -68,15 +90,40 @@ export class Triangle extends Shape {
   }
 
   /**
+   * Checks if a point is inside a filled triangle using barycentric coordinates.
+   * source: https://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
+   * @param p Point to be checked
+   */
+  checkByBaricenter(s: Point): boolean{
+    let a = this.props.vertices[0];
+    let b = this.props.vertices[1];
+    let c = this.props.vertices[2];
+    let asX = s.x - a.x;
+    let asY = s.y - a.y;
+
+    let sAB: boolean = (b.x-a.x)*asY-(b.y-a.y)*asX > 0;
+
+    if((c.x-a.x)*asY-(c.y-a.y)*asX > 0 == sAB) return false;
+
+    if((c.x-b.x)*(s.y-b.y)-(c.y-b.y)*(s.x-b.x) > 0 != sAB) return false;
+
+    return true;
+  }
+
+  /**
    * Check if a certain point is on it, using crossProduct function between
    * the three lines that compose the triangle.
    * @param p Point to be checked
    */
   pick(p: Point){
+    if (!this.style.fill){
     const l1 = this.crossProduct(p,this.props.vertices[0],this.props.vertices[1]);
     const l2 = this.crossProduct(p,this.props.vertices[1],this.props.vertices[2]);
     const l3 = this.crossProduct(p,this.props.vertices[2],this.props.vertices[0]);
     return l1 || l2 || l3;
+    } else {
+      return this.checkByBaricenter(p);
+    }
   }
 
   /**
