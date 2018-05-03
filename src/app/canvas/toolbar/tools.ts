@@ -32,6 +32,7 @@ type MouseHandler = ( canvas: CanvasDirective,
 export interface Tool {
   name: string;
   icon: string;
+  tooltip: string;
   click?: MouseHandler;
   dragStart?: MouseHandler;
   drag?: MouseHandler;
@@ -45,6 +46,7 @@ export interface Tool {
 const selection: Tool = {
   name: 'selection',
   icon: 'crop_free',
+  tooltip: 'Selection',
   click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p: Point, p2?: Point, ctx?: CanvasRenderingContext2D) => {
 
     console.log(canvas.figure.shapes);
@@ -77,6 +79,7 @@ const selection: Tool = {
 const rect: Tool = {
   name: 'rect',
   icon: 'check_box_outline_blank',
+  tooltip: 'Rectangle',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
     const w = p2.x - p1.x;
@@ -113,6 +116,7 @@ const rect: Tool = {
 const circle: Tool = {
   name: 'circle',
   icon: 'radio_button_unchecked',
+  tooltip: 'Circle',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
     const leftSize = Math.abs(p1.x - p2.x);
@@ -151,6 +155,7 @@ const circle: Tool = {
 const line: Tool = {
   name: 'line',
   icon: 'border_color',
+  tooltip: 'Line',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
     layer.context.beginPath();
@@ -187,6 +192,7 @@ const line: Tool = {
 const doodle: Tool = {
   name: 'doodle',
   icon: 'mode_edit',
+  tooltip: 'Doodle',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.context.beginPath();
     if (canvas.pointList.length == 0) canvas.pointList.push(p1);
@@ -223,6 +229,7 @@ const doodle: Tool = {
 const star: Tool = {
   name: 'star',
   icon: 'star_border',
+  tooltip: 'Star',
   click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point) => {
     layer.clear();
     const s = new Star({
@@ -253,6 +260,7 @@ const star: Tool = {
 const triangle: Tool = {
   name: 'triangle',
   icon: 'signal_cellular_null',
+  tooltip: 'Triangle',
   click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point) => {
     if (canvas.pointList[0] === undefined){
       canvas.pointList.push(p1);
@@ -281,6 +289,7 @@ const triangle: Tool = {
 const polygon: Tool = {
   name: 'polygon',
   icon: 'crop',
+  tooltip: 'Polygon',
   click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point) => {
     if (canvas.polygonVertexCounter === undefined){
       canvas.polygonVertexCounter = PolygonVertexes.VERTEX_COUNTER;
