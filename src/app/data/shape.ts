@@ -80,7 +80,6 @@ export abstract class Shape {
    * @param props The initial shape's properties.
    */
   constructor(props?: Partial<ShapeProperties>) {
-    this.generateId();
     this.props = props ? { ...props } : {};   // create a shallow copy
     this.x = this.x || 0;
     this.y = this.y || 0;
@@ -122,6 +121,16 @@ export abstract class Shape {
    */
   abstract get height(): number;
 
+    /**
+   * Width of the shape. It is abstract because it depends on the shape's path.
+   */
+  abstract set width(w: number);
+
+  /**
+   * Height of the shape. It is abstract because it depends on the shape's path.
+   */
+  abstract set height(w: number);
+
   /** X coordinate of the shape. */
   get x() { return this.props.x; }
 
@@ -154,7 +163,7 @@ export abstract class Shape {
   /** Set the drawing style of the shape (fill, stroke, transparency, and line properties) */
   set style(style: Partial<Style>) { this.props.style = style; }
 
-  /** Set the shadow properties of the shape. */  
+  /** Set the shadow properties of the shape. */
   set shadow(shadow: Shadow) { this.props.shadow = shadow; }
 
   /** Set the rotation angle (in degrees) of the shape. */
@@ -178,7 +187,7 @@ export abstract class Shape {
     this.path(ctx);
     this.render(ctx);
     ctx.closePath();
-    ctx.restore();  
+    ctx.restore();
   }
 
   // --- private/protected methods ----------------------------------------------------------
@@ -204,14 +213,14 @@ export abstract class Shape {
    */
   private render(ctx: CanvasRenderingContext2D) {
     this.setShadow(ctx);
-    if (this.style.transparency) {
-      ctx.globalAlpha = this.style.transparency;
-    }
+    //trasnparency
+    ctx.globalAlpha = this.style.transparency;
+
     if (this.style && this.style.fill) {
       this.setFill(ctx);
       ctx.fill();
     }
-    if (this.style && (this.style.stroke || this.style.lineWidth)) {
+    if (this.style && (this.style.lineWidth > 0)) {
       if (this.style.fill) {
         this.clearShadow(ctx);
       }
@@ -219,7 +228,7 @@ export abstract class Shape {
       ctx.stroke();
     }
   }
-  
+
   /** Check if a given parameter is a gradient. */
   private isGradient(fill): fill is Gradient {
     return (<Gradient>fill).type !== undefined;
@@ -257,7 +266,7 @@ export abstract class Shape {
           fill.gradient.addColorStop(colorStop.position, colorStop.color);
         }
       // }
-      ctx.fillStyle = fill.gradient;        
+      ctx.fillStyle = fill.gradient;
     }
     else if (this.isPattern(fill)) {
       if (fill.pattern === undefined) {
@@ -298,7 +307,7 @@ export abstract class Shape {
           stroke.gradient.addColorStop(colorStop.position, colorStop.color);
         }
       }
-      ctx.strokeStyle = stroke.gradient;        
+      ctx.strokeStyle = stroke.gradient;
     }
     if (style.lineWidth !== undefined) { ctx.lineWidth = style.lineWidth; }
     if (style.lineCap !== undefined) { ctx.lineCap = style.lineCap; }
@@ -335,7 +344,7 @@ export abstract class Shape {
    * Convert it to base 36 (numbers + letters), and grab the first 9
    * characters after the decimal.
    */
-  private generateId() {
+  protected generateId() {
     return `${this.type}-${Math.random().toString(36).substr(2, 6)}`;
   }
 

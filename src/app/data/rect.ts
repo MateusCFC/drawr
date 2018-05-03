@@ -15,7 +15,7 @@ function between(v: number, min: number, max: number) {
  */
 export interface RectProperties extends Partial<ShapeProperties> {
   width: number;
-  height: number;  
+  height: number;
 }
 
 /**
@@ -24,7 +24,7 @@ export interface RectProperties extends Partial<ShapeProperties> {
  */
 export class Rect extends Shape {
   readonly type = 'rect';
-  protected props: RectProperties;
+  public props: RectProperties;
 
   /**
    * Create a new rectangle with a unique id.
@@ -32,8 +32,10 @@ export class Rect extends Shape {
    */
   constructor(props?: Partial<RectProperties>) {
     super(props);
+    this.id = this.generateId();
     this.props.width = props.width || DEFAULT_WIDTH;
     this.props.height = props.height || DEFAULT_HEIGHT;
+
   }
 
   get width() {
@@ -42,6 +44,14 @@ export class Rect extends Shape {
 
   get height() {
     return this.props.height;
+  }
+
+  set width(w) {
+    this.props.width = w;
+  }
+
+  set height(h) {
+    this.props.height = h;
   }
 
   /**
@@ -57,12 +67,13 @@ export class Rect extends Shape {
    * @param p Position to check.
    */
   pick(p: Point): boolean {
+    //console.log(this.x + "<="+ p.x + "<="+ (this.x + this.width));
+    //console.log(this.y + "<="+ p.y + "<="+ (this.y + this.height));
     const insideX = between(p.x, this.x, this.x + this.width);
     const insideY = between(p.y, this.y, this.y + this.height);
-    if (this.style.fill) {
-      return insideX && insideY;  
-    }
-    else {
+    /*if (this.style.fill) {*/
+      return insideX && insideY;
+    /*} else {
       const discount = Math.max(this.style.lineWidth, PICK_WIDTH_MIN);
       const onLeftEdge = insideY && between(p.x, this.x - discount, this.x + discount);
       const onTopEdge = insideX && between(p.y, this.y - discount, this.y + discount);
@@ -71,7 +82,7 @@ export class Rect extends Shape {
       const onRightEdge = insideY && between(p.x, right - discount, right + discount);
       const onBottomEdge = insideX && between(p.y, bottom - discount, bottom + discount);
       return onLeftEdge || onRightEdge || onTopEdge || onBottomEdge;
-    }
+    }*/
   }
 
   /**

@@ -2,6 +2,9 @@ import { Rect } from './rect';
 import { Shape } from './shape';
 import { Subject } from 'rxjs/Subject';
 import { Point } from './point';
+import { EditorService } from '../canvas/editor/editor.service';
+import { ObjectController } from './object-controller';
+import { CanvasDirective } from '../canvas/canvas.directive';
 
 export type ShapeType = 'rect' | 'circle' | 'line';
 
@@ -102,7 +105,7 @@ export class Figure {
    * @param p Position to check.
    */
   pick(p: Point): Shape {
-    for(let i = this.shapes.length - 1; i >= 0; i--) {
+    for (let i = this.shapes.length - 1; i >= 0; i--) {
       if (this.shapes[i].pick(p)) {
         return this.shapes[i];
       }
@@ -122,11 +125,19 @@ export class Figure {
    * Draw the figure in a HTML canvas.
    * @param ctx HTML canvas 2D graphic context where the figure will be drawn
    */
-  draw(ctx: CanvasRenderingContext2D): void {
+  draw(canvas: CanvasDirective, editor: EditorService): void {
+    const ctx = canvas.context;
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    for (let shape of this.shapes) {
+    for (const shape of this.shapes) {
       shape.draw(ctx);
     }
+    if (canvas.mainCanvas) {
+      this.drawController(canvas.context, editor);
+    }
+  }
+
+  private drawController(ctx: CanvasRenderingContext2D, editor: EditorService) {
+    ObjectController.draw(ctx, editor);
   }
 
   /**

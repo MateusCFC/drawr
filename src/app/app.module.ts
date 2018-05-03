@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { CanvasModule } from './canvas/canvas.module';
 import { DataModule } from './data/data.module';
 import { SharedModule } from './shared/shared.module';
+import { ColorPickerComponent } from './canvas/props/color-picker/color-picker.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { SharedModule } from './shared/shared.module';
     DataModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ ColorPickerComponent ]
 })
 export class AppModule { }
