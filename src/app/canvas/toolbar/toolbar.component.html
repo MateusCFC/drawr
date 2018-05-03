@@ -1,6 +1,6 @@
 <mat-toolbar>
   <mat-button-toggle-group [value]="toolService.selected?.name">
-    <mat-button-toggle [value]="tool.name" *ngFor="let tool of toolService.tools" (click)="toolService.select(tool.name)">
+    <mat-button-toggle [value]="tool.name" title="{{tool.title}}" *ngFor="let tool of toolService.tools" (click)="toolService.select(tool.name)">
       <mat-icon>{{ tool.icon }}</mat-icon>
     </mat-button-toggle>
   </mat-button-toggle-group>

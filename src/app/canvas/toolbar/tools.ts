@@ -1,5 +1,6 @@
 import { CanvasDirective } from "../canvas.directive";
 import { Point } from "../../data/point";
+import { DataService } from "../../data/data.service";
 import { EditorService } from "../editor/editor.service";
 import { Rect } from "../../data/rect";
 import { Circle } from "../../data/circle";
@@ -32,6 +33,7 @@ type MouseHandler = ( canvas: CanvasDirective,
 export interface Tool {
   name: string;
   icon: string;
+  title: string;
   click?: MouseHandler;
   dragStart?: MouseHandler;
   drag?: MouseHandler;
@@ -45,6 +47,7 @@ export interface Tool {
 const selection: Tool = {
   name: 'selection',
   icon: 'crop_free',
+  title: '',
   click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p: Point, p2?: Point, ctx?: CanvasRenderingContext2D) => {
 
     console.log(canvas.figure.shapes);
@@ -77,6 +80,7 @@ const selection: Tool = {
 const rect: Tool = {
   name: 'rect',
   icon: 'check_box_outline_blank',
+  title: '',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
     const w = p2.x - p1.x;
@@ -113,6 +117,7 @@ const rect: Tool = {
 const circle: Tool = {
   name: 'circle',
   icon: 'radio_button_unchecked',
+  title: '',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
     const leftSize = Math.abs(p1.x - p2.x);
@@ -151,6 +156,7 @@ const circle: Tool = {
 const line: Tool = {
   name: 'line',
   icon: 'border_color',
+  title: '',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
     layer.context.beginPath();
@@ -187,6 +193,7 @@ const line: Tool = {
 const doodle: Tool = {
   name: 'doodle',
   icon: 'mode_edit',
+  title: '',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.context.beginPath();
     if (canvas.pointList.length == 0) canvas.pointList.push(p1);
@@ -223,6 +230,7 @@ const doodle: Tool = {
 const star: Tool = {
   name: 'star',
   icon: 'star_border',
+  title: '',
   click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point) => {
     layer.clear();
     const s = new Star({
@@ -253,6 +261,7 @@ const star: Tool = {
 const triangle: Tool = {
   name: 'triangle',
   icon: 'signal_cellular_null',
+  title: '',
   click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point) => {
     if (canvas.pointList[0] === undefined){
       canvas.pointList.push(p1);
@@ -281,6 +290,7 @@ const triangle: Tool = {
 const polygon: Tool = {
   name: 'polygon',
   icon: 'crop',
+  title: '',
   click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point) => {
     if (canvas.polygonVertexCounter === undefined){
       canvas.polygonVertexCounter = PolygonVertexes.VERTEX_COUNTER;
@@ -306,6 +316,30 @@ const polygon: Tool = {
 }
 
 /**
+ * 
+ */
+const exportImage: Tool = {
+  name: 'line',
+  icon: 'save',
+  title: 'Salvar desenho',
+  click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point) => {
+    /* TODO */
+  }
+}
+
+/**
+ * 
+ */
+const importImage: Tool = {
+  name: 'line',
+  icon: 'import_export',
+  title: 'Importar desenho',
+  click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point) => {
+    /* TODO */
+  }
+}
+
+/**
  * Set of tools used in the canvas editor.
  */
-export const tools = [ selection, line, doodle, rect, circle, triangle, star, polygon ];
+export const tools = [ selection, line, doodle, rect, circle, triangle, star, polygon, exportImage, importImage ];
