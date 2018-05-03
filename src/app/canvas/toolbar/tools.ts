@@ -23,6 +23,8 @@ type MouseHandler = ( canvas: CanvasDirective,
     p2?: Point,
     ctx?: CanvasRenderingContext2D) => void;
 
+type DataHandler = (canvas: CanvasDirective, data: DataService) => void;
+
 /**
  * A tool is defined by its name (identifier), the icon that will shown in the toolbar, and the
  * callbacks to four events as specified below.
@@ -37,7 +39,7 @@ export interface Tool {
   icon: string;
   title: string;
   click?: MouseHandler;
-  doubleClick?: any;
+  doubleClick?: DataHandler;
   dragStart?: MouseHandler;
   drag?: MouseHandler;
   dragEnd?: MouseHandler;
@@ -72,7 +74,7 @@ const selection: Tool = {
       }
     }
   },
-  doubleClick: (canvas: CanvasDirective) => {}
+  doubleClick: () => {}
 };
 
 /**
@@ -109,7 +111,7 @@ const rect: Tool = {
     canvas.figure.add(r);
     canvas.figure.refresh();
   },
-  doubleClick: (canvas: CanvasDirective) => {}
+  doubleClick: () => {}
 };
 
 /**
@@ -149,7 +151,7 @@ const circle: Tool = {
     canvas.figure.add(c);
     canvas.figure.refresh();
   },
-  doubleClick: (canvas: CanvasDirective) => {}
+  doubleClick: () => {}
 }
 
 /**
@@ -188,7 +190,7 @@ const line: Tool = {
     canvas.figure.add(l);
     canvas.figure.refresh();
   },
-  doubleClick: (canvas: CanvasDirective) => {}
+  doubleClick: () => {}
 }
 
 /**
@@ -226,7 +228,7 @@ const doodle: Tool = {
     canvas.figure.refresh();
     canvas.pointList = [];
   },
-  doubleClick: (canvas: CanvasDirective) => {}
+  doubleClick: () => {}
 }
 
 /**
@@ -258,7 +260,7 @@ const star: Tool = {
     canvas.figure.add(s);
     canvas.figure.refresh();
   },
-  doubleClick: (canvas: CanvasDirective) => {}
+  doubleClick: () => {}
 }
 
 /**
@@ -288,7 +290,7 @@ const triangle: Tool = {
     canvas.figure.refresh();
     canvas.pointList = [];
   },
-  doubleClick: (canvas: CanvasDirective) => {}
+  doubleClick: () => {}
 }
 
 /**
@@ -322,7 +324,7 @@ const polygon: Tool = {
       }
     }
   },
-  doubleClick: (canvas: CanvasDirective) => {}
+  doubleClick: () => {}
 }
 
 /**
@@ -335,8 +337,8 @@ const exportImage: Tool = {
   doubleClick: (canvas: CanvasDirective, data: DataService) => {
     /* TODO */
     Swal({
-      title: 'Formato da exportação',
-      text: "Em qual formato gostaria de salvar sua imagem?",
+      title: 'Salvar arquivo',
+      text: "Em qual formato gostaria de salvar seu desenho?",
       type: 'question',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -346,21 +348,14 @@ const exportImage: Tool = {
     }).then((result) => {
       // Handle the user choice
       if (result.value) {
-        Swal(
-          'Imagem!',
-          'Exportar como imagem.',
-          'success'
-        )
-      } 
+        // Export draw to image
+        data.saveAsImage(canvas.canvas);
+      }
       else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal(
-          'PDF',
-          'Exportar como PDF',
-          'error'
-        )
+        // Export draw to pdf
+        data.saveAsPDF(canvas.canvas);
       }
     });
-    console.log("exportImage");
   }
 }
 
