@@ -26,6 +26,7 @@ type MouseHandler = ( canvas: CanvasDirective,
  * A tool is defined by its name (identifier), the icon that will shown in the toolbar, and the
  * callbacks to four events as specified below.
  * * *mouse click* is called whenever the user clicks in the canvas;
+ * * *double mouse click* is called when the user clicks twice in the icon;
  * * *dragStart* is called when the user starts dragging on the canvas;
  * * *drag* is called when the user is dragging the mouse one the canvas, and finnaly;
  * * *dragEnd* is called when the dragging has finished.
@@ -35,11 +36,11 @@ export interface Tool {
   icon: string;
   title: string;
   click?: MouseHandler;
+  doubleClick?: any;
   dragStart?: MouseHandler;
   drag?: MouseHandler;
   dragEnd?: MouseHandler;
 }
-
 
 /**
  * Tool responsible for selecting a shape or a group of shapes.
@@ -69,7 +70,8 @@ const selection: Tool = {
         editor.selectedShape = null;
       }
     }
-  }
+  },
+  doubleClick: (canvas: CanvasDirective) => {}
 };
 
 /**
@@ -105,7 +107,8 @@ const rect: Tool = {
     });
     canvas.figure.add(r);
     canvas.figure.refresh();
-  }
+  },
+  doubleClick: (canvas: CanvasDirective) => {}
 };
 
 /**
@@ -144,7 +147,8 @@ const circle: Tool = {
 
     canvas.figure.add(c);
     canvas.figure.refresh();
-  }
+  },
+  doubleClick: (canvas: CanvasDirective) => {}
 }
 
 /**
@@ -182,7 +186,8 @@ const line: Tool = {
     });
     canvas.figure.add(l);
     canvas.figure.refresh();
-  }
+  },
+  doubleClick: (canvas: CanvasDirective) => {}
 }
 
 /**
@@ -219,7 +224,8 @@ const doodle: Tool = {
     canvas.figure.add(l);
     canvas.figure.refresh();
     canvas.pointList = [];
-  }
+  },
+  doubleClick: (canvas: CanvasDirective) => {}
 }
 
 /**
@@ -250,7 +256,8 @@ const star: Tool = {
 
     canvas.figure.add(s);
     canvas.figure.refresh();
-  }
+  },
+  doubleClick: (canvas: CanvasDirective) => {}
 }
 
 /**
@@ -279,7 +286,8 @@ const triangle: Tool = {
     canvas.figure.add(t);
     canvas.figure.refresh();
     canvas.pointList = [];
-  }
+  },
+  doubleClick: (canvas: CanvasDirective) => {}
 }
 
 /**
@@ -312,30 +320,33 @@ const polygon: Tool = {
         canvas.polygonVertexCounter = undefined;
       }
     }
-  }
+  },
+  doubleClick: (canvas: CanvasDirective) => {}
 }
 
 /**
- * 
+ * This tool is responsible for export the image canvas
  */
 const exportImage: Tool = {
   name: 'line',
   icon: 'save',
   title: 'Salvar desenho',
-  click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point) => {
+  doubleClick: (canvas: CanvasDirective, data: DataService) => {
     /* TODO */
+    console.log("exportImage");
   }
 }
 
 /**
- * 
+ * This tool is responsible for import the image canvas
  */
 const importImage: Tool = {
   name: 'line',
   icon: 'import_export',
   title: 'Importar desenho',
-  click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point) => {
+  doubleClick: (canvas: CanvasDirective, data: DataService) => {
     /* TODO */
+    console.log("importImage");
   }
 }
 
