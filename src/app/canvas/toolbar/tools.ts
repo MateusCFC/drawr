@@ -9,6 +9,7 @@ import { Doodle } from "../../data/doodle";
 import { Star } from "../../data/star";
 import { Triangle } from "../../data/triangle";
 import { Polygon, PolygonVertexes } from "../../data/polygon";
+import Swal from 'sweetalert2'
 
 /**
  * Define the callback function for mouse events.
@@ -333,6 +334,32 @@ const exportImage: Tool = {
   title: 'Salvar desenho',
   doubleClick: (canvas: CanvasDirective, data: DataService) => {
     /* TODO */
+    Swal({
+      title: 'Formato da exportação',
+      text: "Em qual formato gostaria de salvar sua imagem?",
+      type: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Imagem',
+      cancelButtonText: 'PDF'
+    }).then((result) => {
+      // Handle the user choice
+      if (result.value) {
+        Swal(
+          'Imagem!',
+          'Exportar como imagem.',
+          'success'
+        )
+      } 
+      else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal(
+          'PDF',
+          'Exportar como PDF',
+          'error'
+        )
+      }
+    });
     console.log("exportImage");
   }
 }
