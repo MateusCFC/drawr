@@ -1,3 +1,7 @@
-<p>
-  props works!
-</p>
+<div *ngIf="editorService.selectedShape">
+  <app-rect-properties *ngIf="editorService.selectedShape.type == 'rect'" [canvas]="canvas"></app-rect-properties>
+  <app-circle-properties *ngIf="editorService.selectedShape.type == 'circle'" [canvas]="canvas"></app-circle-properties>
+  <app-line-properties *ngIf="editorService.selectedShape.type == 'line'" [canvas]="canvas"></app-line-properties>
+  <app-doodle-properties *ngIf="editorService.selectedShape.type == 'doodle'" [canvas]="canvas"></app-doodle-properties>
+  <app-star-properties *ngIf="editorService.selectedShape.type == 'star'" [canvas]="canvas"></app-star-properties>
+</div>

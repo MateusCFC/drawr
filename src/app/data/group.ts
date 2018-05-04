@@ -10,6 +10,8 @@ export class Group extends Shape {
   /** The bottom left point of the group. Along with the group position (x and y), they define the group bouding box. */
   private max: Point;
 
+  public name: string;
+
   /** Members of the group. */
   shapes: Shape[];
 
@@ -17,9 +19,12 @@ export class Group extends Shape {
    * Create a new group and optionally set its initial members.
    * @param shapes A list of shapes that will be member of the group.
    */
-  constructor(shapes?: Shape[]) {
+  constructor(name: string, shapes?: Shape[]) {
     super();
     this.max = { x: 0, y: 0 };
+
+    this.name = name;
+
     this.resetBox();
     this.shapes = [];
     if (shapes) {
@@ -39,7 +44,7 @@ export class Group extends Shape {
    */
   add(shapes: Shape | Shape[]) {
     if (Array.isArray(shapes)) {
-      for(let shape of shapes) {
+      for (let shape of shapes) {
         this.shapes.push(shape);
       }
       this.updateBoxForAllShapes();
@@ -167,7 +172,7 @@ export class Group extends Shape {
    */
   private updateBoxForAllShapes() {
     this.resetBox();
-    for(let shape of this.shapes) {
+    for (let shape of this.shapes) {
       this.updateBox(shape);
     }
   }

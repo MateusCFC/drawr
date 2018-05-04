@@ -80,7 +80,6 @@ export abstract class Shape {
    * @param props The initial shape's properties.
    */
   constructor(props?: Partial<ShapeProperties>) {
-    this.generateId();
     this.props = props ? { ...props } : {};   // create a shallow copy
     this.x = this.x || 0;
     this.y = this.y || 0;
@@ -121,6 +120,16 @@ export abstract class Shape {
    * Height of the shape. It is abstract because it depends on the shape's path.
    */
   abstract get height(): number;
+
+    /**
+   * Width of the shape. It is abstract because it depends on the shape's path.
+   */
+  abstract set width(w: number);
+
+  /**
+   * Height of the shape. It is abstract because it depends on the shape's path.
+   */
+  abstract set height(w: number);
 
   /** X coordinate of the shape. */
   get x() { return this.props.x; }
@@ -204,14 +213,14 @@ export abstract class Shape {
    */
   private render(ctx: CanvasRenderingContext2D) {
     this.setShadow(ctx);
-    if (this.style.transparency) {
-      ctx.globalAlpha = this.style.transparency;
-    }
+    //trasnparency
+    ctx.globalAlpha = this.style.transparency;
+
     if (this.style && this.style.fill) {
       this.setFill(ctx);
       ctx.fill();
     }
-    if (this.style && (this.style.stroke || this.style.lineWidth)) {
+    if (this.style && (this.style.lineWidth > 0)) {
       if (this.style.fill) {
         this.clearShadow(ctx);
       }
@@ -335,7 +344,7 @@ export abstract class Shape {
    * Convert it to base 36 (numbers + letters), and grab the first 9
    * characters after the decimal.
    */
-  private generateId() {
+  protected generateId() {
     return `${this.type}-${Math.random().toString(36).substr(2, 6)}`;
   }
 

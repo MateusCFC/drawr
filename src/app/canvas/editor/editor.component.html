@@ -1,13 +1,16 @@
 <app-canvas-toolbar></app-canvas-toolbar>
 <mat-sidenav-container>
-  <mat-sidenav position="end">End</mat-sidenav>
+  <mat-sidenav position="end" mode="side" [opened]="editorService.selectedShape">
+    <app-canvas-props [canvas]="canvas"></app-canvas-props>
+  </mat-sidenav>
   <mat-sidenav-content>
     <ng-content></ng-content>
-    <canvas appCanvas class="layer" [figure]="layerFig"
+    <canvas appCanvas class="layer" [figure]="layerFig" [width]="width" [height]="height"
       (mousedown)="mouseDown($event)"
       (mouseup)="mouseUp($event)"
       (mousemove)="mouseMove($event)"
       (mouseout)="resetMouseEvent($event)"
+      (dblclick)="doubleClick($event)"
     ></canvas>
   </mat-sidenav-content>
 </mat-sidenav-container>

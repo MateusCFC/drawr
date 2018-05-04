@@ -6,7 +6,7 @@ import { EditorService } from '../canvas/editor/editor.service';
 import { ObjectController } from './object-controller';
 import { CanvasDirective } from '../canvas/canvas.directive';
 
-export type ShapeType = 'rect' | 'circle';
+export type ShapeType = 'rect' | 'circle' | 'line';
 
 /**
  * A figure is a set of shapes. It represents the model (data) and it's not concerned by the view (how the shapes are rendered).

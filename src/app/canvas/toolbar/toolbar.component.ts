@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ToolService } from './tool.service';
+import { CanvasEditorComponent } from '../editor/editor.component';
 
 @Component({
   selector: 'app-canvas-toolbar',
@@ -7,6 +8,6 @@ import { ToolService } from './tool.service';
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent {
-  constructor(public toolService: ToolService) {
+  constructor(public toolService: ToolService, public editorComponent: CanvasEditorComponent) {
   }
 }

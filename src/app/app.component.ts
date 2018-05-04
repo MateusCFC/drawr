@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { DataService } from './data/data.service';
 import { Figure } from './data/figure';
 import { Rect } from './data/rect';
@@ -6,7 +6,7 @@ import { Gradient, Style, Shadow } from './data/shape';
 import { Group } from './data/group';
 
 /**
- * Main component. It demonstrates the use of the other components. 
+ * Main component. It demonstrates the use of the other components.
  */
 @Component({
   selector: 'app-root',
@@ -14,6 +14,7 @@ import { Group } from './data/group';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   fig1: Figure;
   fig2: Figure;
 
@@ -74,7 +75,7 @@ export class AppComponent {
       .add(r1)
       .add(r2)
       .up(r1);
-      
+
     const r3 = new Rect({
       x: 200, y: 100,
       width: 50, height: 50
@@ -85,11 +86,11 @@ export class AppComponent {
       width: 50, height: 50
     });
 
-    const g1 = new Group([r3, r4]);
+    const g1 = new Group('', [r3, r4]);
     g1.moveTo(20,10);
     g1.scale(0.5, 0.5, 0.5, 0.5);
     g1.rotation = 45;
-      
+
     this.fig2 = dataServ.createFigure()
       .add(g1);
   }
