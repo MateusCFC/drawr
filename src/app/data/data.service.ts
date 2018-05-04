@@ -14,6 +14,33 @@ export class DataService {
   }
 
   /**
+   * Function responsible for forcing the browser to download
+   * 
+   * @param image_ 
+   * @param filename_ 
+   */
+  download(image_, filename_) {
+    // Create a virtual link <a>
+    var a = document.createElement("a");
+
+    // Set its exportation object
+    a.href = image_;
+
+    // Set the filename
+    a['download'] = filename_;
+
+    // Attach a mouse event
+    var e = document.createEvent("MouseEvents");
+
+    // Use of deprecated function to satisfy TypeScript.
+    e.initMouseEvent("click", true, false,
+        document.defaultView, 0, 0, 0, 0, 0,
+        false, false, false, false, 0, null);
+    a.dispatchEvent(e);
+    //a.removeNode();
+  }
+
+  /**
    * Function responsible for saving the draw as image
    * 
    * @param canvas_ 
@@ -23,7 +50,7 @@ export class DataService {
     let imgData = canvas_.toDataURL("image/png;base64;");
 
     // Force download
-    imgData = imgData.replace("image/png","image/octet-stream");
+    this.download(imgData, 'desenho.png');
   }
 
   /**
