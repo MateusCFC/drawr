@@ -342,16 +342,17 @@ const polygon: Tool = {
 const exportImage: Tool = {
   name: 'save',
   icon: 'save',
-  title: 'Salvar desenho',  
+  title: '',
+  tooltip: 'Save draw (double click)',
   doubleClick: (canvas: CanvasDirective, data: DataService) => {
     Swal({
-      title: 'Salvar arquivo',
-      text: "Em qual formato gostaria de salvar seu desenho?",
+      title: 'Save file',
+      text: "In which format would you like to save your draw?",
       type: 'question',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Imagem',
+      confirmButtonText: 'Image',
       cancelButtonText: 'PDF'
     }).then((result) => {
       // Handle the user choice
@@ -373,7 +374,8 @@ const exportImage: Tool = {
 const importImage: Tool = {
   name: 'import',
   icon: 'import_export',
-  title: 'Importar desenho',
+  title: '',
+  tooltip: 'Import draw (double click)',
   doubleClick: (canvas: CanvasDirective, data: DataService) => {
     // Trigger the file upload
     let input = document.getElementById('imgfile');
