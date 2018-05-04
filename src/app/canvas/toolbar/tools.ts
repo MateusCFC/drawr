@@ -335,10 +335,6 @@ const exportImage: Tool = {
   icon: 'save',
   title: 'Salvar desenho',  
   doubleClick: (canvas: CanvasDirective, data: DataService) => {
-
-    console.log(canvas);
-
-    /* TODO */
     Swal({
       title: 'Salvar arquivo',
       text: "Em qual formato gostaria de salvar seu desenho?",
@@ -376,14 +372,19 @@ const importImage: Tool = {
 
     // Image handler
     function handleFiles(e) {
+      // Get the canvas context
       var ctx = canvas.context;
       var img = new Image;
-      img.src = URL.createObjectURL(e.target.files[0]);
-      img.onload = function() {
-          ctx.drawImage(img, 40, 40);
+
+      if (!(e.target.files[0] === undefined)) {
+        img.src = URL.createObjectURL(e.target.files[0]);
+        img.onload = function() {
+            ctx.drawImage(img, 40, 40);
+        }
       }
     }
 
+    // Trigger the upload click
     input.click();
   }
 }
