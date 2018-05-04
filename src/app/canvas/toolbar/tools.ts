@@ -56,7 +56,6 @@ const selection: Tool = {
   tooltip: 'Selection',
   click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p: Point, p2?: Point, ctx?: CanvasRenderingContext2D) => {
 
-    console.log(canvas.figure.shapes);
     Object.keys(canvas.figure.shapes);
     for (let i = 0; i < canvas.figure.shapes.length; i++) {
       const id = Object.keys(canvas.figure.shapes)[i];
@@ -66,8 +65,6 @@ const selection: Tool = {
        * First step: Show controller -> Resize, Move and Rotate
        * Second step: Create a filter to mouseDown and mouseUp with the active controller
        */
-      console.log(shape);
-      console.log(shape.pick(p));
       if (shape.pick(p)) {
         editor.selectedShape = shape;
         break;
@@ -96,7 +93,6 @@ const rect: Tool = {
     layer.context.strokeRect(p1.x, p1.y, w, h);
   },
   dragEnd: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
-    console.log('get here');
     layer.clear();
     const r = new Rect({
       x: p1.x,
