@@ -370,8 +370,21 @@ const importImage: Tool = {
   icon: 'import_export',
   title: 'Importar desenho',
   doubleClick: (canvas: CanvasDirective, data: DataService) => {
-    /* TODO */
-    console.log("importImage");
+    // Trigger the file upload
+    let input = document.getElementById('imgfile');
+    input.addEventListener('change', handleFiles);
+
+    // Image handler
+    function handleFiles(e) {
+      var ctx = canvas.context;
+      var img = new Image;
+      img.src = URL.createObjectURL(e.target.files[0]);
+      img.onload = function() {
+          ctx.drawImage(img, 40, 40);
+      }
+    }
+
+    input.click();
   }
 }
 
