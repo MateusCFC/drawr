@@ -5,6 +5,7 @@ import {
   MatButtonModule, MatCheckboxModule, MatToolbarModule, MatIconModule,
   MatButtonToggleModule, MatSidenavModule, MatFormFieldModule, MatInputModule, MatSliderModule, MatDialogModule, MatTooltipModule
 } from '@angular/material';
+import 'hammerjs';
 
 const LAYOUT_MODULES: any[] = [
   FlexLayoutModule,

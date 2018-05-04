@@ -38,6 +38,7 @@ export interface Tool {
   name: string;
   icon: string;
   title: string;
+  tooltip: string;
   click?: MouseHandler;
   doubleClick?: DataHandler;
   dragStart?: MouseHandler;
@@ -52,6 +53,7 @@ const selection: Tool = {
   name: 'selection',
   icon: 'crop_free',
   title: '',
+  tooltip: 'Selection',
   click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p: Point, p2?: Point, ctx?: CanvasRenderingContext2D) => {
 
     console.log(canvas.figure.shapes);
@@ -86,6 +88,7 @@ const rect: Tool = {
   name: 'rect',
   icon: 'check_box_outline_blank',
   title: '',
+  tooltip: 'Rectangle',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
     const w = p2.x - p1.x;
@@ -124,6 +127,7 @@ const circle: Tool = {
   name: 'circle',
   icon: 'radio_button_unchecked',
   title: '',
+  tooltip: 'Circle',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
     const leftSize = Math.abs(p1.x - p2.x);
@@ -164,6 +168,7 @@ const line: Tool = {
   name: 'line',
   icon: 'border_color',
   title: '',
+  tooltip: 'Line',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
     layer.context.beginPath();
@@ -202,6 +207,7 @@ const doodle: Tool = {
   name: 'doodle',
   icon: 'mode_edit',
   title: '',
+  tooltip: 'Doodle',
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.context.beginPath();
     if (canvas.pointList.length == 0) canvas.pointList.push(p1);
@@ -240,6 +246,7 @@ const star: Tool = {
   name: 'star',
   icon: 'star_border',
   title: '',
+  tooltip: 'Star',
   click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point) => {
     layer.clear();
     const s = new Star({
@@ -272,6 +279,7 @@ const triangle: Tool = {
   name: 'triangle',
   icon: 'signal_cellular_null',
   title: '',
+  tooltip: 'Triangle',
   click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point) => {
     if (canvas.pointList[0] === undefined){
       canvas.pointList.push(p1);
@@ -302,6 +310,7 @@ const polygon: Tool = {
   name: 'polygon',
   icon: 'crop',
   title: '',
+  tooltip: 'Polygon',
   click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point) => {
     if (canvas.polygonVertexCounter === undefined){
       canvas.polygonVertexCounter = PolygonVertexes.VERTEX_COUNTER;

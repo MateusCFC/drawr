@@ -1,7 +1,7 @@
 import { Point } from './point';
 import { Shape, ShapeProperties } from './shape'
 
-const DEFAULT_VERTEX_COUNTER = 4;
+const DEFAULT_VERTEX_COUNTER = 5;
 const DEFAULT_VERTICES: Point[] = [{x:100, y:100}, {x:200, y:100}, {x:150, y:150}];
 const PICK_WIDTH_MIN = 4; //min width considered for the stroke when picking the polygon.
 
