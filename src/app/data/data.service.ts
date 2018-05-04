@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { Figure } from './figure';
-let jsPDF = require('jspdf');
+import * as jsPDF from 'jspdf'; 
 
 /**
  * Simple service to provide app data access.

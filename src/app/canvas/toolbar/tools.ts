@@ -29,7 +29,7 @@ type DataHandler = (canvas: CanvasDirective, data: DataService) => void;
  * A tool is defined by its name (identifier), the icon that will shown in the toolbar, and the
  * callbacks to four events as specified below.
  * * *mouse click* is called whenever the user clicks in the canvas;
- * * *double mouse click* is called when the user clicks twice in the icon;
+ * * *mouse double click* is called when the user clicks twice in the icon;
  * * *dragStart* is called when the user starts dragging on the canvas;
  * * *drag* is called when the user is dragging the mouse one the canvas, and finnaly;
  * * *dragEnd* is called when the dragging has finished.
@@ -331,10 +331,13 @@ const polygon: Tool = {
  * This tool is responsible for export the image canvas
  */
 const exportImage: Tool = {
-  name: 'line',
+  name: 'save',
   icon: 'save',
-  title: 'Salvar desenho',
+  title: 'Salvar desenho',  
   doubleClick: (canvas: CanvasDirective, data: DataService) => {
+
+    console.log(canvas);
+
     /* TODO */
     Swal({
       title: 'Salvar arquivo',
@@ -363,7 +366,7 @@ const exportImage: Tool = {
  * This tool is responsible for import the image canvas
  */
 const importImage: Tool = {
-  name: 'line',
+  name: 'import',
   icon: 'import_export',
   title: 'Importar desenho',
   doubleClick: (canvas: CanvasDirective, data: DataService) => {

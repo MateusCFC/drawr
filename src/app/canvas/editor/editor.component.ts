@@ -168,4 +168,18 @@ export class CanvasEditorComponent implements AfterContentInit {
     this.isDragging = false;
   }
 
+  /**
+   * Called when the mouse gets out from the canvas or when some interaction has finished.
+   * @param event mouse out event
+   */
+  doubleClick(event?: MouseEvent) {
+    if (event && event.type === 'dblclick') {
+      const tool = this.toolService.selected;
+      if (tool && (tool.name === 'save' || tool.name === 'import')) {
+        tool.doubleClick(this.canvas, this.dataService);
+      }
+    }
+    this.dragOrigin = undefined;
+    this.isDragging = false;
+  }
 }
