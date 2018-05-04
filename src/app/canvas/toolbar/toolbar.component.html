@@ -1,7 +1,9 @@
 <mat-toolbar>
   <mat-button-toggle-group [value]="toolService.selected?.name">
-    <mat-button-toggle matTooltip={{tool.tooltip}} [value]="tool.name" *ngFor="let tool of toolService.tools" (click)="toolService.select(tool.name)">
+    <mat-button-toggle [value]="tool.name" matTooltip={{tool.tooltip}} title="{{tool.title}}" *ngFor="let tool of toolService.tools" 
+      (click)="toolService.select(tool.name)" (dblclick)="editorComponent.doubleClick()">
       <mat-icon>{{ tool.icon }}</mat-icon>
     </mat-button-toggle>
   </mat-button-toggle-group>
+  <input type='file' id='imgfile' style="display: none"/>
 </mat-toolbar>

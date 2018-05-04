@@ -8,7 +8,6 @@ import { DataModule } from './data/data.module';
 import { SharedModule } from './shared/shared.module';
 import { ColorPickerComponent } from './canvas/props/color-picker/color-picker.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
