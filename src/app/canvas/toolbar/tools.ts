@@ -65,7 +65,7 @@ const selection: Tool = {
        * First step: Show controller -> Resize, Move and Rotate
        * Second step: Create a filter to mouseDown and mouseUp with the active controller
        */
-      if (shape.pick(p) && shape.type !== 'group') {
+      if (shape.type !== 'group' && shape.pick(p)) {
         editor.selectedShape = shape;
         break;
       } else {
@@ -95,7 +95,7 @@ const selection_group: Tool = {
        * First step: Show controller -> Resize, Move and Rotate
        * Second step: Create a filter to mouseDown and mouseUp with the active controller
        */
-      if (shape.pick(p) && shape.type === 'group') {
+      if (shape.type === 'group' && shape.pick(p)) {
         editor.selectedShape = shape;
         break;
       } else {
