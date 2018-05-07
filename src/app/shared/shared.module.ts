@@ -14,7 +14,7 @@ const LAYOUT_MODULES: any[] = [
 const MATERIAL_MODULES: any[] = [
   MatButtonModule, MatCheckboxModule, MatToolbarModule, MatIconModule,
   MatButtonToggleModule, MatSidenavModule, MatFormFieldModule, MatInputModule,
-  MatSliderModule, MatDialogModule, MatTooltipModule, MatSelectModule, ReactiveFormsModule
+  MatSliderModule, MatDialogModule, MatTooltipModule, MatSelectModule
 ];
 
 /**
