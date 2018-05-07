@@ -12,24 +12,45 @@ export class GroupService {
 
   private currentGroupNumber: number;
 
-  createGroup(shape: Shape): void {
-    this.groups.push(new Group(('Group ' + String(this.currentGroupNumber)), shape));
+  public createGroup(shape: Shape): Group {
+    const g = new Group(('Group ' + String(this.currentGroupNumber)), shape);
+    this.groups.push(g);
     this.currentGroupNumber += 1;
+    return g;
   }
 
-  addToGroup(name: String, shape: Shape) {
-    for (let group of this.groups) {
+  public addToGroup(name: String, shape: Shape): void {
+    for (const group of this.groups) {
       if (group.name === name) {
         group.add(shape);
       }
     }
   }
 
-  removeFromGroup(name: String, shape: Shape) {
-    for (let group of this.groups) {
+  public removeFromGroup(name: String, shape: Shape): void {
+    for (const group of this.groups) {
       if (group.name === name) {
         group.remove(shape);
       }
     }
   }
+
+  public getGroupFromName(name: String): Group {
+    for (const group of this.groups) {
+      if (group.name === name) {
+        return group;
+      }
+    }
+  }
+
+  public getGroupsFromShape(shape: Shape): Group[] {
+    const list = [];
+    for (const group of this.groups) {
+      if (group.has_shape(shape)) {
+        list.push(group);
+      }
+    }
+    return list;
+  }
+
 }
