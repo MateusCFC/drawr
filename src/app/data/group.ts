@@ -19,7 +19,7 @@ export class Group extends Shape {
    * Create a new group and optionally set its initial members.
    * @param shapes A list of shapes that will be member of the group.
    */
-  constructor(name: string, shapes?: Shape[]) {
+  constructor(name: string, shape?: Shape) {
     super();
     this.max = { x: 0, y: 0 };
 
@@ -27,50 +27,32 @@ export class Group extends Shape {
 
     this.resetBox();
     this.shapes = [];
-    if (shapes) {
-      this.add(shapes);
-      // Make the shape's position relative to the group position.
-      // So, they need to be moved.
-      for(let shape of shapes) {
-        shape.moveTo(shape.x - this.x, shape.y - this.y);
-      }
+    if (shape) {
+      this.add(shape);
+      // Make the shape position relative to the group position.
+      // So, it need to be moved.
+      shape.moveTo(shape.x - this.x, shape.y - this.y);
     }
   }
 
   /**
-   * Add one or more shapes. When a shape is added to the group, its box (which defines the group's position
+   * Add one shape. When a shape is added to the group, its box (which defines the group's position
    * and bottom-left coordinate) is updated.
-   * @param shape Shape of list of shapes to be added
+   * @param shape Shape to be added
    */
-  add(shapes: Shape | Shape[]) {
-    if (Array.isArray(shapes)) {
-      for (let shape of shapes) {
-        this.shapes.push(shape);
-      }
-      this.updateBoxForAllShapes();
-    }
-    else {
-      this.shapes.push(shapes);
-      this.updateBox(shapes);
-    }
+  add(shape: Shape) {
+    this.shapes.push(shape);
+    this.updateBox(shape);
   }
 
   /**
-   * Remove one or more shapes. When a shape is removed from the group, its box (which defines the group's position
+   * Remove one shape. When a shape is removed from the group, its box (which defines the group's position
    * and bottom-left coordinate) is updated.
    * @param shape Shape of list of shapes to be removed
    */
-  remove(shapes: Shape | Shape[]) {
-    if (Array.isArray(shapes)) {
-      for(let shape of shapes) {
-        const index = this.shapes.findIndex(sh => sh === shape);
-        this.shapes.splice(index, 1);
-      }
-    }
-    else {
-      const index = this.shapes.findIndex(sh => sh === shapes);
-      this.shapes.splice(index, 1);
-    }
+  remove(shape: Shape) {
+    const index = this.shapes.findIndex(sh => sh === shape);
+    this.shapes.splice(index, 1);
     this.updateBoxForAllShapes();
   }
 
