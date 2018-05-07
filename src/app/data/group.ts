@@ -22,10 +22,11 @@ export class Group extends Shape {
   constructor(name: string, shape?: Shape) {
     super();
     this.id = this.generateId();
+    // console.log(this.id);
     this.max = { x: 0, y: 0 };
 
     this.name = name;
-
+    // console.log(this.name);
     this.resetBox();
     this.shapes = [];
     if (shape) {
