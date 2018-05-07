@@ -33,6 +33,16 @@
     </mat-form-field>
   </div>
 
+  <h2>Groups</h2>
+  <button mat-button (click)="groupService.createGroupFromSelectedShape()">Criar Grupo com Shape</button>
+  <mat-form-field>
+    <mat-select placeholder="Grupos" name="Grupos" [(ngModel)]="groupService.selectedGroups" [compareWith]="groupService.compare" (change)="groupService.processSelectedGroups($event)" multiple>
+      <mat-option *ngFor="let group of groupService.getGroups()" [value]="group">
+        {{ group.id }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
   <h2>Style</h2>
   <div fxLayout="row" fxFlexFill>
     <mat-form-field fxFlex="70" class="form-field">

@@ -65,8 +65,40 @@ const selection: Tool = {
        * First step: Show controller -> Resize, Move and Rotate
        * Second step: Create a filter to mouseDown and mouseUp with the active controller
        */
-      if (shape.pick(p)) {
+      if (shape.type !== 'group' && shape.pick(p)) {
         editor.selectedShape = shape;
+        break;
+      } else {
+        editor.selectedShape = null;
+      }
+    }
+  },
+  doubleClick: () => {}
+};
+
+/**
+ * Tool responsible for selecting a shape or a group of shapes.
+ */
+const selection_group: Tool = {
+  name: 'selection group',
+  icon: 'photo_size_select_large',
+  title: '',
+  tooltip: 'Selection group',
+  click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p: Point, p2?: Point, ctx?: CanvasRenderingContext2D) => {
+
+    Object.keys(canvas.figure.shapes);
+    for (let i = 0; i < canvas.figure.shapes.length; i++) {
+      const id = Object.keys(canvas.figure.shapes)[i];
+      const shape = canvas.figure.shapes[id];
+      console.log(shape);
+      /**
+       * First step: Show controller -> Resize, Move and Rotate
+       * Second step: Create a filter to mouseDown and mouseUp with the active controller
+       */
+      if (shape.type === 'group' && shape.pick(p)) {
+        console.log('Selecionou um grupo');
+        editor.selectedShape = shape;
+        console.log(editor.selectedShape);
         break;
       } else {
         editor.selectedShape = null;
@@ -399,4 +431,4 @@ const importImage: Tool = {
 /**
  * Set of tools used in the canvas editor.
  */
-export const tools = [ selection, line, doodle, rect, circle, triangle, star, polygon, exportImage, importImage ];
+export const tools = [ selection, selection_group, line, doodle, rect, circle, triangle, star, polygon, exportImage, importImage ];
