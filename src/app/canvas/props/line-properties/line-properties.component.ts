@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CanvasDirective } from '../../canvas.directive';
 import { EditorService } from '../../editor/editor.service';
+import { GroupService } from '../../../data/group.service';
 import { MatDialog } from '@angular/material';
 import { Line } from '../../../data/line';
 import { Gradient } from '../../../data/shape';
@@ -26,7 +27,7 @@ export class LinePropertiesComponent implements OnInit {
 
   private shape: Line;
 
-  constructor(public editorService: EditorService, public dialog: MatDialog) { }
+  constructor(public editorService: EditorService, public groupService: GroupService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.shape = this.editorService.selectedShape as Line;
@@ -43,6 +44,8 @@ export class LinePropertiesComponent implements OnInit {
 
     this.lineWidth = this.shape.style.lineWidth;
     this.stroke = this.shape.style.stroke;
+
+    this.groupService.setSelectedShape(this.shape);
   }
 
   updateShape(){
