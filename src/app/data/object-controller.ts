@@ -2,17 +2,27 @@ import { EditorService } from '../canvas/editor/editor.service';
 import { Point } from './point';
 
 function between(v: number, min: number, max: number) {
-  return (min <= v) && (v <= max);
+  return min <= v && v <= max;
+}
+
+export enum ObjectControllersTypes {
+  ScaleTopLeft,
+  ScaleTopRight,
+  ScaleBottomLeft,
+  ScaleBottomRight,
+  Rotation,
+  Move
 }
 
 export class ObjectController {
-
   private PICK_WIDTH_MIN = 4;
 
   constructor(private editor: EditorService) {}
 
   static draw(ctx: CanvasRenderingContext2D, editor: EditorService): void {
-    if (!editor.selectedShape) { return; }
+    if (!editor.selectedShape) {
+      return;
+    }
     ctx.save();
     ctx.strokeStyle = 'blue';
     ctx.fillStyle = 'blue';
@@ -73,14 +83,105 @@ export class ObjectController {
     ctx.stroke();
     ctx.closePath();
 
+    // Draw the rotation controller
+    ctx.beginPath();
+    ctx.arc(
+      editor.selectedShape.x + editor.selectedShape.width / 2,
+      editor.selectedShape.y - 15,
+      3,
+      0,
+      2 * Math.PI
+    );
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.moveTo(
+      editor.selectedShape.x + editor.selectedShape.width / 2,
+      editor.selectedShape.y
+    );
+    ctx.lineTo(
+      editor.selectedShape.x + editor.selectedShape.width / 2,
+      editor.selectedShape.y - 12
+    );
+    ctx.stroke();
+    ctx.closePath();
+
     ctx.restore();
   }
 
   isTopLeftScaleController(p: Point) {
     const shape = this.editor.selectedShape;
-    const insideX = between(p.x, shape.x - 10 - this.PICK_WIDTH_MIN, shape.x - 10 + 5 + this.PICK_WIDTH_MIN);
-    const insideY = between(p.y, shape.y - 10 - this.PICK_WIDTH_MIN, shape.y - 10 + 5 + this.PICK_WIDTH_MIN);
+    const insideX = between(
+      p.x,
+      shape.x - 10 - this.PICK_WIDTH_MIN,
+      shape.x - 10 + 5 + this.PICK_WIDTH_MIN
+    );
+    const insideY = between(
+      p.y,
+      shape.y - 10 - this.PICK_WIDTH_MIN,
+      shape.y - 10 + 5 + this.PICK_WIDTH_MIN
+    );
     return insideX && insideY;
   }
 
+  isBottomLeftScaleController(p: Point) {
+    const shape = this.editor.selectedShape;
+    const insideX = between(
+      p.x,
+      shape.x - 10 - this.PICK_WIDTH_MIN,
+      shape.x - 10 + 5 + this.PICK_WIDTH_MIN
+    );
+    const insideY = between(
+      p.y,
+      shape.y + shape.height + 10 - this.PICK_WIDTH_MIN,
+      shape.y + shape.height + 10 + 5 + this.PICK_WIDTH_MIN
+    );
+    return insideX && insideY;
+  }
+
+  isTopRightScaleController(p: Point) {
+    const shape = this.editor.selectedShape;
+    const insideX = between(
+      p.x,
+      shape.x + shape.width + 10 - this.PICK_WIDTH_MIN,
+      shape.x + shape.width + 10 + this.PICK_WIDTH_MIN
+    );
+    const insideY = between(
+      p.y,
+      shape.y - 10 - this.PICK_WIDTH_MIN,
+      shape.y - 10 + 5 + this.PICK_WIDTH_MIN
+    );
+    return insideX && insideY;
+  }
+
+  isBottomRightScaleController(p: Point) {
+    const shape = this.editor.selectedShape;
+    const insideX = between(
+      p.x,
+      shape.x + shape.width + 10 - this.PICK_WIDTH_MIN,
+      shape.x + shape.width + 10 + this.PICK_WIDTH_MIN
+    );
+    const insideY = between(
+      p.y,
+      shape.y + shape.height + 10 - this.PICK_WIDTH_MIN,
+      shape.y + shape.height + 10 + 5 + this.PICK_WIDTH_MIN
+    );
+    return insideX && insideY;
+  }
+
+  isRotateController(p: Point) {
+    const shape = this.editor.selectedShape;
+    const insideX = between(
+      p.x,
+      shape.x + (shape.width / 2) - this.PICK_WIDTH_MIN,
+      shape.x + (shape.width / 2) + this.PICK_WIDTH_MIN
+    );
+    const insideY = between(
+      p.y,
+      shape.y - 15 - this.PICK_WIDTH_MIN,
+      shape.y - 15 + this.PICK_WIDTH_MIN
+    );
+    return insideX && insideY;
+  }
 }

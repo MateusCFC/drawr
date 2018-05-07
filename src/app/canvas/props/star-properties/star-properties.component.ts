@@ -3,6 +3,7 @@ import { Gradient, Pattern } from '../../../data/shape';
 import { CanvasDirective } from '../../canvas.directive';
 import { Star } from '../../../data/star';
 import { EditorService } from '../../editor/editor.service';
+import { GroupService } from '../../../data/group.service';
 import { MatDialog } from '@angular/material';
 import { ColorPickerComponent } from '../color-picker/color-picker.component';
 
@@ -28,7 +29,7 @@ export class StarPropertiesComponent implements OnInit {
 
   private shape: Star;
 
-  constructor(public editorService: EditorService, public dialog: MatDialog) {
+  constructor(public editorService: EditorService, public groupService: GroupService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -49,6 +50,8 @@ export class StarPropertiesComponent implements OnInit {
 
     this.lineWidth = this.shape.style.lineWidth;
     this.stroke = this.shape.style.stroke;
+
+    this.groupService.setSelectedShape(this.shape);
   }
 
   updateShape(){

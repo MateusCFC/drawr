@@ -3,9 +3,9 @@ import { CommonModule, } from '@angular/common';
 import { FlexLayoutModule, } from '@angular/flex-layout';
 import {
   MatButtonModule, MatCheckboxModule, MatToolbarModule, MatIconModule,
-  MatButtonToggleModule, MatSidenavModule, MatFormFieldModule, MatInputModule, MatSliderModule, MatDialogModule, MatTooltipModule
+  MatButtonToggleModule, MatSidenavModule, MatFormFieldModule, MatInputModule,
+  MatSliderModule, MatDialogModule, MatTooltipModule, MatSelectModule
 } from '@angular/material';
-import 'hammerjs';
 
 const LAYOUT_MODULES: any[] = [
   FlexLayoutModule,
@@ -13,7 +13,8 @@ const LAYOUT_MODULES: any[] = [
 
 const MATERIAL_MODULES: any[] = [
   MatButtonModule, MatCheckboxModule, MatToolbarModule, MatIconModule,
-  MatButtonToggleModule, MatSidenavModule, MatFormFieldModule, MatInputModule, MatSliderModule, MatDialogModule, MatTooltipModule
+  MatButtonToggleModule, MatSidenavModule, MatFormFieldModule, MatInputModule,
+  MatSliderModule, MatDialogModule, MatTooltipModule, MatSelectModule
 ];
 
 /**

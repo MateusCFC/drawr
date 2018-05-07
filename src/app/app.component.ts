@@ -16,7 +16,7 @@ import { Group } from './data/group';
 export class AppComponent {
 
   fig1: Figure;
-  fig2: Figure;
+  // fig2: Figure;
 
   /**
    * Create two figures to illustrate how to create figures and how to add shapes to them.
@@ -75,24 +75,6 @@ export class AppComponent {
       .add(r1)
       .add(r2)
       .up(r1);
-
-    const r3 = new Rect({
-      x: 200, y: 100,
-      width: 50, height: 50
-    });
-
-    const r4 = new Rect({
-      x: 100, y: 100,
-      width: 50, height: 50
-    });
-
-    const g1 = new Group([r3, r4]);
-    g1.moveTo(20,10);
-    g1.scale(0.5, 0.5, 0.5, 0.5);
-    g1.rotation = 45;
-
-    this.fig2 = dataServ.createFigure()
-      .add(g1);
   }
 
   clicked(fig: Figure, event: MouseEvent) {

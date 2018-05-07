@@ -3,6 +3,7 @@ import { ColorPickerComponent } from '../color-picker/color-picker.component';
 import { Gradient, Pattern } from '../../../data/shape';
 import { CanvasDirective } from '../../canvas.directive';
 import { EditorService } from '../../editor/editor.service';
+import { GroupService } from '../../../data/group.service';
 import { MatDialog } from '@angular/material';
 import { Circle } from '../../../data/circle';
 
@@ -30,7 +31,7 @@ export class CirclePropertiesComponent implements OnInit {
 
   private shape: Circle;
 
-  constructor(public editorService: EditorService, public dialog: MatDialog) {
+  constructor(public editorService: EditorService, public groupService: GroupService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -60,6 +61,8 @@ export class CirclePropertiesComponent implements OnInit {
 
     this.lineWidth = this.shape.style.lineWidth;
     this.stroke = this.shape.style.stroke;
+
+    this.groupService.setSelectedShape(this.shape);
   }
 
   updateShape(){

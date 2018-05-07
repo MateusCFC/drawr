@@ -10,6 +10,8 @@ export class Group extends Shape {
   /** The bottom left point of the group. Along with the group position (x and y), they define the group bouding box. */
   private max: Point;
 
+  public name: string;
+
   /** Members of the group. */
   shapes: Shape[];
 
@@ -17,57 +19,58 @@ export class Group extends Shape {
    * Create a new group and optionally set its initial members.
    * @param shapes A list of shapes that will be member of the group.
    */
-  constructor(shapes?: Shape[]) {
+  constructor(name: string, shape?: Shape) {
     super();
+    this.id = this.generateId();
+    // console.log(this.id);
     this.max = { x: 0, y: 0 };
+
+    this.name = name;
+    // console.log(this.name);
     this.resetBox();
     this.shapes = [];
-    if (shapes) {
-      this.add(shapes);
-      // Make the shape's position relative to the group position.
-      // So, they need to be moved.
-      for(let shape of shapes) {
-        shape.moveTo(shape.x - this.x, shape.y - this.y);
-      }
+    if (shape) {
+      this.add(shape);
+      // Make the shape position relative to the group position.
+      // So, it need to be moved.
+      shape.moveTo(shape.x - this.x, shape.y - this.y);
     }
   }
 
   /**
-   * Add one or more shapes. When a shape is added to the group, its box (which defines the group's position
+   * Add one shape. When a shape is added to the group, its box (which defines the group's position
    * and bottom-left coordinate) is updated.
-   * @param shape Shape of list of shapes to be added
+   * @param shape Shape to be added
    */
-  add(shapes: Shape | Shape[]) {
-    if (Array.isArray(shapes)) {
-      for(let shape of shapes) {
-        this.shapes.push(shape);
-      }
-      this.updateBoxForAllShapes();
-    }
-    else {
-      this.shapes.push(shapes);
-      this.updateBox(shapes);
-    }
+  add(shape: Shape) {
+    this.shapes.push(shape);
+    this.updateBox(shape);
   }
 
   /**
-   * Remove one or more shapes. When a shape is removed from the group, its box (which defines the group's position
+   * Remove one shape. When a shape is removed from the group, its box (which defines the group's position
    * and bottom-left coordinate) is updated.
-   * @param shape Shape of list of shapes to be removed
+   * @param shape Shape to be removed
    */
-  remove(shapes: Shape | Shape[]) {
-    if (Array.isArray(shapes)) {
-      for(let shape of shapes) {
-        const index = this.shapes.findIndex(sh => sh === shape);
-        this.shapes.splice(index, 1);
-      }
-    }
-    else {
-      const index = this.shapes.findIndex(sh => sh === shapes);
-      this.shapes.splice(index, 1);
-    }
+  remove(shape: Shape) {
+    const index = this.shapes.findIndex(sh => sh === shape);
+    this.shapes.splice(index, 1);
     this.updateBoxForAllShapes();
   }
+
+  /**
+   * Check if group has the shape
+   *  @param shape Shape to be checked
+   */
+  has_shape(shape: Shape) {
+    for (const current_shape of this.shapes) {
+      if (current_shape === shape) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 
   /**
    * The group width is the difference between left and right positions.
@@ -88,14 +91,14 @@ export class Group extends Shape {
    * @param ctx Canvas graphics context
    */
   draw(ctx: CanvasRenderingContext2D): void {
-    ctx.save();
-    this.rotate(ctx);
-    // draw the shapes of the group relative to the group position
-    ctx.translate(this.x, this.y);
-    for (let shape of this.shapes) {
-      shape.draw(ctx);
-    }
-    ctx.restore();
+    // ctx.save();
+    // this.rotate(ctx);
+    // // draw the shapes of the group relative to the group position
+    // ctx.translate(this.x, this.y);
+    // for (let shape of this.shapes) {
+    //   shape.draw(ctx);
+    // }
+    // ctx.restore();
   }
 
   /**
@@ -167,7 +170,7 @@ export class Group extends Shape {
    */
   private updateBoxForAllShapes() {
     this.resetBox();
-    for(let shape of this.shapes) {
+    for (let shape of this.shapes) {
       this.updateBox(shape);
     }
   }
