@@ -86,8 +86,8 @@ export class AppComponent {
       width: 50, height: 50
     });
 
-    const g1 = new Group('', [r3, r4]);
-    g1.moveTo(20,10);
+    const g1 = new Group('', r3);
+    g1.moveTo(20, 10);
     g1.scale(0.5, 0.5, 0.5, 0.5);
     g1.rotation = 45;
 
