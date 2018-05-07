@@ -90,13 +90,15 @@ const selection_group: Tool = {
     for (let i = 0; i < canvas.figure.shapes.length; i++) {
       const id = Object.keys(canvas.figure.shapes)[i];
       const shape = canvas.figure.shapes[id];
-
+      console.log(shape);
       /**
        * First step: Show controller -> Resize, Move and Rotate
        * Second step: Create a filter to mouseDown and mouseUp with the active controller
        */
       if (shape.type === 'group' && shape.pick(p)) {
+        console.log('Selecionou um grupo');
         editor.selectedShape = shape;
+        console.log(editor.selectedShape);
         break;
       } else {
         editor.selectedShape = null;
