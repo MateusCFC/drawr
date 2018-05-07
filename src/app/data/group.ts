@@ -21,6 +21,7 @@ export class Group extends Shape {
    */
   constructor(name: string, shape?: Shape) {
     super();
+    this.id = this.generateId();
     this.max = { x: 0, y: 0 };
 
     this.name = name;
@@ -48,13 +49,27 @@ export class Group extends Shape {
   /**
    * Remove one shape. When a shape is removed from the group, its box (which defines the group's position
    * and bottom-left coordinate) is updated.
-   * @param shape Shape of list of shapes to be removed
+   * @param shape Shape to be removed
    */
   remove(shape: Shape) {
     const index = this.shapes.findIndex(sh => sh === shape);
     this.shapes.splice(index, 1);
     this.updateBoxForAllShapes();
   }
+
+  /**
+   * Check if group has the shape
+   *  @param shape Shape to be checked
+   */
+  has_shape(shape: Shape) {
+    for (const current_shape of this.shapes) {
+      if (current_shape === shape) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 
   /**
    * The group width is the difference between left and right positions.
@@ -75,14 +90,14 @@ export class Group extends Shape {
    * @param ctx Canvas graphics context
    */
   draw(ctx: CanvasRenderingContext2D): void {
-    ctx.save();
-    this.rotate(ctx);
-    // draw the shapes of the group relative to the group position
-    ctx.translate(this.x, this.y);
-    for (let shape of this.shapes) {
-      shape.draw(ctx);
-    }
-    ctx.restore();
+    // ctx.save();
+    // this.rotate(ctx);
+    // // draw the shapes of the group relative to the group position
+    // ctx.translate(this.x, this.y);
+    // for (let shape of this.shapes) {
+    //   shape.draw(ctx);
+    // }
+    // ctx.restore();
   }
 
   /**
