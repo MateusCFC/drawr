@@ -1,3 +1,65 @@
-<p>
-  polygon-properties works!
-</p>
+<form (ngSubmit)="updateShape()" (change)="updateShape()" fxLayout="column" fxFlexFill >
+  <h1>Properties</h1>
+  <mat-form-field class="form-field">
+    <input matInput type="text" placeholder="type" [(ngModel)]="editorService.selectedShape.type"  name="type" disabled>
+  </mat-form-field>
+  <mat-form-field class="form-field">
+    <input matInput type="text" placeholder="id" [(ngModel)]="editorService.selectedShape.id"  name="id">
+  </mat-form-field>
+
+  <div fxLayout="row" fxFlexFill>
+    <mat-form-field fxFlex="50" class="form-field">
+      <input matInput type="number" placeholder="x" [(ngModel)]="x"  name="x">
+    </mat-form-field>
+    <mat-form-field fxFlex="50" class="form-field">
+      <input matInput type="number" placeholder="y" [(ngModel)]="y"  name="y">
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxFlexFill>
+    <mat-form-field fxFlex="50" class="form-field">
+      <input matInput type="number" placeholder="width" [(ngModel)]="width"  name="width" min="1">
+    </mat-form-field>
+    <mat-form-field fxFlex="50" class="form-field">
+      <input matInput type="number" placeholder="height" [(ngModel)]="height"  name="height" min="1">
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxFlexFill>
+    <mat-form-field fxFlex="50" class="form-field">
+      <input matInput type="number" placeholder="rotation" [(ngModel)]="rotation"  name="rotation" min="0" max="360">
+      <span matSuffix>&nbsp;°</span>
+    </mat-form-field>
+    <mat-form-field fxFlex="50" class="form-field">
+      <input matInput type="number" placeholder="opacity" [(ngModel)]="transparency"  name="transparency" min="0" max="100">
+      <span matSuffix>&nbsp;%</span>
+    </mat-form-field>
+  </div>
+
+  <h2>Groups</h2>
+  <button mat-button (click)="groupService.createGroupFromSelectedShape()">Criar Grupo com Shape</button>
+  <mat-form-field>
+    <mat-select placeholder="Grupos" name="Grupos" [(ngModel)]="groupService.selectedGroups" [compareWith]="groupService.compare" (change)="groupService.processSelectedGroups($event)" multiple>
+      <mat-option *ngFor="let group of groupService.getGroups()" [value]="group">
+        {{ group.id }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <h2>Style</h2>
+  <mat-form-field fxFlex="100" class="form-field">
+    <input matInput type="text" placeholder="background" [(ngModel)]="fill"  name="fill">
+    <mat-icon matSuffix (click)="openColorPickerFill()" matTooltip="Open Color Picker!!!!">colorize</mat-icon>
+  </mat-form-field>
+
+  <div fxLayout="row" fxFlexFill>
+    <mat-form-field fxFlex="70" class="form-field">
+      <input matInput type="text" placeholder="stroke" [(ngModel)]="stroke"  name="stroke">
+      <mat-icon matSuffix (click)="openColorPickerStroke()" matTooltip="Open Color Picker!!!!">colorize</mat-icon>
+    </mat-form-field>
+    <mat-form-field fxFlex="30" class="form-field">
+      <input matInput type="number" placeholder="size" [(ngModel)]="lineWidth"  name="lineWidth" min="0">
+    </mat-form-field>
+  </div>
+
+</form>

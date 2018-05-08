@@ -27,7 +27,7 @@ export class PolygonVerticesHandler {
 }
 
 /**
- * Polygon shape. 
+ * Polygon shape.
  * It is defined by an array of Points that represents its vertices.
  */
 export class Polygon extends Shape {
@@ -40,6 +40,7 @@ export class Polygon extends Shape {
    */
   constructor(props?: Partial<PolygonProperties>) {
     super(props);
+    this.id = this.generateId();
     this.props.vertices = props.vertices || DEFAULT_VERTICES;
     this.props.vertexCounter = props.vertexCounter || DEFAULT_VERTEX_COUNTER;
   }

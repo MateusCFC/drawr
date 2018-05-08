@@ -360,6 +360,15 @@ const polygon: Tool = {
       canvas.polygonVertexCounter -= 1;
       if (canvas.polygonVertexCounter == 0) {
         const p = new Polygon({
+          x: p1.x,
+          y: p1.y,
+          rotation: 0,
+          style: {
+            fill: '#cccccc',
+            stroke: '#000000',
+            lineWidth: 1,
+            transparency: 1
+          },
           vertices: canvas.pointList,
           vertexCounter: PolygonVerticesHandler.VERTEX_COUNTER
         });
