@@ -10,7 +10,7 @@ Para executar o projeto, utilize o comando:
 
     npm start
 
-Isso criará um servidor local  [localhost:4200](http://localhost:4200) e abrirá o navegador com o LiveReload ativado para que a página se auto-atualize toda vez que for detectada alguma mudança no código.
+Isso criará um [servidor local (localhost:4200)](http://localhost:4200) e abrirá o navegador com o LiveReload ativado para que a página se auto-atualize toda vez que for detectada alguma mudança no código.
 
 E para lançar o aplicativo para produção, execute o comando:
 
