@@ -35,14 +35,13 @@ export class CirclePropertiesComponent implements OnInit {
   }
 
   ngOnInit() {
-    /*this.editorService.shapeSelectionChanged.subscribe(() => {
-      if (this.editorService.selectedShape) {
-        this.setFieldValues();
-      }
-    });
-    */
     this.shape = this.editorService.selectedShape as Circle;
     this.setFieldValues();
+
+    // atualiza o painel de propriedades quando o usuário interagir com as shapes direto no canvas
+    this.canvas.figure.$update.subscribe(() => {
+      this.setFieldValues();
+    });
   }
 
   setFieldValues(){
