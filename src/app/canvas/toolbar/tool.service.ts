@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { tools } from './tools';
 import { Subject } from 'rxjs/Subject';
+import { SnackBarService } from './snackbar.service';
+import { DialogService } from './dialog.service';
 
 /**
  * Service responsible for managing the current drawing tool.
  */
 @Injectable()
 export class ToolService {
+  constructor(private snackBarService: SnackBarService, private dialogService: DialogService) { }
+
   private currentIndex: number;
 
   private pointListSubject = new Subject<boolean>();
@@ -35,9 +39,14 @@ export class ToolService {
    */
   select(name: string) {
     this.currentIndex = tools.findIndex(tool => tool.name === name);
-    //important to keep the order on the tools array declaration
-    if (!(this.currentIndex == tools.length-1)){
+    if (tools[this.currentIndex].name != 'polygon') {
       this.pointListSubject.next(true);
+    }
+    if (tools[this.currentIndex].name == 'triangle') {
+      this.snackBarService.openTriangleSnackBar();
+    }
+    if (tools[this.currentIndex].name == 'polygon'){
+      this.dialogService.openPolygonDialog();
     }
   }
 }
