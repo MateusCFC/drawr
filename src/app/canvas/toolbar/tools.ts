@@ -320,6 +320,15 @@ const triangle: Tool = {
     }
     canvas.pointList.push(p1);
     const t = new Triangle({
+      x: p1.x,
+      y: p1.y,
+      rotation: 0,
+      style: {
+        fill: '#cccccc',
+        stroke: '#000000',
+        lineWidth: 1,
+        transparency: 1
+      },
       vertices: canvas.pointList
     });
     canvas.figure.add(t);

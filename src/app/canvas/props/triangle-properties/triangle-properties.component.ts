@@ -1,19 +1,18 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Gradient, Pattern } from '../../../data/shape';
 import { CanvasDirective } from '../../canvas.directive';
+import { Triangle } from '../../../data/triangle';
 import { EditorService } from '../../editor/editor.service';
 import { GroupService } from '../../../data/group.service';
 import { MatSelect, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ColorPickerComponent } from '../color-picker/color-picker.component';
-import { Rect } from '../../../data/rect';
 
 @Component({
-  selector: 'app-rect-properties',
-  templateUrl: './rect-properties.component.html',
-  styleUrls: ['./rect-properties.component.css'],
-  entryComponents: [ ColorPickerComponent ]
+  selector: 'app-triangle-properties',
+  templateUrl: './triangle-properties.component.html',
+  styleUrls: ['./triangle-properties.component.css']
 })
-export class RectPropertiesComponent implements OnInit {
+export class TrianglePropertiesComponent implements OnInit {
 
   x: number;
   y: number;
@@ -28,13 +27,12 @@ export class RectPropertiesComponent implements OnInit {
 
   @Input() canvas: CanvasDirective;
 
-  private shape: Rect;
+  private shape: Triangle;
 
-  constructor(public editorService: EditorService, public groupService: GroupService, public dialog: MatDialog) {
-  }
+  constructor(public editorService: EditorService, public groupService: GroupService, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.shape = this.editorService.selectedShape as Rect;
+    this.shape = this.editorService.selectedShape as Triangle;
     this.setFieldValues();
   }
 
@@ -57,8 +55,8 @@ export class RectPropertiesComponent implements OnInit {
 
   updateShape(): void {
     this.shape.moveTo(Number(this.x), Number(this.y));
-    this.shape.width = this.width;
-    this.shape.height = this.height;
+    /*this.shape.width = this.width;*/
+    /*this.shape.height = this.height;*/
     this.shape.rotation = this.rotation;
     this.shape.style.transparency = this.transparency / 100;
 
@@ -99,4 +97,5 @@ export class RectPropertiesComponent implements OnInit {
       }
     });
   }
+
 }

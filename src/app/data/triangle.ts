@@ -13,7 +13,7 @@ export interface TriangleProperties extends Partial<ShapeProperties> {
 }
 
 /**
- * Triangle shape. 
+ * Triangle shape.
  * It is defined by an array of Points that represents its vertices.
  */
 export class Triangle extends Shape {
@@ -26,29 +26,30 @@ export class Triangle extends Shape {
    */
   constructor(props?: Partial<TriangleProperties>) {
     super(props);
+    this.id = this.generateId();
     this.props.vertices = props.vertices || DEFAULT_VERTICES;
   }
 
   getMinYX(opt) {
     let minX = 100000;
     let minY = 100000;
-    for (var i = 0; i < this.props.vertices.length; i++) {
-      if (this.props.vertices[i].x < minX) minX = this.props.vertices[i].x;
-      if (this.props.vertices[i].y < minY) minY = this.props.vertices[i].y;
+    for (let i = 0; i < this.props.vertices.length; i++) {
+      if (this.props.vertices[i].x < minX) { minX = this.props.vertices[i].x; }
+      if (this.props.vertices[i].y < minY) { minY = this.props.vertices[i].y; }
     }
-    if (opt === 'w') return minX;
-    if (opt === 'h') return minY;
+    if (opt === 'w') { return minX; }
+    if (opt === 'h') { return minY; }
   }
 
   getMaxYX(opt) {
     let maxX = 0;
     let maxY = 0;
-    for (var i = 0; i < this.props.vertices.length; i++) {
-      if (this.props.vertices[i].x > maxX) maxX = this.props.vertices[i].x;
-      if (this.props.vertices[i].y > maxY) maxY = this.props.vertices[i].y;
+    for (let i = 0; i < this.props.vertices.length; i++) {
+      if (this.props.vertices[i].x > maxX) { maxX = this.props.vertices[i].x; }
+      if (this.props.vertices[i].y > maxY) { maxY = this.props.vertices[i].y; }
     }
-    if (opt === 'w') return maxX;
-    if (opt === 'h') return maxY;
+    if (opt === 'w') { return maxX; }
+    if (opt === 'h') { return maxY; }
   }
 
   get width() {
@@ -103,9 +104,9 @@ export class Triangle extends Shape {
 
     let sAB: boolean = (b.x-a.x)*asY-(b.y-a.y)*asX > 0;
 
-    if((c.x-a.x)*asY-(c.y-a.y)*asX > 0 == sAB) return false;
+    if((c.x-a.x)*asY-(c.y-a.y)*asX > 0 == sAB) { return false; }
 
-    if((c.x-b.x)*(s.y-b.y)-(c.y-b.y)*(s.x-b.x) > 0 != sAB) return false;
+    if((c.x-b.x)*(s.y-b.y)-(c.y-b.y)*(s.x-b.x) > 0 != sAB) { return false; }
 
     return true;
   }
