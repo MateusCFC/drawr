@@ -8,7 +8,7 @@ import { Line } from "../../data/line";
 import { Doodle } from "../../data/doodle";
 import { Star } from "../../data/star";
 import { Triangle } from "../../data/triangle";
-import { Polygon, PolygonVertexes } from "../../data/polygon";
+import { Polygon, PolygonVerticesHandler } from "../../data/polygon";
 import Swal from 'sweetalert2'
 
 /**
@@ -16,12 +16,12 @@ import Swal from 'sweetalert2'
  * It must receive the canvas (where the figures are drawn), the canvas layer (where the user
  * interaction happens), and one or two points, according to the occorred event.
  */
-type MouseHandler = ( canvas: CanvasDirective,
-    layer: CanvasDirective,
-    editor: EditorService,
-    p1: Point,
-    p2?: Point,
-    ctx?: CanvasRenderingContext2D) => void;
+type MouseHandler = (canvas: CanvasDirective,
+  layer: CanvasDirective,
+  editor: EditorService,
+  p1: Point,
+  p2?: Point,
+  ctx?: CanvasRenderingContext2D) => void;
 
 type DataHandler = (canvas: CanvasDirective, data: DataService) => void;
 
@@ -73,7 +73,7 @@ const selection: Tool = {
       }
     }
   },
-  doubleClick: () => {}
+  doubleClick: () => { }
 };
 
 /**
@@ -105,7 +105,7 @@ const selection_group: Tool = {
       }
     }
   },
-  doubleClick: () => {}
+  doubleClick: () => { }
 };
 
 /**
@@ -132,17 +132,17 @@ const rect: Tool = {
       width: p2.x - p1.x,
       height: p2.y - p1.y,
       rotation: 0,
-      style : {
-          fill : '#cccccc',
-          stroke : '#000000',
-          lineWidth : 1,
-          transparency: 1
+      style: {
+        fill: '#cccccc',
+        stroke: '#000000',
+        lineWidth: 1,
+        transparency: 1
       }
     });
     canvas.figure.add(r);
     canvas.figure.refresh();
   },
-  doubleClick: () => {}
+  doubleClick: () => { }
 };
 
 /**
@@ -160,9 +160,9 @@ const circle: Tool = {
     layer.clear();
     const leftSize = Math.abs(p1.x - p2.x);
     const topSize = Math.abs(p1.y - p2.y);
-    const radius = Math.sqrt(leftSize*leftSize + topSize*topSize);
+    const radius = Math.sqrt(leftSize * leftSize + topSize * topSize);
     layer.context.beginPath();
-    layer.context.arc(p1.x,p1.y,radius,0,Math.PI*2);
+    layer.context.arc(p1.x, p1.y, radius, 0, Math.PI * 2);
     layer.context.stroke();
     layer.context.closePath();
   },
@@ -170,12 +170,12 @@ const circle: Tool = {
     layer.clear();
     const c = new Circle({
       center: p1,
-      radius: Math.sqrt(Math.pow(p1.x - p2.x,2) + Math.pow(p1.y - p2.y,2)),
+      radius: Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2)),
       rotation: 0,
-      style : {
-        fill : '#cccccc',
-        stroke : '#000000',
-        lineWidth : 1,
+      style: {
+        fill: '#cccccc',
+        stroke: '#000000',
+        lineWidth: 1,
         transparency: 1
       }
     });
@@ -183,7 +183,7 @@ const circle: Tool = {
     canvas.figure.add(c);
     canvas.figure.refresh();
   },
-  doubleClick: () => {}
+  doubleClick: () => { }
 }
 
 /**
@@ -200,8 +200,8 @@ const line: Tool = {
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.clear();
     layer.context.beginPath();
-    layer.context.moveTo(p1.x,p1.y);
-    layer.context.lineTo(p2.x,p2.y);
+    layer.context.moveTo(p1.x, p1.y);
+    layer.context.lineTo(p2.x, p2.y);
     layer.context.stroke();
     layer.context.closePath();
   },
@@ -214,16 +214,16 @@ const line: Tool = {
       x: p1.x,
       y: p1.y,
       rotation: 0,
-      style : {
-          stroke : '#000000',
-          lineWidth : 1,
-          transparency: 1
+      style: {
+        stroke: '#000000',
+        lineWidth: 1,
+        transparency: 1
       }
     });
     canvas.figure.add(l);
     canvas.figure.refresh();
   },
-  doubleClick: () => {}
+  doubleClick: () => { }
 }
 
 /**
@@ -239,8 +239,8 @@ const doodle: Tool = {
   drag: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point, p2: Point) => {
     layer.context.beginPath();
     if (canvas.pointList.length == 0) canvas.pointList.push(p1);
-    layer.context.moveTo(canvas.pointList[canvas.pointList.length-1].x,canvas.pointList[canvas.pointList.length-1].y);
-    layer.context.lineTo(p2.x,p2.y);
+    layer.context.moveTo(canvas.pointList[canvas.pointList.length - 1].x, canvas.pointList[canvas.pointList.length - 1].y);
+    layer.context.lineTo(p2.x, p2.y);
     canvas.pointList.push(p2);
     layer.context.stroke();
     layer.context.closePath();
@@ -252,17 +252,17 @@ const doodle: Tool = {
       x: p1.x,
       y: p1.y,
       rotation: 0,
-      style : {
-          stroke : '#000000',
-          lineWidth : 1,
-          transparency: 1
+      style: {
+        stroke: '#000000',
+        lineWidth: 1,
+        transparency: 1
       }
     });
     canvas.figure.add(l);
     canvas.figure.refresh();
     canvas.pointList = [];
   },
-  doubleClick: () => {}
+  doubleClick: () => { }
 }
 
 /**
@@ -281,11 +281,11 @@ const star: Tool = {
       x: p1.x,
       y: p1.y,
       rotation: 0,
-      style : {
-          fill : '#cccccc',
-          stroke : '#000000',
-          lineWidth : 1,
-          transparency: 1
+      style: {
+        fill: '#cccccc',
+        stroke: '#000000',
+        lineWidth: 1,
+        transparency: 1
       },
       spikes: 5,
       innerRadius: 5,
@@ -295,7 +295,7 @@ const star: Tool = {
     canvas.figure.add(s);
     canvas.figure.refresh();
   },
-  doubleClick: () => {}
+  doubleClick: () => { }
 }
 
 /**
@@ -309,11 +309,11 @@ const triangle: Tool = {
   title: '',
   tooltip: 'Triangle',
   click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point) => {
-    if (canvas.pointList[0] === undefined){
+    if (canvas.pointList[0] === undefined) {
       canvas.pointList.push(p1);
       return;
     } else {
-      if (canvas.pointList[1] === undefined){
+      if (canvas.pointList[1] === undefined) {
         canvas.pointList.push(p1);
         return;
       }
@@ -326,7 +326,7 @@ const triangle: Tool = {
     canvas.figure.refresh();
     canvas.pointList = [];
   },
-  doubleClick: () => {}
+  doubleClick: () => { }
 }
 
 /**
@@ -340,19 +340,19 @@ const polygon: Tool = {
   title: '',
   tooltip: 'Polygon',
   click: (canvas: CanvasDirective, layer: CanvasDirective, editor: EditorService, p1: Point) => {
-    if (canvas.polygonVertexCounter === undefined){
-      canvas.polygonVertexCounter = PolygonVertexes.VERTEX_COUNTER;
+    if (canvas.polygonVertexCounter === undefined) {
+      canvas.polygonVertexCounter = PolygonVerticesHandler.VERTEX_COUNTER;
       canvas.pointList.push(p1);
       canvas.polygonVertexCounter -= 1;
       return;
     }
-    if (canvas.polygonVertexCounter > 0){
+    if (canvas.polygonVertexCounter > 0) {
       canvas.pointList.push(p1);
       canvas.polygonVertexCounter -= 1;
       if (canvas.polygonVertexCounter == 0) {
         const p = new Polygon({
           vertices: canvas.pointList,
-          vertexCounter: PolygonVertexes.VERTEX_COUNTER
+          vertexCounter: PolygonVerticesHandler.VERTEX_COUNTER
         });
         canvas.figure.add(p);
         canvas.figure.refresh();
@@ -361,7 +361,7 @@ const polygon: Tool = {
       }
     }
   },
-  doubleClick: () => {}
+  doubleClick: () => { }
 }
 
 /**
@@ -417,8 +417,8 @@ const importImage: Tool = {
 
       if (!(e.target.files[0] === undefined)) {
         img.src = URL.createObjectURL(e.target.files[0]);
-        img.onload = function() {
-            ctx.drawImage(img, 40, 40);
+        img.onload = function () {
+          ctx.drawImage(img, 40, 40);
         }
       }
     }
@@ -431,4 +431,4 @@ const importImage: Tool = {
 /**
  * Set of tools used in the canvas editor.
  */
-export const tools = [ selection, selection_group, line, doodle, rect, circle, triangle, star, polygon, exportImage, importImage ];
+export const tools = [selection, selection_group, line, doodle, rect, circle, triangle, star, polygon, exportImage, importImage];
