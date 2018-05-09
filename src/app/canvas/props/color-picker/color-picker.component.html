@@ -29,28 +29,28 @@
 
         <div fxLayout="row" fxFlexFill>
           <div class="form-field" fxFlex="70">
-            <mat-slider min="0" max="255" step="1" [(ngModel)]="red" name="red" class="red-slider"></mat-slider>
+            <mat-slider min="0" max="255" step="1" [(ngModel)]="red" name="red" class="red-slider" (change)="this.updateHSB()"></mat-slider>
           </div>
           <mat-form-field class="form-field" fxFlex="30">
-              <input matInput type="number" placeholder="red" [(ngModel)]="red" name="red" min="0" max="255">
+              <input matInput type="number" placeholder="red" [(ngModel)]="red" name="red" min="0" max="255" (change)="this.updateHSB()">
           </mat-form-field>
         </div>
 
         <div fxLayout="row" fxFlexFill>
           <div class="form-field" fxFlex="70">
-            <mat-slider min="0" max="255" step="1" [(ngModel)]="green" name="green"></mat-slider>
+            <mat-slider min="0" max="255" step="1" [(ngModel)]="green" name="green" (change)="this.updateHSB()"></mat-slider>
           </div>
           <mat-form-field class="form-field" fxFlex="30">
-              <input matInput type="number" placeholder="green" [(ngModel)]="green" name="green" min="0" max="255">
+              <input matInput type="number" placeholder="green" [(ngModel)]="green" name="green" min="0" max="255" (change)="this.updateHSB()">
           </mat-form-field>
         </div>
 
         <div fxLayout="row" fxFlexFill>
           <div class="form-field" fxFlex="70">
-            <mat-slider min="0" max="255" step="1" [(ngModel)]="blue" name="blue"></mat-slider>
+            <mat-slider min="0" max="255" step="1" [(ngModel)]="blue" name="blue" (change)="this.updateHSB()"></mat-slider>
           </div>
           <mat-form-field class="form-field" fxFlex="30" >
-              <input matInput type="number" placeholder="blue" [(ngModel)]="blue" name="blue" min="0" max="255">
+              <input matInput type="number" placeholder="blue" [(ngModel)]="blue" name="blue" min="0" max="255" (change)="this.updateHSB()">
           </mat-form-field>
         </div>
       </div>

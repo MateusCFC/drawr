@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject, ElementRef, ViewChild } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import * as Colorsys from 'colorsys';
 
 
 const MAX_SATURATION = 100;
@@ -35,12 +36,6 @@ export class ColorPickerComponent implements OnInit {
 
   hueLimit;
 
-  /**
-   * API cara conversão entre formatos de cores
-   * https://www.npmjs.com/package/colorsys
-   * */
-  colorsy = require('colorsys');
-
   constructor(
     public dialogRef: MatDialogRef<ColorPickerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -55,33 +50,41 @@ export class ColorPickerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.saturationLimit = this.SBcontrol.nativeElement.offsetWidth;
+    this.brightnessLimit = this.SBcontrol.nativeElement.offsetHeight;
+    this.hueLimit = this.Hcontrol.nativeElement.offsetHeight;
+
     const rgb = this.hexToRgb(this.data.hex);
     this.red = rgb.r;
     this.green = rgb.g;
     this.blue = rgb.b;
 
-    const hsb = this.colorsy.rgb_to_hsl(rgb);
-    this.hue = hsb.h;
-    this.saturation = hsb.s;
-    this.brightness = hsb.l;
-
-    this.saturationLimit = this.SBcontrol.nativeElement.offsetWidth;
-    this.brightnessLimit = this.SBcontrol.nativeElement.offsetHeight;
-    this.hueLimit = this.Hcontrol.nativeElement.offsetHeight;
+    this.updateHSB();
   }
 
   updateRGB() {
-    const rgb = this.colorsy.hsl_to_rgb(this.hue, this.saturation, this.brightness);
+    const rgb = Colorsys.hsl_to_rgb(this.hue, this.saturation, this.brightness);
     this.red = rgb.r;
     this.green = rgb.g;
     this.blue = rgb.b;
   }
 
   updateHSB() {
-    const hsb = this.colorsy.rgb_to_hsl(this.red, this.green, this.blue);
+    const hsb = Colorsys.rgb_to_hsl(this.red, this.green, this.blue);
     this.hue = hsb.h;
     this.saturation = hsb.s;
     this.brightness = hsb.l;
+
+    const offsetS = Math.round( this.saturation * this.saturationLimit / MAX_SATURATION );
+    const briLimit = MAX_BRIGHTNESS - Math.round(offsetS * (MAX_BRIGHTNESS / 2) / this.saturationLimit);
+    const offsetB = Math.round( (briLimit -  this.brightness) * this.brightnessLimit / briLimit );
+
+    this.SBcontrol.nativeElement.children[0].style.left = (offsetS - 5) + "px";
+    this.SBcontrol.nativeElement.children[0].style.top = (offsetB - 5) + "px";
+
+    const offsetH = Math.round( (MAX_HUE - this.hue) * this.hueLimit / MAX_HUE );
+    this.Hcontrol.nativeElement.children[0].style.top = (offsetH - 5) + "px";
+
   }
 
   save() {
@@ -123,7 +126,7 @@ export class ColorPickerComponent implements OnInit {
    * Converte um valor em rgb para seu correspondente em HSB
    */
   rgbToHsb(r, g, b) {
-    const hsb = this.colorsy.rgb_to_hsl(r, g, b);
+    const hsb = Colorsys.rgb_to_hsl(r, g, b);
     return hsb.h + ' ' + hsb.s + ' ' + hsb.l;
   }
 
@@ -139,7 +142,9 @@ export class ColorPickerComponent implements OnInit {
     this.SBcontrol.nativeElement.children[0].style.top = (event.offsetY - 5) + "px";
 
     this.saturation = Math.round(event.offsetX * MAX_SATURATION / this.saturationLimit);
-    this.brightness = MAX_BRIGHTNESS - Math.round(event.offsetY * MAX_BRIGHTNESS / this.brightnessLimit);
+
+    const briLimit = MAX_BRIGHTNESS - Math.round(event.offsetX * (MAX_BRIGHTNESS / 2) / this.saturationLimit);
+    this.brightness = briLimit - Math.round(event.offsetY * briLimit / this.brightnessLimit);
     this.updateRGB();
   }
 
