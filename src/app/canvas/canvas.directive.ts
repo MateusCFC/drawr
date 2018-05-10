@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Point } from '../data/point';
 import { ToolService } from '../canvas/toolbar/tool.service';
 import { EditorService } from './editor/editor.service';
+import { GroupsService } from './groups/groups.service';
 
 /**
  * Adapt the HTML canvas element to handle figures.
@@ -28,16 +29,19 @@ export class CanvasDirective implements OnInit, OnDestroy {
   private _context: CanvasRenderingContext2D;
   private figureSubscription: Subscription;
 
-  //saves point list. used by the doodle, triangle and polygon tools.
+  // saves point list. used by the doodle, triangle and polygon tools.
   public pointList: Point[] = [];
 
-  //subscription that listens to tool changes to persist (or not) information.
+  // subscription that listens to tool changes to persist (or not) information.
   private pointListSubscription: Subscription;
 
-  //saves polygon points counter. used by the polygon function.
+  private groupCreatedSubscription: Subscription;
+
+  // saves polygon points counter. used by the polygon function.
   public polygonVertexCounter: number;
-  
-  constructor(elm: ElementRef, private editorService: EditorService, private toolService: ToolService) {
+
+  constructor(elm: ElementRef, private editorService: EditorService, private toolService: ToolService,
+    private groupsService: GroupsService) {
     this._canvas = elm.nativeElement;
     this._context = this._canvas.getContext('2d');
     this._canvas.style.border = '1px dashed #ccc';
@@ -67,6 +71,13 @@ export class CanvasDirective implements OnInit, OnDestroy {
       );
     }
     this.pointListSubscription = this.toolService.$plUpdate.subscribe(() => this.refreshStoredInfo());
+
+    this.groupCreatedSubscription = this.groupsService.groupCreated$.subscribe(
+      group => {
+        console.log('Evento Grupo Criado');
+        console.log(group);
+      }
+    );
   }
 
   /**
@@ -75,6 +86,7 @@ export class CanvasDirective implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.figureSubscription.unsubscribe();
     this.pointListSubscription.unsubscribe();
+    this.groupCreatedSubscription.unsubscribe();
   }
 
   clear() {
