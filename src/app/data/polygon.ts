@@ -14,11 +14,20 @@ export interface PolygonProperties extends Partial<ShapeProperties> {
   vertexCounter: number;
 }
 
-export class PolygonVertexes {
-    public static VERTEX_COUNTER: number = DEFAULT_VERTEX_COUNTER;
+export class PolygonVerticesHandler {
+    public static VERTEX_COUNTER: number;
+
+    static set vertexCounter(n: number){
+      this.VERTEX_COUNTER = n;
+    }
+
+    static get vertexCounter(){
+      return this.VERTEX_COUNTER;
+    }
 }
+
 /**
- * Polygon shape. 
+ * Polygon shape.
  * It is defined by an array of Points that represents its vertices.
  */
 export class Polygon extends Shape {
@@ -31,6 +40,7 @@ export class Polygon extends Shape {
    */
   constructor(props?: Partial<PolygonProperties>) {
     super(props);
+    this.id = this.generateId();
     this.props.vertices = props.vertices || DEFAULT_VERTICES;
     this.props.vertexCounter = props.vertexCounter || DEFAULT_VERTEX_COUNTER;
   }

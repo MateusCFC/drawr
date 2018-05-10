@@ -14,6 +14,8 @@ import { CirclePropertiesComponent } from './props/circle-properties/circle-prop
 import { LinePropertiesComponent } from './props/line-properties/line-properties.component';
 import { DoodlePropertiesComponent } from './props/doodle-properties/doodle-properties.component';
 import { StarPropertiesComponent } from './props/star-properties/star-properties.component';
+import { TrianglePropertiesComponent } from './props/triangle-properties/triangle-properties.component';
+import { PolygonPropertiesComponent } from './props/polygon-properties/polygon-properties.component';
 
 /**
  * Integrate drawing funcionalities in a canvas.
@@ -34,7 +36,9 @@ import { StarPropertiesComponent } from './props/star-properties/star-properties
     CirclePropertiesComponent,
     LinePropertiesComponent,
     DoodlePropertiesComponent,
-    StarPropertiesComponent
+    StarPropertiesComponent,
+    TrianglePropertiesComponent,
+    PolygonPropertiesComponent
   ],
   providers: [
     ToolService,

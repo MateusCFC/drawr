@@ -8,6 +8,9 @@ import { DataModule } from './data/data.module';
 import { SharedModule } from './shared/shared.module';
 import { ColorPickerComponent } from './canvas/props/color-picker/color-picker.component';
 
+import { SnackBarService } from './canvas/toolbar/snackbar.service';
+import { DialogService } from './canvas/toolbar/dialog.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,8 +22,8 @@ import { ColorPickerComponent } from './canvas/props/color-picker/color-picker.c
     CanvasModule,
     DataModule
   ],
-  providers: [],
+  providers: [SnackBarService, DialogService],
   bootstrap: [AppComponent],
-  entryComponents: [ ColorPickerComponent ]
+  entryComponents: [ColorPickerComponent]
 })
 export class AppModule { }

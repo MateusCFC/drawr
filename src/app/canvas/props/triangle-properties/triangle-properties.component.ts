@@ -1,25 +1,23 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ColorPickerComponent } from '../color-picker/color-picker.component';
 import { Gradient, Pattern } from '../../../data/shape';
 import { CanvasDirective } from '../../canvas.directive';
+import { Triangle } from '../../../data/triangle';
 import { EditorService } from '../../editor/editor.service';
 import { GroupService } from '../../../data/group.service';
-import { MatDialog } from '@angular/material';
-import { Circle } from '../../../data/circle';
+import { MatSelect, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { ColorPickerComponent } from '../color-picker/color-picker.component';
 
 @Component({
-  selector: 'app-circle-properties',
-  templateUrl: './circle-properties.component.html',
-  styleUrls: ['./circle-properties.component.css'],
-  entryComponents: [ ColorPickerComponent ]
+  selector: 'app-triangle-properties',
+  templateUrl: './triangle-properties.component.html',
+  styleUrls: ['./triangle-properties.component.css']
 })
-export class CirclePropertiesComponent implements OnInit {
+export class TrianglePropertiesComponent implements OnInit {
 
   x: number;
   y: number;
   height: number;
   width: number;
-  radius: number;
   rotation: number;
   transparency: number;
 
@@ -29,13 +27,12 @@ export class CirclePropertiesComponent implements OnInit {
 
   @Input() canvas: CanvasDirective;
 
-  private shape: Circle;
+  private shape: Triangle;
 
-  constructor(public editorService: EditorService, public groupService: GroupService, public dialog: MatDialog) {
-  }
+  constructor(public editorService: EditorService, public groupService: GroupService, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.shape = this.editorService.selectedShape as Circle;
+    this.shape = this.editorService.selectedShape as Triangle;
     this.setFieldValues();
 
     // atualiza o painel de propriedades quando o usuário interagir com as shapes direto no canvas
@@ -44,15 +41,12 @@ export class CirclePropertiesComponent implements OnInit {
     });
   }
 
-  setFieldValues(){
+  setFieldValues() {
     console.log(this.shape.id);
-
     this.x = this.shape.x;
     this.y = this.shape.y;
     this.width = this.shape.width;
     this.height = this.shape.height;
-
-    this.radius = this.shape.props.radius;
     this.rotation = this.shape.rotation;
     this.transparency = this.shape.style.transparency * 100;
 
@@ -64,11 +58,10 @@ export class CirclePropertiesComponent implements OnInit {
     this.groupService.setSelectedShape(this.shape);
   }
 
-  updateShape(){
+  updateShape(): void {
     this.shape.moveTo(Number(this.x), Number(this.y));
-    this.shape.props.radius = this.radius;
-    this.width = this.shape.props.radius * 2;
-    this.height = this.shape.props.radius * 2;
+    /*this.shape.width = this.width;*/
+    /*this.shape.height = this.height;*/
     this.shape.rotation = this.rotation;
     this.shape.style.transparency = this.transparency / 100;
 
@@ -83,13 +76,13 @@ export class CirclePropertiesComponent implements OnInit {
   }
 
   openColorPickerFill(): void {
-    let dialogRef = this.dialog.open(ColorPickerComponent, {
+    const dialogRef = this.dialog.open(ColorPickerComponent, {
       width: '250px',
       data: { hex: this.fill }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         this.fill = result;
         this.updateShape();
       }
@@ -97,13 +90,13 @@ export class CirclePropertiesComponent implements OnInit {
   }
 
   openColorPickerStroke(): void {
-    let dialogRef = this.dialog.open(ColorPickerComponent, {
+    const dialogRef = this.dialog.open(ColorPickerComponent, {
       width: '250px',
       data: { hex: this.stroke }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         this.stroke = result;
         this.updateShape();
       }

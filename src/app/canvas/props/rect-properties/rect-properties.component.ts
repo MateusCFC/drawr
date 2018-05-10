@@ -36,9 +36,14 @@ export class RectPropertiesComponent implements OnInit {
   ngOnInit() {
     this.shape = this.editorService.selectedShape as Rect;
     this.setFieldValues();
+
+    // atualiza o painel de propriedades quando o usuário interagir com as shapes direto no canvas
+    this.canvas.figure.$update.subscribe(() => {
+      this.setFieldValues();
+    });
   }
 
-  setFieldValues(){
+  setFieldValues() {
     console.log(this.shape.id);
     this.x = this.shape.x;
     this.y = this.shape.y;
@@ -73,13 +78,13 @@ export class RectPropertiesComponent implements OnInit {
   }
 
   openColorPickerFill(): void {
-    let dialogRef = this.dialog.open(ColorPickerComponent, {
+    const dialogRef = this.dialog.open(ColorPickerComponent, {
       width: '250px',
       data: { hex: this.fill }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         this.fill = result;
         this.updateShape();
       }
@@ -87,13 +92,13 @@ export class RectPropertiesComponent implements OnInit {
   }
 
   openColorPickerStroke(): void {
-    let dialogRef = this.dialog.open(ColorPickerComponent, {
+    const dialogRef = this.dialog.open(ColorPickerComponent, {
       width: '250px',
       data: { hex: this.stroke }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         this.stroke = result;
         this.updateShape();
       }

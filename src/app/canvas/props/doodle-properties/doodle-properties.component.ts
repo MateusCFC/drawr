@@ -34,6 +34,11 @@ export class DoodlePropertiesComponent implements OnInit {
   ngOnInit() {
     this.shape = this.editorService.selectedShape as Doodle;
     this.setFieldValues();
+
+    // atualiza o painel de propriedades quando o usuário interagir com as shapes direto no canvas
+    this.canvas.figure.$update.subscribe(() => {
+      this.setFieldValues();
+    });
   }
 
   setFieldValues(){
