@@ -13,7 +13,7 @@ import { DialogService } from './canvas/toolbar/dialog.service';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,

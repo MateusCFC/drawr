@@ -16,6 +16,8 @@ import { DoodlePropertiesComponent } from './props/doodle-properties/doodle-prop
 import { StarPropertiesComponent } from './props/star-properties/star-properties.component';
 import { TrianglePropertiesComponent } from './props/triangle-properties/triangle-properties.component';
 import { PolygonPropertiesComponent } from './props/polygon-properties/polygon-properties.component';
+import { GroupsComponent } from './groups/groups.component';
+import { GroupsService } from './groups/groups.service';
 
 /**
  * Integrate drawing funcionalities in a canvas.
@@ -29,6 +31,7 @@ import { PolygonPropertiesComponent } from './props/polygon-properties/polygon-p
   declarations: [
     CanvasDirective,
     CanvasEditorComponent,
+    GroupsComponent,
     PropsComponent,
     ToolbarComponent,
     ColorPickerComponent,
@@ -42,7 +45,8 @@ import { PolygonPropertiesComponent } from './props/polygon-properties/polygon-p
   ],
   providers: [
     ToolService,
-    EditorService
+    EditorService,
+    GroupsService
   ],
   exports: [
     CanvasDirective,
