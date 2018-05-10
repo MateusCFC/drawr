@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Gradient, Pattern } from '../../../data/shape';
 import { CanvasDirective } from '../../canvas.directive';
 import { EditorService } from '../../editor/editor.service';
-import { GroupService } from '../../../data/group.service';
 import { MatSelect, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ColorPickerComponent } from '../color-picker/color-picker.component';
 import { Rect } from '../../../data/rect';
@@ -30,7 +29,7 @@ export class RectPropertiesComponent implements OnInit {
 
   private shape: Rect;
 
-  constructor(public editorService: EditorService, public groupService: GroupService, public dialog: MatDialog) {
+  constructor(public editorService: EditorService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -57,7 +56,6 @@ export class RectPropertiesComponent implements OnInit {
     this.lineWidth = this.shape.style.lineWidth;
     this.stroke = this.shape.style.stroke;
 
-    this.groupService.setSelectedShape(this.shape);
   }
 
   updateShape(): void {

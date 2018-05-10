@@ -3,7 +3,6 @@ import { Gradient, Pattern } from '../../../data/shape';
 import { CanvasDirective } from '../../canvas.directive';
 import { Triangle } from '../../../data/triangle';
 import { EditorService } from '../../editor/editor.service';
-import { GroupService } from '../../../data/group.service';
 import { MatSelect, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ColorPickerComponent } from '../color-picker/color-picker.component';
 
@@ -29,7 +28,7 @@ export class TrianglePropertiesComponent implements OnInit {
 
   private shape: Triangle;
 
-  constructor(public editorService: EditorService, public groupService: GroupService, public dialog: MatDialog) { }
+  constructor(public editorService: EditorService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.shape = this.editorService.selectedShape as Triangle;
@@ -54,8 +53,6 @@ export class TrianglePropertiesComponent implements OnInit {
 
     this.lineWidth = this.shape.style.lineWidth;
     this.stroke = this.shape.style.stroke;
-
-    this.groupService.setSelectedShape(this.shape);
   }
 
   updateShape(): void {

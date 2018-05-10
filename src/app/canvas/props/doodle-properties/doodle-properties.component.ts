@@ -3,7 +3,6 @@ import { Gradient, Pattern } from '../../../data/shape';
 import { CanvasDirective } from '../../canvas.directive';
 import { Doodle } from '../../../data/doodle';
 import { EditorService } from '../../editor/editor.service';
-import { GroupService } from '../../../data/group.service';
 import { MatDialog } from '@angular/material';
 import { ColorPickerComponent } from '../color-picker/color-picker.component';
 
@@ -28,7 +27,7 @@ export class DoodlePropertiesComponent implements OnInit {
 
   private shape: Doodle;
 
-  constructor(public editorService: EditorService, public groupService: GroupService, public dialog: MatDialog) {
+  constructor(public editorService: EditorService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -52,8 +51,6 @@ export class DoodlePropertiesComponent implements OnInit {
 
     this.lineWidth = this.shape.style.lineWidth;
     this.stroke = this.shape.style.stroke;
-
-    this.groupService.setSelectedShape(this.shape);
   }
 
   updateShape(){
