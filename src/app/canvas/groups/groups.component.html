@@ -1,0 +1,9 @@
+<h2>Groups</h2>
+  <button mat-button (click)="createGroupFromSelectedShape()">Criar Grupo com Shape</button>
+  <mat-form-field>
+    <mat-select placeholder="Grupos" name="Grupos" [(ngModel)]="selectedGroups" [compareWith]="compare" (change)="processSelectedGroups($event)" multiple>
+      <mat-option *ngFor="let group of groupsService.getGroups()" [value]="group">
+        {{ group.id }}
+      </mat-option>
+    </mat-select>
+</mat-form-field>

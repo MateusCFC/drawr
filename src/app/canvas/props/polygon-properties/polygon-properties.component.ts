@@ -3,7 +3,6 @@ import { Gradient, Pattern } from '../../../data/shape';
 import { CanvasDirective } from '../../canvas.directive';
 import { Polygon } from '../../../data/polygon';
 import { EditorService } from '../../editor/editor.service';
-import { GroupService } from '../../../data/group.service';
 import { MatSelect, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ColorPickerComponent } from '../color-picker/color-picker.component';
 
@@ -29,7 +28,7 @@ export class PolygonPropertiesComponent implements OnInit {
 
   private shape: Polygon;
 
-  constructor(public editorService: EditorService, public groupService: GroupService, public dialog: MatDialog) {
+  constructor(public editorService: EditorService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -55,8 +54,6 @@ export class PolygonPropertiesComponent implements OnInit {
 
     this.lineWidth = this.shape.style.lineWidth;
     this.stroke = this.shape.style.stroke;
-
-    this.groupService.setSelectedShape(this.shape);
   }
 
   updateShape(): void {

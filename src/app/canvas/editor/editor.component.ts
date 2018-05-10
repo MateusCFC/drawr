@@ -86,7 +86,7 @@ export class CanvasEditorComponent implements AfterContentInit {
     this.canvas.figure.draw(this.canvas, this.editorService);
 
     this.canvas.mainCanvas = true;
-    this.editorService.shapeSelectionChanged.subscribe(() => {
+    this.editorService.shapeSelectionChanged$.subscribe(() => {
       this.canvas.figure.draw(this.canvas, this.editorService);
     });
   }
@@ -369,7 +369,7 @@ export class CanvasEditorComponent implements AfterContentInit {
     if (tool && (tool.name === 'save' || tool.name === 'import')) {
       tool.doubleClick(this.canvas, this.dataService);
     }
-    
+
     this.dragOrigin = undefined;
     this.isDragging = false;
   }
